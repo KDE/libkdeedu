@@ -227,6 +227,8 @@ QString ExtDate::toString( Qt::DateFormat f) const
 
 QString ExtDate::toString( const QString& format ) const
 {
+	if ( ! isValid() ) return QString::null;
+
 	//We use the KDE Date format specs.
 	//Replace occurences of the following tokens with their
 	//corresponding values:
@@ -304,12 +306,19 @@ ExtDate ExtDate::addDays( int days ) const
 
 ExtDate  ExtDate::addMonths( int months ) const
 {
-	int	a_month = month() + months;
-	int	a_year = year() + (a_month - 1)/12;
+	int a_month = month() + months%12;
+	int a_year  = year()  + int(months/12);
+
 	while ( a_month < 1 ) {
-		 a_month += 12;
-		 a_year--;
+		a_month += 12;
+		a_year--;
 	}
+
+	while ( a_month > 12 ) {
+		a_month -= 12;
+		a_year++;
+	}
+
 	return ExtDate(a_year, a_month, day());
 }
 
@@ -724,23 +733,23 @@ void ExtDateTime::setTime_t( uint secsSince1Jan1970UTC, Qt::TimeSpec ts )
 
 QString ExtDateTime::toString( Qt::DateFormat f ) const
 {
-    if ( !isValid() )
-	return QString::null;
+	if ( !isValid() )
+		return QString::null;
 
-    if ( f == Qt::ISODate ) {
-	return d.toString( Qt::ISODate ) + "T" + t.toString( Qt::ISODate );
-    }
+	if ( f == Qt::ISODate ) {
+		return d.toString( Qt::ISODate ) + "T" + t.toString( Qt::ISODate );
+	}
 #ifndef QT_NO_TEXTDATE
-    else if ( f == Qt::TextDate ) {
+	else if ( f == Qt::TextDate ) {
 		return toString( "%a %b %e %Y %H:%M:%S" );
-    }
+	}
 #endif
-    else if ( f == Qt::LocalDate ) {
+	else if ( f == Qt::LocalDate ) {
 		return toString( KGlobal::locale()->dateFormat()
 						+ " " + KGlobal::locale()->timeFormat() );
-    }
+	}
 
-    return QString::null;
+	return QString::null;
 }
 #endif
 
