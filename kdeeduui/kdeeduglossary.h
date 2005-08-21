@@ -38,7 +38,7 @@ class Glossary
 {
 	public:
 		Glossary();
-		~Glossary();
+		virtual ~Glossary();
 
 		/**
 		 * add the item @p item to the glossary
