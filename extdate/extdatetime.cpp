@@ -920,8 +920,8 @@ bool ExtDateTime::operator!=( const ExtDateTime &dt ) const
 bool ExtDateTime::operator<( const ExtDateTime &dt ) const
 {
     if ( d < dt.d )
-	return TRUE;
-    return d == dt.d ? t < dt.t : FALSE;
+	return true;
+    return d == dt.d ? t < dt.t : false;
 }
 
 /*!
@@ -932,8 +932,8 @@ bool ExtDateTime::operator<( const ExtDateTime &dt ) const
 bool ExtDateTime::operator<=( const ExtDateTime &dt ) const
 {
     if ( d < dt.d )
-	return TRUE;
-    return d == dt.d ? t <= dt.t : FALSE;
+	return true;
+    return d == dt.d ? t <= dt.t : false;
 }
 
 /*!
@@ -944,8 +944,8 @@ bool ExtDateTime::operator<=( const ExtDateTime &dt ) const
 bool ExtDateTime::operator>( const ExtDateTime &dt ) const
 {
     if ( d > dt.d )
-	return TRUE;
-    return d == dt.d ? t > dt.t : FALSE;
+	return true;
+    return d == dt.d ? t > dt.t : false;
 }
 
 /*!
@@ -956,8 +956,8 @@ bool ExtDateTime::operator>( const ExtDateTime &dt ) const
 bool ExtDateTime::operator>=( const ExtDateTime &dt ) const
 {
     if ( d > dt.d )
-	return TRUE;
-    return d == dt.d ? t >= dt.t : FALSE;
+	return true;
+    return d == dt.d ? t >= dt.t : false;
 }
 
 /*!

@@ -32,7 +32,7 @@ KPlotObject::KPlotObject( const QString &n, const QString &c, PTYPE t, unsigned 
 	setSize( s );
 	setParam( p );
 
-	pList.setAutoDelete( TRUE );
+	pList.setAutoDelete( true );
 }
 
 KPlotObject::~KPlotObject()

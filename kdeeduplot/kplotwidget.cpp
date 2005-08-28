@@ -46,7 +46,7 @@ KPlotWidget::KPlotWidget( double x1, double x2, double y1, double y2, QWidget *p
 	setFGColor( QColor( "white" ) );
 	setGridColor( QColor( "grey" ) );
 
-	ObjectList.setAutoDelete( TRUE );
+	ObjectList.setAutoDelete( true );
 }
 
 KPlotWidget::~KPlotWidget()
