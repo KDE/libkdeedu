@@ -130,7 +130,7 @@ QValueList<GlossaryItem*> Glossary::readItems( QDomDocument &itemDocument )
 		QString picName = itemElement.namedItem( "picture" ).toElement().text();
 		QDomElement refNode = ( const QDomElement& ) itemElement.namedItem( "references" ).toElement();
 
-		QString desc = descNode.toElement().text();
+		QString desc = i18n( descNode.toElement().text().utf8() );
 		if ( !picName.isEmpty() )
 			desc.prepend("[img]"+picName +"[/img]" );
 
@@ -146,8 +146,6 @@ QValueList<GlossaryItem*> Glossary::readItems( QDomDocument &itemDocument )
 		item->setDesc( item->desc().replace("[/sup]", "</sup>" ) );
 		item->setDesc( item->desc().replace("[br]", "<br />" ) );
 		
-		item->setDesc( i18n( item->desc().utf8() ) );
-
 		refNodeList = refNode.elementsByTagName( "refitem" );
 		for ( uint it = 0; it < refNodeList.count(); it++ )
 		{
