@@ -356,6 +356,17 @@ ExtDate ExtDate::currentDate(Qt::TimeSpec ts)
 }
 
 #ifndef QT_NO_DATESTRING
+//Try both DateFormat values
+ExtDate ExtDate::fromString( const QString& s )
+{
+	ExtDate dResult = ExtDate::fromString( s, Qt::TextDate );
+	if ( dResult.isValid() ) return dResult;
+
+	dResult = ExtDate::fromString( s, Qt::ISODate );
+	if ( dResult.isValid() ) return dResult;
+	else return ExtDate(); //invalid	
+}
+
 ExtDate ExtDate::fromString( const QString& s, Qt::DateFormat f )
 {
 	ExtDate dt = ExtDate();  //initialize invalid date
@@ -373,6 +384,7 @@ ExtDate ExtDate::fromString( const QString& s, Qt::DateFormat f )
 			int year( s.mid( 0, 4 ).toInt() );
 			int month( s.mid( 5, 2 ).toInt() );
 			int day( s.mid( 8, 2 ).toInt() );
+
 			if ( year && month && day )
 				return ExtDate( year, month, day );
 		}
@@ -384,6 +396,7 @@ ExtDate ExtDate::fromString( const QString& s, Qt::DateFormat f )
 		{
 			//Three possible date formats:
 			//dd mth yyyy; mth dd yyyy; wkd mth dd yyyy
+			//"mth" is the word for the month (long or short form)
 			QStringList ss = QStringList::split( " ", s );
 			bool ok = false;
 			int month = -1;
@@ -412,7 +425,7 @@ ExtDate ExtDate::fromString( const QString& s, Qt::DateFormat f )
 			}
 
 			for ( uint i = 0; i < 12; i++ ) {
-				if ( ss[imonth] == m_shortMonthNames[i] || ss[imonth] == shortMonthName( i + 1 ) ) {
+				if ( ss[imonth] == shortMonthName( i+1 ) || ss[imonth] == longMonthName( i+1 ) ) {
 						month = i + 1;
 						break;
 				}
@@ -422,7 +435,7 @@ ExtDate ExtDate::fromString( const QString& s, Qt::DateFormat f )
 				imonth = 2;
 				iyear = 3;
 				for ( uint i = 0; i < 12; i++ ) {
-					if ( ss[imonth] == m_shortMonthNames[i] || ss[imonth] == shortMonthName( i + 1 ) ) {
+					if ( ss[imonth] == shortMonthName( i+1 ) || ss[imonth] == longMonthName( i+1 ) ) {
 							month = i + 1;
 							break;
 					}
@@ -1002,6 +1015,17 @@ ExtDateTime ExtDateTime::currentDateTime( Qt::TimeSpec ts )
 
     \warning Note that \c Qt::LocalDate cannot be used here.
 */
+ExtDateTime ExtDateTime::fromString( const QString& s )
+{
+	ExtDateTime dtResult = ExtDateTime::fromString( s, Qt::TextDate );
+	if ( dtResult.isValid() ) return dtResult;
+
+	dtResult = ExtDateTime::fromString( s, Qt::ISODate );
+
+	if ( dtResult.isValid() ) return dtResult;
+	else return ExtDateTime(); //invalid
+}
+
 ExtDateTime ExtDateTime::fromString( const QString& s, Qt::DateFormat f )
 {
 	ExtDateTime dt;
@@ -1015,8 +1039,13 @@ ExtDateTime ExtDateTime::fromString( const QString& s, Qt::DateFormat f )
 	}
 
 	if ( f == Qt::ISODate ) {
-		return ExtDateTime( ExtDate::fromString( s.mid(0,10), Qt::ISODate ),
+		if ( s.length() <= 10 || ! s.contains( ':' )  ) { //no time specified
+			QTime t = QTime(0,0,0);
+			return ExtDateTime( ExtDate::fromString( s.mid(0,10), Qt::ISODate ) );
+		} else {
+			return ExtDateTime( ExtDate::fromString( s.mid(0,10), Qt::ISODate ),
 					QTime::fromString( s.mid(11), Qt::ISODate ) );
+		}
 	}
 #if !defined(QT_NO_REGEXP) && !defined(QT_NO_TEXTDATE)
 	else if ( f == Qt::TextDate ) {
