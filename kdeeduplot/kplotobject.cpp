@@ -17,7 +17,6 @@
 
 #include <qpainter.h>
 #include <kdebug.h>
-#include <klocale.h>
 #include "kplotobject.h"
 
 KPlotObject::KPlotObject() {
@@ -41,7 +40,7 @@ KPlotObject::~KPlotObject()
 
 void KPlotObject::removePoint( unsigned int index ) {
 	if ( index > pList.count() - 1 ) {
-		kdWarning() << i18n( "Ignoring attempt to remove non-existent plot object" ) << endl;
+		kdWarning() << "Ignoring attempt to remove non-existent plot object" << endl;
 		return;
 	}
 
