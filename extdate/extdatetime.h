@@ -113,7 +113,7 @@ private:
 
 	friend class ExtDateTime;
 
-	#ifndef QT_NO_DATASTREAM
+#ifndef QT_NO_DATASTREAM
 	friend Q_EXPORT QDataStream &operator<<( QDataStream &, const ExtDate & );
 	friend Q_EXPORT QDataStream &operator>>( QDataStream &, ExtDate & );
 	friend Q_EXPORT QDataStream &operator<<( QDataStream &, const ExtDateTime & );
