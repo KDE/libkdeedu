@@ -253,7 +253,7 @@ void KPlotWidget::drawBox( QPainter *p ) {
 		//horizontal grid lines
 		double y0 = y() - dmod( y(), dYtick ); //zeropoint; y(i) is this plus i*mX
 		for ( int iy = 0; iy <= nmajY+1; iy++ ) {
-			int py = int( PixRect.height() * ( (y0 + iy*dYtick - y())/dataHeight() ) );
+			int py = PixRect.height() - int( PixRect.height() * ( (y0 + iy*dYtick - y())/dataHeight() ) );
 			p->drawLine( 0, py, PixRect.width(), py );
 		}
 	}
