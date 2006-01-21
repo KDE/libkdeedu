@@ -1365,6 +1365,17 @@ void ExtDateEdit::addNumber( int sec, int num )
     d->typing = TRUE;
     QString txt;
     if ( sec == d->yearSection ) {
+      if ( d->overwrite ) {
+	d->y = num;
+	d->overwrite = FALSE;
+	accepted = TRUE;
+      } else {
+	txt = QString::number( 10*d->y + num );
+	if ( txt.length() > 5 ) txt = txt.mid(1);
+	d->y = txt.toInt();
+	accepted = TRUE;
+      }
+/*
 	txt = QString::number( d->y );
 	if ( d->overwrite || txt.length() == 4 ) {
 	    accepted = TRUE;
@@ -1392,6 +1403,7 @@ void ExtDateEdit::addNumber( int sec, int num )
 		overwrite = TRUE;
 	    }
 	}
+*/
     } else if ( sec == d->monthSection ) {
 	txt = QString::number( d->m );
 	if ( d->overwrite || txt.length() == 2 ) {
@@ -1492,6 +1504,7 @@ void ExtDateEdit::fix()
   
   int currentYear = ExtDate::currentDate().year();
   int year = d->y;
+/* No longer valid for extended dates
   if ( year < 100 ) {
     int currentCentury = currentYear / 100;
     year += currentCentury * 100;
@@ -1508,6 +1521,7 @@ void ExtDateEdit::fix()
     year += currentMillennium * 10;
     changed = TRUE;
   }
+*/
   if ( changed && outOfRange( year, d->m, d->d ) ) {
   	if ( minValue().isValid() && date() < minValue() ) {
 	    d->d =  minValue().day();
@@ -1539,6 +1553,7 @@ bool ExtDateEdit::event( QEvent *e )
 {
   if( e->type() == QEvent::FocusOut ) {
     d->typing = FALSE;
+    d->overwrite = TRUE;
     // the following can't be done in fix() because fix() called
     // from all over the place and it will break the old behaviour
     if ( !ExtDate::isValid( d->y, d->m, d->d ) ) {
