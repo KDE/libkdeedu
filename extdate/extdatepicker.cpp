@@ -162,6 +162,8 @@ void ExtDatePicker::init( const ExtDate &dt )
   setFontSize(fontsize);
   line->setValidator(val);
   line->installEventFilter( this );
+  line->setReadOnly( true );
+
   if (  QApplication::reverseLayout() )
   {
       yearForward->setIconSet(BarIconSet(QString::fromLatin1("2leftarrow")));

@@ -25,7 +25,7 @@
 
 #include "extdatetime.h"
 
-class QLineEdit;
+class KLineEdit;
 class QToolButton;
 class ExtDateValidator;
 class ExtDateTable;
@@ -170,7 +170,7 @@ protected:
   /// the button for selecting the year directly
   QToolButton *selectYear;
   /// the line edit to enter the date directly
-  QLineEdit *line;
+  KLineEdit *line;
   /// the validator for the line edit:
   ExtDateValidator *val;
   /// the date table
