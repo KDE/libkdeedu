@@ -982,11 +982,15 @@ bool KEduVocKvtmlReader::readExpression(QDomElement &domElementParent)
 
   QDomAttr domAttrSelected = domElementParent.attributeNode(KV_SELECTED);
   if (!domAttrSelected.isNull())
-    inquery = domAttrSelected.value().toInt();
+    inquery = domAttrSelected.value() == "1" ? true : false;
+  else
+    inquery = false;
 
   QDomAttr domAttrInactive = domElementParent.attributeNode(KV_INACTIVE);
   if (!domAttrInactive.isNull())
-    active = !domAttrInactive.value().toInt();
+    active = domAttrInactive.value() == "1" ? false : true;
+  else
+    active = true;
 
   QDomAttr domAttrType = domElementParent.attributeNode(KV_EXPRTYPE);
   if (!domAttrType.isNull())
