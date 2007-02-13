@@ -241,7 +241,12 @@ void GlossaryDialog::displayItem( const KURL& url, const KParts::URLArgs& )
 		}
 		++it;
 	}
-	slotClicked( found );
+	if ( found )
+	{
+		m_glosstree->ensureItemVisible( found );
+		m_glosstree->setCurrentItem( found );
+		slotClicked( found );
+	}
 }
 
 void GlossaryDialog::updateTree()
