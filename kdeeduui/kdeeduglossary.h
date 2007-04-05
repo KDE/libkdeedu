@@ -179,8 +179,8 @@ class Glossary
 class GlossaryItem
 {
 	public:
-		GlossaryItem(){};
-		~GlossaryItem(){};
+		GlossaryItem(){}
+		~GlossaryItem(){}
 
 		void setName( const QString& s ){
 			m_name = s;

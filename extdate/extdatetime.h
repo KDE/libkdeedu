@@ -81,12 +81,12 @@ public:
 	ExtDate addYears( int years ) const;
 	int daysTo( const ExtDate & ) const;
 
-	bool operator==( const ExtDate &d ) const { return m_jd == d.jd(); };
-	bool operator!=( const ExtDate &d ) const { return m_jd != d.jd(); };
-	bool operator<( const ExtDate &d )  const { return m_jd  < d.jd(); };
-	bool operator<=( const ExtDate &d ) const { return m_jd <= d.jd(); };
-	bool operator>( const ExtDate &d )  const { return m_jd  > d.jd(); };
-	bool operator>=( const ExtDate &d ) const { return m_jd >= d.jd(); };
+	bool operator==( const ExtDate &d ) const { return m_jd == d.jd(); }
+	bool operator!=( const ExtDate &d ) const { return m_jd != d.jd(); }
+	bool operator<( const ExtDate &d )  const { return m_jd  < d.jd(); }
+	bool operator<=( const ExtDate &d ) const { return m_jd <= d.jd(); }
+	bool operator>( const ExtDate &d )  const { return m_jd  > d.jd(); }
+	bool operator>=( const ExtDate &d ) const { return m_jd >= d.jd(); }
 
 	static ExtDate currentDate( Qt::TimeSpec ts = Qt::LocalTime );
 #ifndef QT_NO_DATESTRING

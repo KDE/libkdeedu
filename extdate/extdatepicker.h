@@ -122,7 +122,7 @@ public:
    * widget.
    * @since 3.2
    */
-  ExtDateTable *dateTable() const { return table; };
+  ExtDateTable *dateTable() const { return table; }
 
   /**
    * Sets the font size of the widgets elements.
