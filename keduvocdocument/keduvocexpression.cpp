@@ -107,7 +107,8 @@ void KEduVocExpression::setTranslation( int index, const QString & expr )
         return;
     }
 
-    d->m_translations[index] = expr.simplified();
+    // if it exists already, only change the text, not the whole show!
+    d->m_translations[index].setText(expr.simplified());
 }
 
 

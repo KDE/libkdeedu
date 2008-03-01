@@ -42,7 +42,7 @@ public:
         * Constructor
         * @param translation is used as translation
         */
-    KEduVocTranslation( const QString &translation );
+    explicit KEduVocTranslation( const QString &translation );
 
     /** copy constructor for d-pointer safet */
     KEduVocTranslation( const KEduVocTranslation &other );
