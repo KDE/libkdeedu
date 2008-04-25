@@ -458,15 +458,14 @@ bool KEduVocKvtml2Reader::readLesson( QDomElement &lessonElement )
     }
 
     //<entry id="123"/>
-    currentElement = lessonElement.firstChildElement( KVTML_ENTRY );
-    while ( !currentElement.isNull() ) {
+    QDomNodeList entries = lessonElement.elementsByTagName( KVTML_ENTRY );
+    for (int i = 0; i < entries.count(); i++) {
         bool result = false;
-        int id = currentElement.attribute( KVTML_ID ).toInt( &result );
+        int id = entries.item(i).toElement().attribute( KVTML_ID ).toInt( &result );
         if(result) {
             m_doc->entry(id)->setLesson(lessonId);
             m_doc->lesson(lessonId).addEntry(id);
         }
-        currentElement = currentElement.nextSiblingElement( KVTML_ENTRY );
     }
 
     ///@todo remove this after 4.0 release. it provides compability with some documents written with kvtml2 prior to the 4.0 release during the beta phase.
