@@ -1,4 +1,4 @@
-bin_PROGRAMS = test_extdate test_extdatepicker
+check_PROGRAMS = test_extdate test_extdatepicker
 
 INCLUDES= $(all_includes)
 
