@@ -86,25 +86,19 @@ KEduVocTranslation::KEduVocTranslationPrivate::KEduVocTranslationPrivate(KEduVoc
 }
 
 
-KEduVocTranslation::KEduVocTranslationPrivate::~ KEduVocTranslationPrivate()
+KEduVocTranslation::KEduVocTranslationPrivate::~KEduVocTranslationPrivate()
 {
     delete m_declension;
 }
 
 KEduVocTranslation::KEduVocTranslation(KEduVocExpression* entry) : d( new KEduVocTranslationPrivate(entry) )
 {
-
-    assert(d);
-
 }
 
 
 KEduVocTranslation::KEduVocTranslation(KEduVocExpression* entry, const QString &translation ) : d( new KEduVocTranslationPrivate(entry) )
 {
     setText(translation.simplified());
-
-    assert(d);
-
 }
 
 KEduVocTranslation::KEduVocTranslation( const KEduVocTranslation &other )
@@ -197,8 +191,6 @@ KEduVocTranslation & KEduVocTranslation::operator = ( const KEduVocTranslation &
     if (translation.d->m_declension) {
         d->m_declension = new KEduVocDeclension(*translation.d->m_declension);
     }
-
-    assert(d);
 
     return *this;
 }
@@ -359,10 +351,11 @@ void KEduVocTranslation::setImageUrl(const KUrl &url)
 
 KEduVocWordType * KEduVocTranslation::wordType() const
 {
-    if (d)
+    if (d) {
         return d->m_wordType;
-    else
+    } else {
         return 0;
+    }
 }
 
 void KEduVocTranslation::setWordType(KEduVocWordType * wordType)
