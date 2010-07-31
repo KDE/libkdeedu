@@ -31,14 +31,14 @@
 //#include "../kernel/qrichtext_p.h"
 #include <private/qinternal_p.h>
 #include <private/qrichtext_p.h>
-#include <qrangecontrol.h>
-#include <qapplication.h>
-#include <qpixmap.h>
-#include <qapplication.h>
-#include <qvaluelist.h>
-#include <qstring.h>
-#include <qstyle.h>
-#include <qdatetimeedit.h> //need for QTimeEdit
+#include <tqrangecontrol.h>
+#include <tqapplication.h>
+#include <tqpixmap.h>
+#include <tqapplication.h>
+#include <tqvaluelist.h>
+#include <tqstring.h>
+#include <tqstyle.h>
+#include <tqdatetimeedit.h> //need for QTimeEdit
 
 #define EXTDATETIMEEDIT_HIDDEN_CHAR '0'
 
@@ -71,48 +71,48 @@ static void readLocaleSettings()
     int dpos, mpos, ypos;
     cleanup();
 
-    lDateSep = new QString();
-    lTimeSep = new QString();
+    lDateSep = new TQString();
+    lTimeSep = new TQString();
 
 #if defined(Q_WS_WIN)
     QT_WA( {
 	TCHAR data[10];
 	GetLocaleInfo( LOCALE_USER_DEFAULT, LOCALE_SDATE, data, 10 );
-	*lDateSep = QString::fromUcs2( (ushort*)data );
+	*lDateSep = TQString::fromUcs2( (ushort*)data );
 	GetLocaleInfo( LOCALE_USER_DEFAULT, LOCALE_STIME, data, 10 );
-	*lTimeSep = QString::fromUcs2( (ushort*)data );
+	*lTimeSep = TQString::fromUcs2( (ushort*)data );
 	GetLocaleInfo( LOCALE_USER_DEFAULT, LOCALE_ITIME, data, 10 );
-	lAMPM = QString::fromUcs2( (ushort*)data ).toInt()==0;
+	lAMPM = TQString::fromUcs2( (ushort*)data ).toInt()==0;
 	GetLocaleInfo( LOCALE_USER_DEFAULT, LOCALE_S1159, data, 10 );
-	QString am = QString::fromUcs2( (ushort*)data );
+	TQString am = TQString::fromUcs2( (ushort*)data );
 	if ( !am.isEmpty() )
-	    lAM = new QString( am );
+	    lAM = new TQString( am );
 	GetLocaleInfo( LOCALE_USER_DEFAULT, LOCALE_S2359, data, 10 );
-	QString pm = QString::fromUcs2( (ushort*)data );
+	TQString pm = TQString::fromUcs2( (ushort*)data );
 	if ( !pm.isEmpty()  )
-	    lPM = new QString( pm );
+	    lPM = new TQString( pm );
     } , {
 	char data[10];
 	GetLocaleInfoA( LOCALE_USER_DEFAULT, LOCALE_SDATE, (char*)&data, 10 );
-	*lDateSep = QString::fromLocal8Bit( data );
+	*lDateSep = TQString::fromLocal8Bit( data );
 	GetLocaleInfoA( LOCALE_USER_DEFAULT, LOCALE_STIME, (char*)&data, 10 );
-	*lTimeSep = QString::fromLocal8Bit( data );
+	*lTimeSep = TQString::fromLocal8Bit( data );
 	GetLocaleInfoA( LOCALE_USER_DEFAULT, LOCALE_ITIME, (char*)&data, 10 );
-	lAMPM = QString::fromLocal8Bit( data ).toInt()==0;
+	lAMPM = TQString::fromLocal8Bit( data ).toInt()==0;
 	GetLocaleInfoA( LOCALE_USER_DEFAULT, LOCALE_S1159, (char*)&data, 10 );
-	QString am = QString::fromLocal8Bit( data );
+	TQString am = TQString::fromLocal8Bit( data );
 	if ( !am.isEmpty() )
-	    lAM = new QString( am );
+	    lAM = new TQString( am );
 	GetLocaleInfoA( LOCALE_USER_DEFAULT, LOCALE_S2359, (char*)&data, 10 );
-	QString pm = QString::fromLocal8Bit( data );
+	TQString pm = TQString::fromLocal8Bit( data );
 	if ( !pm.isEmpty() )
-	    lPM = new QString( pm );
+	    lPM = new TQString( pm );
     } );
 #else
     *lDateSep = "-";
     *lTimeSep = ":";
 #endif
-    QString d = ExtDate( 1999, 11, 22 ).toString( Qt::LocalDate );
+    TQString d = ExtDate( 1999, 11, 22 ).toString( Qt::LocalDate );
     dpos = d.find( "22" );
     mpos = d.find( "11" );
     ypos = d.find( "99" );
@@ -134,7 +134,7 @@ static void readLocaleSettings()
 	// this code needs to change if new formats are added
 
 #ifndef Q_WS_WIN
-	QString sep = d.mid( QMIN( dpos, mpos ) + 2, QABS( dpos - mpos ) - 2 );
+	TQString sep = d.mid( QMIN( dpos, mpos ) + 2, QABS( dpos - mpos ) - 2 );
 	if ( d.contains( sep ) == 2 ) {
 	    *lDateSep = sep;
 	}
@@ -142,13 +142,13 @@ static void readLocaleSettings()
     }
 
 #ifndef Q_WS_WIN
-    QString t = QTime( 11, 22, 33 ).toString( Qt::LocalDate );
+    TQString t = TQTime( 11, 22, 33 ).toString( Qt::LocalDate );
     dpos = t.find( "11" );
     mpos = t.find( "22" );
     ypos = t.find( "33" );
     // We only allow hhmmss
     if ( dpos > -1 && dpos < mpos && mpos < ypos ) {
-	QString sep = t.mid( dpos + 2, mpos - dpos - 2 );
+	TQString sep = t.mid( dpos + 2, mpos - dpos - 2 );
 	if ( sep == t.mid( mpos + 2, ypos - mpos - 2 ) ) {
 	    *lTimeSep = sep;
 	}
@@ -163,14 +163,14 @@ static ExtDateEdit::Order localOrder() {
     return lOrder;
 }
 
-static QString localDateSep() {
+static TQString localDateSep() {
     if ( !lDateSep ) {
 	readLocaleSettings();
     }
     return *lDateSep;
 }
 
-static QString localTimeSep() {
+static TQString localTimeSep() {
     if ( !lTimeSep ) {
 	readLocaleSettings();
     }
@@ -217,16 +217,16 @@ public:
 	sections[sec].setSelectionEnd( selend );
     }
     uint sectionCount() const { return (uint)sections.count(); }
-    void setSeparator( const QString& s ) { sep = s; }
-    QString separator() const { return sep; }
+    void setSeparator( const TQString& s ) { sep = s; }
+    TQString separator() const { return sep; }
 
     void setFrame( bool f ) { frm = f; }
     bool frame() const { return frm; }
 
     int focusSection() const { return focusSec; }
-    int section( const QPoint& p )
+    int section( const TQPoint& p )
     {
-	cursor->place( p + QPoint( offset, 0 ), parag );
+	cursor->place( p + TQPoint( offset, 0 ), parag );
 	int idx = cursor->index();
 	for ( uint i = 0; i < sections.count(); ++i ) {
 	    if ( idx >= sections[i].selectionStart() &&
@@ -261,12 +261,12 @@ public:
 	return FALSE;
     }
 
-    void paint( const QString& txt, bool focus, QPainter& p,
-		const QColorGroup& cg, const QRect& rect, QStyle& style )
+    void paint( const TQString& txt, bool focus, TQPainter& p,
+		const TQColorGroup& cg, const TQRect& rect, TQStyle& style )
     {
 	int fw = 0;
 	if ( frm )
-	    fw = style.pixelMetric(QStyle::PM_DefaultFrameWidth);
+	    fw = style.pixelMetric(TQStyle::PM_DefaultFrameWidth);
 
 	parag->truncate( 0 );
 	parag->append( txt );
@@ -293,7 +293,7 @@ public:
 	fb->removeRef();
 	nf->removeRef();
 
-	QRect r( rect.x(), rect.y(), rect.width() - 2 * ( 2 + fw ), rect.height() );
+	TQRect r( rect.x(), rect.y(), rect.width() - 2 * ( 2 + fw ), rect.height() );
 	parag->pseudoDocument()->docRect = r;
 	parag->invalidate(0);
 	parag->format();
@@ -309,7 +309,7 @@ public:
 	    p.translate( -xoff, -yoff );
     }
 
-    void resize( const QSize& size ) { sz = size; }
+    void resize( const TQSize& size ) { sz = size; }
 
     int mapSection( int sec )
     {
@@ -334,24 +334,24 @@ private:
     bool frm;
     QTextParagraph *parag;
     QTextCursor *cursor;
-    QSize sz;
+    TQSize sz;
     int focusSec;
-    QValueList< QNumberSection > sections;
-    QString sep;
+    TQValueList< QNumberSection > sections;
+    TQString sep;
     int offset;
 };
 
 class ExtDateTimeSpinWidget : public QSpinWidget
 {
 public:
-    ExtDateTimeSpinWidget( QWidget *parent, const char *name )
-	: QSpinWidget( parent, name )
+    ExtDateTimeSpinWidget( TQWidget *parent, const char *name )
+	: TQSpinWidget( parent, name )
     {
     }
 
 protected:
 #ifndef QT_NO_WHEELEVENT
-    void wheelEvent( QWheelEvent *e )
+    void wheelEvent( TQWheelEvent *e )
     {
 	ExtDateTimeEditor *editor = (ExtDateTimeEditor*)editWidget()->qt_cast( "ExtDateTimeEditor" );
 	Q_ASSERT( editor );
@@ -363,7 +363,7 @@ protected:
 
 	if ( section == -1 )
 	    return;
-	QSpinWidget::wheelEvent( e );
+	TQSpinWidget::wheelEvent( e );
     }
 #endif
 };
@@ -374,7 +374,7 @@ protected:
 */
 ExtDateTimeEditor::ExtDateTimeEditor( ExtDateTimeEditBase * parent,
 				  const char * name )
-    : QWidget( parent, name, WNoAutoErase )
+    : TQWidget( parent, name, WNoAutoErase )
 {
     d = new ExtDateTimeEditorPrivate();
     cw = parent;
@@ -407,14 +407,14 @@ void ExtDateTimeEditor::init()
 
 */
 
-bool ExtDateTimeEditor::event( QEvent *e )
+bool ExtDateTimeEditor::event( TQEvent *e )
 {
-    if ( e->type() == QEvent::FocusIn || e->type() == QEvent::FocusOut ) {
- 	if ( e->type() == QEvent::FocusOut )
+    if ( e->type() == TQEvent::FocusIn || e->type() == TQEvent::FocusOut ) {
+ 	if ( e->type() == TQEvent::FocusOut )
   	    qApp->sendEvent( cw, e );
 	update( rect() );
-    } else if ( e->type() == QEvent::AccelOverride ) {
-	QKeyEvent* ke = (QKeyEvent*) e;
+    } else if ( e->type() == TQEvent::AccelOverride ) {
+	TQKeyEvent* ke = (TQKeyEvent*) e;
 	switch ( ke->key() ) {
 	case Key_Delete:
 	case Key_Backspace:
@@ -427,17 +427,17 @@ bool ExtDateTimeEditor::event( QEvent *e )
 	    break;
 	}
     }
-    return QWidget::event( e );
+    return TQWidget::event( e );
 }
 
 /*! \reimp
 
 */
 
-void ExtDateTimeEditor::resizeEvent( QResizeEvent *e )
+void ExtDateTimeEditor::resizeEvent( TQResizeEvent *e )
 {
     d->resize( e->size() );
-    QWidget::resizeEvent( e );
+    TQWidget::resizeEvent( e );
 }
 
 
@@ -445,9 +445,9 @@ void ExtDateTimeEditor::resizeEvent( QResizeEvent *e )
 
 */
 
-void ExtDateTimeEditor::paintEvent( QPaintEvent * )
+void ExtDateTimeEditor::paintEvent( TQPaintEvent * )
 {
-    QString txt;
+    TQString txt;
     for ( uint i = 0; i < d->sectionCount(); ++i ) {
 	txt += cw->sectionFormattedText( i );
 	if ( i < d->sectionCount()-1 ) {
@@ -459,8 +459,8 @@ void ExtDateTimeEditor::paintEvent( QPaintEvent * )
     }
 
     QSharedDoubleBuffer buffer( this );
-    const QBrush &bg =
-	colorGroup().brush( isEnabled() ? QColorGroup::Base : QColorGroup::Background );
+    const TQBrush &bg =
+	colorGroup().brush( isEnabled() ? TQColorGroup::Base : TQColorGroup::Background );
     buffer.painter()->fillRect( 0, 0, width(), height(), bg );
     d->paint( txt, hasFocus(), *buffer.painter(), colorGroup(), rect(),
 	      style() );
@@ -471,7 +471,7 @@ void ExtDateTimeEditor::paintEvent( QPaintEvent * )
 /*!
     Returns the section index at point \a p.
 */
-int ExtDateTimeEditor::sectionAt( const QPoint &p )
+int ExtDateTimeEditor::sectionAt( const TQPoint &p )
 {
     return d->section( p );
 }
@@ -486,9 +486,9 @@ int ExtDateTimeEditor::mapSection( int sec )
 
 */
 
-void ExtDateTimeEditor::mousePressEvent( QMouseEvent *e )
+void ExtDateTimeEditor::mousePressEvent( TQMouseEvent *e )
 {
-    QPoint p( e->pos().x(), 0 );
+    TQPoint p( e->pos().x(), 0 );
     int sec = sectionAt( p );
     if ( sec != -1 ) {
 	cw->setFocusSection( sec );
@@ -499,11 +499,11 @@ void ExtDateTimeEditor::mousePressEvent( QMouseEvent *e )
 /*! \reimp
 
 */
-bool ExtDateTimeEditor::eventFilter( QObject *o, QEvent *e )
+bool ExtDateTimeEditor::eventFilter( TQObject *o, TQEvent *e )
 {
     if ( o == this ) {
-	if ( e->type() == QEvent::KeyPress ) {
-	    QKeyEvent *ke = (QKeyEvent*)e;
+	if ( e->type() == TQEvent::KeyPress ) {
+	    TQKeyEvent *ke = (TQKeyEvent*)e;
 	    switch ( ke->key() ) {
 	    case Key_Right:
 		if ( d->focusSection() < (int)d->sectionCount()-1 ) {
@@ -537,7 +537,7 @@ bool ExtDateTimeEditor::eventFilter( QObject *o, QEvent *e )
 		if ( ke->state() == Qt::ControlButton )
 		    return FALSE;
 
-		QWidget *w = this;
+		TQWidget *w = this;
 		bool hadDateEdit = FALSE;
 		while ( w ) {
 		    if ( ::qt_cast<ExtDateTimeSpinWidget*>(w) && qstrcmp( w->name(), "qt_spin_widget" ) != 0 ||
@@ -569,7 +569,7 @@ bool ExtDateTimeEditor::eventFilter( QObject *o, QEvent *e )
 		}
 	    } break;
 	    default:
-		QString txt = ke->text().lower();
+		TQString txt = ke->text().lower();
 		if ( !txt.isEmpty() && !separator().isEmpty() && txt[0] == separator()[0] ) {
 		    // do the same thing as KEY_RIGHT when the user presses the separator key
 		    if ( d->focusSection() < 2 ) {
@@ -580,7 +580,7 @@ bool ExtDateTimeEditor::eventFilter( QObject *o, QEvent *e )
 		} else if ( !txt.isEmpty() && ::qt_cast<QTimeEdit*>(cw) && focusSection() == (int) d->sectionCount()-1 ) {
 		    // the first character of the AM/PM indicator toggles if the section has focus
 		    QTimeEdit *te = (QTimeEdit*)cw;
-		    QTime time = te->time();
+		    TQTime time = te->time();
 		    if ( lAMPM && lAM && lPM && (te->display()&QTimeEdit::AMPM) ) {
 			if ( txt[0] == (*lAM).lower()[0] && time.hour() >= 12 ) {
 			    time.setHMS( time.hour()-12, time.minute(), time.second(), time.msec() );
@@ -637,7 +637,7 @@ void ExtDateTimeEditor::setSectionSelection( int sec, int selstart, int selend )
     currently, only the first character of \a s is used.
 */
 
-void ExtDateTimeEditor::setSeparator( const QString& s )
+void ExtDateTimeEditor::setSeparator( const TQString& s )
 {
     d->setSeparator( s );
     update();
@@ -648,7 +648,7 @@ void ExtDateTimeEditor::setSeparator( const QString& s )
     Returns the editor's separator.
 */
 
-QString ExtDateTimeEditor::separator() const
+TQString ExtDateTimeEditor::separator() const
 {
     return d->separator();
 }
@@ -682,7 +682,7 @@ bool ExtDateTimeEditor::setFocusSection( int sec )
     ExtDateTimeEditor.
 */
 
-/*! \fn QString ExtDateTimeEditBase::sectionFormattedText( int sec )
+/*! \fn TQString ExtDateTimeEditBase::sectionFormattedText( int sec )
     \internal
 
   Pure virtual function which returns the formatted text of section \a
@@ -747,7 +747,7 @@ public:
     ExtDate max;
     bool changed;
     ExtDateTimeEditor *ed;
-    QSpinWidget *controls;
+    TQSpinWidget *controls;
 };
 
 
@@ -823,7 +823,7 @@ public:
     called name \a name.
 */
 
-ExtDateEdit::ExtDateEdit( QWidget * parent, const char * name )
+ExtDateEdit::ExtDateEdit( TQWidget * parent, const char * name )
     : ExtDateTimeEditBase( parent, name )
 {
     init();
@@ -839,7 +839,7 @@ ExtDateEdit::ExtDateEdit( QWidget * parent, const char * name )
     The date editor is initialized with \a date.
 */
 
-ExtDateEdit::ExtDateEdit( const ExtDate& date, QWidget * parent, const char * name )
+ExtDateEdit::ExtDateEdit( const ExtDate& date, TQWidget * parent, const char * name )
     : ExtDateTimeEditBase( parent, name )
 {
     init();
@@ -857,10 +857,10 @@ void ExtDateEdit::init()
   d->ed = new ExtDateTimeEditor( this, "date editor" );
   d->controls->setEditWidget( d->ed );
   setFocusProxy( d->ed );
-  connect( d->controls, SIGNAL( stepUpPressed() ), SLOT( stepUp() ) );
-  connect( d->controls, SIGNAL( stepDownPressed() ), SLOT( stepDown() ) );
-  connect( this, SIGNAL( valueChanged(const ExtDate&) ),
-      SLOT( updateButtons() ) );
+  connect( d->controls, TQT_SIGNAL( stepUpPressed() ), TQT_SLOT( stepUp() ) );
+  connect( d->controls, TQT_SIGNAL( stepDownPressed() ), TQT_SLOT( stepDown() ) );
+  connect( this, TQT_SIGNAL( valueChanged(const ExtDate&) ),
+      TQT_SLOT( updateButtons() ) );
   d->ed->appendSection( QNumberSection( 0,4 ) );
   d->ed->appendSection( QNumberSection( 5,7 ) );
   d->ed->appendSection( QNumberSection( 8,10 ) );
@@ -883,7 +883,7 @@ void ExtDateEdit::init()
   d->max = ExtDate( 50000, 12, 31 );
   d->changed = FALSE;
 
-  setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
+  setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
 
   refcount++;
 }
@@ -953,7 +953,7 @@ void ExtDateEdit::setRange( const ExtDate& min, const ExtDate& max )
     character of \a s is used.
 */
 
-void ExtDateEdit::setSeparator( const QString& s )
+void ExtDateEdit::setSeparator( const TQString& s )
 {
   d->ed->setSeparator( s );
 }
@@ -962,7 +962,7 @@ void ExtDateEdit::setSeparator( const QString& s )
     Returns the editor's separator.
 */
 
-QString ExtDateEdit::separator() const
+TQString ExtDateEdit::separator() const
 {
   return d->ed->separator();
 }
@@ -989,7 +989,7 @@ void ExtDateEdit::updateButtons()
 
 /*! \reimp
  */
-void ExtDateEdit::resizeEvent( QResizeEvent * )
+void ExtDateEdit::resizeEvent( TQResizeEvent * )
 {
   d->controls->resize( width(), height() );
 }
@@ -997,22 +997,22 @@ void ExtDateEdit::resizeEvent( QResizeEvent * )
 /*! \reimp
 
 */
-QSize ExtDateEdit::sizeHint() const
+TQSize ExtDateEdit::sizeHint() const
 {
   constPolish();
-  QFontMetrics fm( font() );
-  int fw = style().pixelMetric( QStyle::PM_DefaultFrameWidth, this );
+  TQFontMetrics fm( font() );
+  int fw = style().pixelMetric( TQStyle::PM_DefaultFrameWidth, this );
   int h = QMAX( fm.lineSpacing(), 14 ) + 2;
   int w = 2 + fm.width( '9' ) * 8 + fm.width( d->ed->separator() ) * 2 
             + d->controls->upRect().width() + fw * 4;
 
-  return QSize( w, QMAX(h + fw * 2,20) ).expandedTo( QApplication::globalStrut() );
+  return TQSize( w, QMAX(h + fw * 2,20) ).expandedTo( TQApplication::globalStrut() );
 }
 
 /*! \reimp
 
 */
-QSize ExtDateEdit::minimumSizeHint() const
+TQSize ExtDateEdit::minimumSizeHint() const
 {
   return sizeHint();
 }
@@ -1026,9 +1026,9 @@ QSize ExtDateEdit::minimumSizeHint() const
     \sa setOrder()
 */
 
-QString ExtDateEdit::sectionFormattedText( int sec )
+TQString ExtDateEdit::sectionFormattedText( int sec )
 {
-  QString txt;
+  TQString txt;
   txt = sectionText( sec );
   if ( d->typing && sec == d->ed->focusSection() )
     d->ed->setSectionSelection( sec, sectionOffsetEnd( sec ) - txt.length(),
@@ -1071,7 +1071,7 @@ int ExtDateEdit::sectionLength( int sec ) const
     \sa setOrder()
 */
 
-QString ExtDateEdit::sectionText( int sec ) const
+TQString ExtDateEdit::sectionText( int sec ) const
 {
   int val = 0;
   if ( sec == d->yearSection ) 
@@ -1081,7 +1081,7 @@ QString ExtDateEdit::sectionText( int sec ) const
   else if ( sec == d->daySection ) 
     val = d->d;
     
-  return QString::number( val );
+  return TQString::number( val );
 }
 
 /*! \internal
@@ -1363,25 +1363,25 @@ void ExtDateEdit::addNumber( int sec, int num )
     bool overwrite = FALSE;
     bool accepted = FALSE;
     d->typing = TRUE;
-    QString txt;
+    TQString txt;
     if ( sec == d->yearSection ) {
       if ( d->overwrite ) {
 	d->y = num;
 	d->overwrite = FALSE;
 	accepted = TRUE;
       } else {
-	txt = QString::number( 10*d->y + num );
+	txt = TQString::number( 10*d->y + num );
 	if ( txt.length() > 5 ) txt = txt.mid(1);
 	d->y = txt.toInt();
 	accepted = TRUE;
       }
 /*
-	txt = QString::number( d->y );
+	txt = TQString::number( d->y );
 	if ( d->overwrite || txt.length() == 4 ) {
 	    accepted = TRUE;
 	    d->y = num;
 	} else {
-	    txt += QString::number( num );
+	    txt += TQString::number( num );
 	    if ( txt.length() == 4  ) {
 		int val = txt.toInt();
 		if ( val < 1792 )
@@ -1389,7 +1389,7 @@ void ExtDateEdit::addNumber( int sec, int num )
 		else if ( val > 8000 )
 		    d->y = 8000;
 		else if ( outOfRange( val, d->m, d->d ) )
-		    txt = QString::number( d->y );
+		    txt = TQString::number( d->y );
 		else {
 		    accepted = TRUE;
 		    d->y = val;
@@ -1405,17 +1405,17 @@ void ExtDateEdit::addNumber( int sec, int num )
 	}
 */
     } else if ( sec == d->monthSection ) {
-	txt = QString::number( d->m );
+	txt = TQString::number( d->m );
 	if ( d->overwrite || txt.length() == 2 ) {
 	    accepted = TRUE;
 	    d->m = num;
 	} else {
-	    txt += QString::number( num );
+	    txt += TQString::number( num );
 	    int temp = txt.toInt();
 	    if ( temp > 12 )
 		temp = num;
 	    if ( outOfRange( d->y, temp, d->d ) )
-		txt = QString::number( d->m );
+		txt = TQString::number( d->m );
 	    else {
 		accepted = TRUE;
 		d->m = temp;
@@ -1426,18 +1426,18 @@ void ExtDateEdit::addNumber( int sec, int num )
 	    }
 	}
     } else if ( sec == d->daySection ) {
-	txt = QString::number( d->d );
+	txt = TQString::number( d->d );
 	if ( d->overwrite || txt.length() == 2 ) {
 	    accepted = TRUE;
 	    d->d = num;
 	    d->dayCache = d->d;
 	} else {
-	    txt += QString::number( num );
+	    txt += TQString::number( num );
 	    int temp = txt.toInt();
 	    if ( temp > 31 )
 		temp = num;
 	    if ( outOfRange( d->y, d->m, temp ) )
-		txt = QString::number( d->d );
+		txt = TQString::number( d->d );
 	    else {
 		accepted = TRUE;
 		d->d = temp;
@@ -1549,9 +1549,9 @@ void ExtDateEdit::fix()
 
 */
 
-bool ExtDateEdit::event( QEvent *e )
+bool ExtDateEdit::event( TQEvent *e )
 {
-  if( e->type() == QEvent::FocusOut ) {
+  if( e->type() == TQEvent::FocusOut ) {
     d->typing = FALSE;
     d->overwrite = TRUE;
     // the following can't be done in fix() because fix() called
@@ -1571,7 +1571,7 @@ bool ExtDateEdit::event( QEvent *e )
       emit valueChanged( date() );
       d->changed = FALSE;
     }
-  } else if ( e->type() == QEvent::LocaleChange ) {
+  } else if ( e->type() == TQEvent::LocaleChange ) {
     readLocaleSettings();
     d->ed->setSeparator( localDateSep() );
     setOrder( localOrder() );
@@ -1593,17 +1593,17 @@ void ExtDateEdit::removeFirstNumber( int sec )
 {
     if ( sec == -1 )
 	return;
-    QString txt;
+    TQString txt;
     if ( sec == d->yearSection ) {
-	txt = QString::number( d->y );
+	txt = TQString::number( d->y );
 	txt = txt.mid( 1, txt.length() ) + "0";
 	d->y = txt.toInt();
     } else if ( sec == d->monthSection ) {
-	txt = QString::number( d->m );
+	txt = TQString::number( d->m );
 	txt = txt.mid( 1, txt.length() ) + "0";
 	d->m = txt.toInt();
     } else if ( sec == d->daySection ) {
-	txt = QString::number( d->d );
+	txt = TQString::number( d->d );
 	txt = txt.mid( 1, txt.length() ) + "0";
 	d->d = txt.toInt();
 	d->dayCache = d->d;
@@ -1619,17 +1619,17 @@ void ExtDateEdit::removeLastNumber( int sec )
 {
     if ( sec == -1 )
 	return;
-    QString txt;
+    TQString txt;
     if ( sec == d->yearSection ) {
-	txt = QString::number( d->y );
+	txt = TQString::number( d->y );
 	txt = txt.mid( 0, txt.length()-1 );
 	d->y = txt.toInt();
     } else if ( sec == d->monthSection ) {
-	txt = QString::number( d->m );
+	txt = TQString::number( d->m );
 	txt = txt.mid( 0, txt.length()-1 );
 	d->m = txt.toInt();
     } else if ( sec == d->daySection ) {
-	txt = QString::number( d->d );
+	txt = TQString::number( d->d );
 	txt = txt.mid( 0, txt.length()-1 );
 	d->d = txt.toInt();
 	d->dayCache = d->d;
@@ -1661,7 +1661,7 @@ bool ExtDateEdit::autoAdvance() const
 /*! \reimp
 */
 
-void ExtDateEdit::timerEvent( QTimerEvent * )
+void ExtDateEdit::timerEvent( TQTimerEvent * )
 {
     d->overwrite = TRUE;
 }
@@ -1686,11 +1686,11 @@ public:
     bool overwrite;
     int timerId;
     bool typing;
-    QTime min;
-    QTime max;
+    TQTime min;
+    TQTime max;
     bool changed;
     ExtDateTimeEditor *ed;
-    QSpinWidget *controls;
+    TQSpinWidget *controls;
 };
 
 /*!
@@ -1709,7 +1709,7 @@ public:
     hour, minute, second order. It is recommended that the QTimeEdit
     is initialised with a time, e.g.
     \code
-    QTime timeNow = QTime::currentTime();
+    TQTime timeNow = TQTime::currentTime();
     QTimeEdit *timeEdit = new QTimeEdit( timeNow, this );
     timeEdit->setRange( timeNow, timeNow.addSecs( 60 * 60 ) );
     \endcode
@@ -1718,7 +1718,7 @@ public:
     maximum time to one hour from now.
 
     The maximum and minimum values for a time value in the time editor
-    default to the maximum and minimum values for a QTime. You can
+    default to the maximum and minimum values for a TQTime. You can
     change this by calling setMinValue(), setMaxValue() or setRange().
 
     Terminology: A QTimeWidget consists of three sections, one each
@@ -1728,7 +1728,7 @@ public:
 
     \img datetimewidgets.png Date Time Widgets
 
-    \sa QTime ExtDateEdit ExtDateTimeEdit
+    \sa TQTime ExtDateEdit ExtDateTimeEdit
 */
 
 
@@ -1737,7 +1737,7 @@ public:
 //     name.
 // */
 //
-// QTimeEdit::QTimeEdit( QWidget * parent, const char * name )
+// QTimeEdit::QTimeEdit( TQWidget * parent, const char * name )
 //     : ExtDateTimeEditBase( parent, name )
 // {
 //     init();
@@ -1750,7 +1750,7 @@ public:
 //     parent \a parent and called \a name.
 // */
 //
-// QTimeEdit::QTimeEdit( const QTime& time, QWidget * parent, const char * name )
+// QTimeEdit::QTimeEdit( const TQTime& time, TQWidget * parent, const char * name )
 //     : ExtDateTimeEditBase( parent, name )
 // {
 //     init();
@@ -1767,8 +1767,8 @@ public:
 //     d->controls = new ExtDateTimeSpinWidget( this, qstrcmp( name(), "qt_datetime_timeedit" ) == 0 ? "qt_spin_widget" : "time edit controls" );
 //     d->controls->setEditWidget( d->ed );
 //     setFocusProxy( d->ed );
-//     connect( d->controls, SIGNAL( stepUpPressed() ), SLOT( stepUp() ) );
-//     connect( d->controls, SIGNAL( stepDownPressed() ), SLOT( stepDown() ) );
+//     connect( d->controls, TQT_SIGNAL( stepUpPressed() ), TQT_SLOT( stepUp() ) );
+//     connect( d->controls, TQT_SIGNAL( stepDownPressed() ), TQT_SLOT( stepDown() ) );
 //
 //     d->ed->appendSection( QNumberSection( 0,0, TRUE, 0 ) );
 //     d->ed->appendSection( QNumberSection( 0,0, TRUE, 1 ) );
@@ -1787,11 +1787,11 @@ public:
 //     d->overwrite = TRUE;
 //     d->timerId = 0;
 //     d->typing = FALSE;
-//     d->min = QTime( 0, 0, 0 );
-//     d->max = QTime( 23, 59, 59 );
+//     d->min = TQTime( 0, 0, 0 );
+//     d->max = TQTime( 23, 59, 59 );
 //     d->changed = FALSE;
 //
-//     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
+//     setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
 //
 //     refcount++;
 // }
@@ -1818,7 +1818,7 @@ public:
 //     \sa maxValue setRange()
 // */
 //
-// QTime QTimeEdit::minValue() const
+// TQTime QTimeEdit::minValue() const
 // {
 //     return d->min;
 // }
@@ -1834,7 +1834,7 @@ public:
 //     \sa minValue setRange()
 // */
 //
-// QTime QTimeEdit::maxValue() const
+// TQTime QTimeEdit::maxValue() const
 // {
 //     return d->max;
 // }
@@ -1846,7 +1846,7 @@ public:
 //     Similarly, if \a max is invalid no maximum time is set.
 // */
 //
-// void QTimeEdit::setRange( const QTime& min, const QTime& max )
+// void QTimeEdit::setRange( const TQTime& min, const TQTime& max )
 // {
 //     if ( min.isValid() )
 // 	d->min = min;
@@ -1894,7 +1894,7 @@ public:
 //     minValue(), or is greater than maxValue(), nothing happens.
 // */
 //
-// void QTimeEdit::setTime( const QTime& time )
+// void QTimeEdit::setTime( const TQTime& time )
 // {
 //     if ( !time.isValid() ) {
 // 	d->h = 0;
@@ -1912,11 +1912,11 @@ public:
 //     d->ed->repaint( d->ed->rect(), FALSE );
 // }
 //
-// QTime QTimeEdit::time() const
+// TQTime QTimeEdit::time() const
 // {
-//     if ( QTime::isValid( d->h, d->m, d->s ) )
-// 	return QTime( d->h, d->m, d->s );
-//     return QTime();
+//     if ( TQTime::isValid( d->h, d->m, d->s ) )
+// 	return TQTime( d->h, d->m, d->s );
+//     return TQTime();
 // }
 //
 // /*!
@@ -1944,7 +1944,7 @@ public:
 //     character of \a s is used.
 // */
 //
-// void QTimeEdit::setSeparator( const QString& s )
+// void QTimeEdit::setSeparator( const TQString& s )
 // {
 //     d->ed->setSeparator( s );
 // }
@@ -1953,14 +1953,14 @@ public:
 //     Returns the editor's separator.
 // */
 //
-// QString QTimeEdit::separator() const
+// TQString QTimeEdit::separator() const
 // {
 //     return d->ed->separator();
 // }
 //
 //
 // /*!
-//     \fn void QTimeEdit::valueChanged( const QTime& time )
+//     \fn void QTimeEdit::valueChanged( const TQTime& time )
 //
 //     This signal is emitted whenever the editor's value changes. The \a
 //     time parameter is the new value.
@@ -1970,15 +1970,15 @@ public:
 //
 // */
 //
-// bool QTimeEdit::event( QEvent *e )
+// bool QTimeEdit::event( TQEvent *e )
 // {
-//     if ( e->type() == QEvent::FocusOut ) {
+//     if ( e->type() == TQEvent::FocusOut ) {
 // 	d->typing = FALSE;
 // 	if ( d->changed ) {
 // 	    emit valueChanged( time() );
 // 	    d->changed = FALSE;
 // 	}
-//     } else if ( e->type() == QEvent::LocaleChange ) {
+//     } else if ( e->type() == TQEvent::LocaleChange ) {
 // 	readLocaleSettings();
 // 	d->ed->setSeparator( localTimeSep() );
 //     }
@@ -1989,7 +1989,7 @@ public:
 //
 // */
 //
-// void QTimeEdit::timerEvent( QTimerEvent * )
+// void QTimeEdit::timerEvent( TQTimerEvent * )
 // {
 //     d->overwrite = TRUE;
 // }
@@ -2098,9 +2098,9 @@ public:
 //     on \a sec.
 // */
 //
-// QString QTimeEdit::sectionFormattedText( int sec )
+// TQString QTimeEdit::sectionFormattedText( int sec )
 // {
-//     QString txt;
+//     TQString txt;
 //     txt = sectionText( sec );
 //     txt = txt.rightJustify( 2, EXTDATETIMEEDIT_HIDDEN_CHAR );
 //     int offset = sec*2+sec*separator().length() + txt.length();
@@ -2123,7 +2123,7 @@ public:
 // 	killTimer( d->timerId );
 // 	d->overwrite = TRUE;
 // 	d->typing = FALSE;
-// 	QString txt = sectionText( sec );
+// 	TQString txt = sectionText( sec );
 // 	txt = txt.rightJustify( 2, EXTDATETIMEEDIT_HIDDEN_CHAR );
 // 	int offset = sec*2+sec*separator().length() + txt.length();
 // 	d->ed->setSectionSelection( sec, offset - txt.length(), offset );
@@ -2187,39 +2187,39 @@ public:
 //
 // */
 //
-// QString QTimeEdit::sectionText( int sec )
+// TQString QTimeEdit::sectionText( int sec )
 // {
 //     sec = d->ed->mapSection( sec );
 //
-//     QString txt;
+//     TQString txt;
 //     switch( sec ) {
 //     case 0:
 // 	if ( !(d->display & AMPM) || ( d->h < 13 && d->h ) ) {    // I wished the day stared at 0:00 for everybody
-// 	    txt = QString::number( d->h );
+// 	    txt = TQString::number( d->h );
 // 	} else {
 // 	    if ( d->h )
-// 		txt = QString::number( d->h - 12 );
+// 		txt = TQString::number( d->h - 12 );
 // 	    else
 // 		txt = "12";
 // 	}
 // 	break;
 //     case 1:
-// 	txt = QString::number( d->m );
+// 	txt = TQString::number( d->m );
 // 	break;
 //     case 2:
-// 	txt = QString::number( d->s );
+// 	txt = TQString::number( d->s );
 // 	break;
 //     case 3:
 // 	if ( d->h < 12 ) {
 // 	    if ( lAM )
 // 		txt = *lAM;
 // 	    else
-// 		txt = QString::fromLatin1( "AM" );
+// 		txt = TQString::fromLatin1( "AM" );
 // 	} else {
 // 	    if ( lPM )
 // 		txt = *lPM;
 // 	    else
-// 		txt = QString::fromLatin1( "PM" );
+// 		txt = TQString::fromLatin1( "PM" );
 // 	}
 // 	break;
 //     default:
@@ -2235,8 +2235,8 @@ public:
 //
 // bool QTimeEdit::outOfRange( int h, int m, int s ) const
 // {
-//     if ( QTime::isValid( h, m, s ) ) {
-// 	QTime currentTime( h, m, s );
+//     if ( TQTime::isValid( h, m, s ) ) {
+// 	TQTime currentTime( h, m, s );
 // 	if ( currentTime > maxValue() ||
 // 	     currentTime < minValue() )
 // 	    return TRUE;
@@ -2259,12 +2259,12 @@ public:
 //     bool overwrite = FALSE;
 //     bool accepted = FALSE;
 //     d->typing = TRUE;
-//     QString txt;
+//     TQString txt;
 //
 //     switch( sec ) {
 //     case 0:
 // 	txt = ( d->display & AMPM && d->h > 12 ) ?
-// 	    QString::number( d->h - 12 ) : QString::number( d->h );
+// 	    TQString::number( d->h - 12 ) : TQString::number( d->h );
 //
 // 	if ( d->overwrite || txt.length() == 2 ) {
 // 	    if ( d->display & AMPM && num == 0 )
@@ -2276,7 +2276,7 @@ public:
 // 		d->h = num;
 // 	    }
 // 	} else {
-// 	    txt += QString::number( num );
+// 	    txt += TQString::number( num );
 // 	    int temp = txt.toInt();
 //
 // 	    if ( d->display & AMPM ) {
@@ -2286,7 +2286,7 @@ public:
 // 		    }
 // 		    accepted = TRUE;
 // 		} else if ( outOfRange( temp + 12, d->m, d->s ) ) {
-// 		    txt = QString::number( d->h );
+// 		    txt = TQString::number( d->h );
 // 		} else {
 // 		    if ( d->h > 11 ) {
 // 			temp += 12;
@@ -2294,7 +2294,7 @@ public:
 // 		    accepted = TRUE;
 // 		}
 // 	    } else if ( !(d->display & AMPM) && outOfRange( temp, d->m, d->s ) ) {
-// 		txt = QString::number( d->h );
+// 		txt = TQString::number( d->h );
 // 	    } else {
 // 		accepted = TRUE;
 // 	    }
@@ -2310,19 +2310,19 @@ public:
 // 	break;
 //
 //     case 1:
-// 	txt = QString::number( d->m );
+// 	txt = TQString::number( d->m );
 // 	if ( d->overwrite || txt.length() == 2 ) {
 // 	    if ( !outOfRange( d->h, num, d->s ) ) {
 // 		accepted = TRUE;
 // 		d->m = num;
 // 	    }
 // 	} else {
-// 	    txt += QString::number( num );
+// 	    txt += TQString::number( num );
 // 	    int temp = txt.toInt();
 // 	    if ( temp > 59 )
 // 		temp = num;
 // 	    if ( outOfRange( d->h, temp, d->s ) )
-// 		txt = QString::number( d->m );
+// 		txt = TQString::number( d->m );
 // 	    else {
 // 		accepted = TRUE;
 // 		d->m = temp;
@@ -2335,19 +2335,19 @@ public:
 // 	break;
 //
 //     case 2:
-// 	txt = QString::number( d->s );
+// 	txt = TQString::number( d->s );
 // 	if ( d->overwrite || txt.length() == 2 ) {
 // 	    if ( !outOfRange( d->h, d->m, num ) ) {
 // 		accepted = TRUE;
 // 		d->s = num;
 // 	    }
 // 	} else {
-// 	    txt += QString::number( num );
+// 	    txt += TQString::number( num );
 // 	    int temp = txt.toInt();
 // 	    if ( temp > 59 )
 // 		temp = num;
 // 	    if ( outOfRange( d->h, d->m, temp ) )
-// 		txt = QString::number( d->s );
+// 		txt = TQString::number( d->s );
 // 	    else {
 // 		accepted = TRUE;
 // 		d->s = temp;
@@ -2386,16 +2386,16 @@ public:
 //     if ( sec == -1 )
 // 	return;
 //     sec = d->ed->mapSection( sec );
-//     QString txt;
+//     TQString txt;
 //     switch( sec ) {
 //     case 0:
-// 	txt = QString::number( d->h );
+// 	txt = TQString::number( d->h );
 // 	break;
 //     case 1:
-// 	txt = QString::number( d->m );
+// 	txt = TQString::number( d->m );
 // 	break;
 //     case 2:
-// 	txt = QString::number( d->s );
+// 	txt = TQString::number( d->s );
 // 	break;
 //     }
 //     txt = txt.mid( 1, txt.length() ) + "0";
@@ -2421,16 +2421,16 @@ public:
 //     if ( sec == -1 )
 // 	return;
 //     sec = d->ed->mapSection( sec );
-//     QString txt;
+//     TQString txt;
 //     switch( sec ) {
 //     case 0:
-// 	txt = QString::number( d->h );
+// 	txt = TQString::number( d->h );
 // 	break;
 //     case 1:
-// 	txt = QString::number( d->m );
+// 	txt = TQString::number( d->m );
 // 	break;
 //     case 2:
-// 	txt = QString::number( d->s );
+// 	txt = TQString::number( d->s );
 // 	break;
 //     }
 //     txt = txt.mid( 0, txt.length()-1 );
@@ -2450,18 +2450,18 @@ public:
 //
 // /*! \reimp
 //  */
-// void QTimeEdit::resizeEvent( QResizeEvent * )
+// void QTimeEdit::resizeEvent( TQResizeEvent * )
 // {
 //     d->controls->resize( width(), height() );
 // }
 //
 // /*! \reimp
 // */
-// QSize QTimeEdit::sizeHint() const
+// TQSize QTimeEdit::sizeHint() const
 // {
 //     constPolish();
-//     QFontMetrics fm( font() );
-//     int fw = style().pixelMetric( QStyle::PM_DefaultFrameWidth, this );
+//     TQFontMetrics fm( font() );
+//     int fw = style().pixelMetric( TQStyle::PM_DefaultFrameWidth, this );
 //     int h = fm.lineSpacing() + 2;
 //     int w = 2 + fm.width( '9' ) * 6 + fm.width( d->ed->separator() ) * 2 +
 // 	d->controls->upRect().width() + fw * 4;
@@ -2469,15 +2469,15 @@ public:
 // 	if ( lAM )
 // 	    w += fm.width( *lAM ) + 4;
 // 	else
-// 	    w += fm.width( QString::fromLatin1( "AM" ) ) + 4;
+// 	    w += fm.width( TQString::fromLatin1( "AM" ) ) + 4;
 //     }
 //
-//     return QSize( w, QMAX(h + fw * 2,20) ).expandedTo( QApplication::globalStrut() );
+//     return TQSize( w, QMAX(h + fw * 2,20) ).expandedTo( TQApplication::globalStrut() );
 // }
 //
 // /*! \reimp
 // */
-// QSize QTimeEdit::minimumSizeHint() const
+// TQSize QTimeEdit::minimumSizeHint() const
 // {
 //     return sizeHint();
 // }
@@ -2558,8 +2558,8 @@ public:
     Constructs an empty datetime edit with parent \a parent and called
     \a name.
 */
-ExtDateTimeEdit::ExtDateTimeEdit( QWidget * parent, const char * name )
-    : QWidget( parent, name )
+ExtDateTimeEdit::ExtDateTimeEdit( TQWidget * parent, const char * name )
+    : TQWidget( parent, name )
 {
     init();
 }
@@ -2572,8 +2572,8 @@ ExtDateTimeEdit::ExtDateTimeEdit( QWidget * parent, const char * name )
     parent \a parent and called \a name.
 */
 ExtDateTimeEdit::ExtDateTimeEdit( const ExtDateTime& datetime,
-			      QWidget * parent, const char * name )
-    : QWidget( parent, name )
+			      TQWidget * parent, const char * name )
+    : TQWidget( parent, name )
 {
     init();
     setDateTime( datetime );
@@ -2598,7 +2598,7 @@ ExtDateTimeEdit::~ExtDateTimeEdit()
     for the ExtDateTimeEdit.
 */
 
-void ExtDateTimeEdit::resizeEvent( QResizeEvent * )
+void ExtDateTimeEdit::resizeEvent( TQResizeEvent * )
 {
     int dw = de->sizeHint().width();
     int tw = te->sizeHint().width();
@@ -2620,11 +2620,11 @@ void ExtDateTimeEdit::resizeEvent( QResizeEvent * )
 /*! \reimp
 */
 
-QSize ExtDateTimeEdit::minimumSizeHint() const
+TQSize ExtDateTimeEdit::minimumSizeHint() const
 {
-    QSize dsh = de->minimumSizeHint();
-    QSize tsh = te->minimumSizeHint();
-    return QSize( dsh.width() + tsh.width(),
+    TQSize dsh = de->minimumSizeHint();
+    TQSize tsh = te->minimumSizeHint();
+    return TQSize( dsh.width() + tsh.width(),
 		  QMAX( dsh.height(), tsh.height() ) );
 }
 
@@ -2637,23 +2637,23 @@ void ExtDateTimeEdit::init()
     de = new ExtDateEdit( this, "qt_datetime_dateedit" );
     te = new QTimeEdit( this, "qt_datetime_timeedit" );
     d->adv = FALSE;
-    connect( de, SIGNAL( valueChanged( const ExtDate& ) ),
-	     this, SLOT( newValue( const ExtDate& ) ) );
-    connect( te, SIGNAL( valueChanged( const QTime& ) ),
-	     this, SLOT( newValue( const QTime& ) ) );
+    connect( de, TQT_SIGNAL( valueChanged( const ExtDate& ) ),
+	     this, TQT_SLOT( newValue( const ExtDate& ) ) );
+    connect( te, TQT_SIGNAL( valueChanged( const TQTime& ) ),
+	     this, TQT_SLOT( newValue( const TQTime& ) ) );
     setFocusProxy( de );
-    setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
+    setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
 }
 
 /*! \reimp
  */
 
-QSize ExtDateTimeEdit::sizeHint() const
+TQSize ExtDateTimeEdit::sizeHint() const
 {
     constPolish();
-    QSize dsh = de->sizeHint();
-    QSize tsh = te->sizeHint();
-    return QSize( dsh.width() + tsh.width(),
+    TQSize dsh = de->sizeHint();
+    TQSize tsh = te->sizeHint();
+    return TQSize( dsh.width() + tsh.width(),
 		  QMAX( dsh.height(), tsh.height() ) );
 }
 
@@ -2702,7 +2702,7 @@ void ExtDateTimeEdit::newValue( const ExtDate& )
   Re-emits the value \a t.
  */
 
-void ExtDateTimeEdit::newValue( const QTime& )
+void ExtDateTimeEdit::newValue( const TQTime& )
 {
     ExtDateTime dt = dateTime();
     emit valueChanged( dt );

@@ -18,7 +18,7 @@
 #ifndef _KPLOTWIDGET_H_
 #define _KPLOTWIDGET_H_
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include "kplotobject.h"
 #include "kplotaxis.h"
 
@@ -38,7 +38,7 @@ class QPixmap;
  	*tickmarks and labels and a list of KPlotObjects to be drawn.
 	*/
 
-class KDE_EXPORT KPlotWidget : public QWidget {
+class KDE_EXPORT KPlotWidget : public TQWidget {
 	Q_OBJECT
 public:
 	/**@short Constructor.  Sets the primary x and y limits in data units.
@@ -49,7 +49,7 @@ public:
 		*@param parent the parent widget
 		*@param name name label for the KPlotWidget
 		*/
-	KPlotWidget( double x1=0.0, double x2=1.0, double y1=0.0, double y2=1.0, QWidget *parent=0, const char* name=0 );
+	KPlotWidget( double x1=0.0, double x2=1.0, double y1=0.0, double y2=1.0, TQWidget *parent=0, const char* name=0 );
 
 	/**Destructor (empty)
 		*/
@@ -111,28 +111,28 @@ public:
 	virtual KPlotObject *object( int i ) { return ObjectList.at(i); }
 
 	/**@return the background color */
-	virtual QColor bgColor() const { return cBackground; }
+	virtual TQColor bgColor() const { return cBackground; }
 
 	/**@return the foreground color */
-	virtual QColor fgColor() const { return cForeground; }
+	virtual TQColor fgColor() const { return cForeground; }
 
 	/**@return the grid color */
-	virtual QColor gridColor() const { return cGrid; }
+	virtual TQColor gridColor() const { return cGrid; }
 
 	/**@short set the background color
 		*@param bg the new background color
 		*/
-	virtual void setBGColor( const QColor &bg ) { cBackground = bg; setBackgroundColor( bg ); }
+	virtual void setBGColor( const TQColor &bg ) { cBackground = bg; setBackgroundColor( bg ); }
 
 	/**@short set the foreground color
 		*@param fg the new foreground color
 		*/
-	virtual void setFGColor( const QColor &fg ) { cForeground = fg; }
+	virtual void setFGColor( const TQColor &fg ) { cForeground = fg; }
 
 	/**@short set the grid color
 		*@param gc the new grid color
 		*/
-	virtual void setGridColor( const QColor &gc ) { cGrid = gc; }
+	virtual void setGridColor( const TQColor &gc ) { cGrid = gc; }
 
 	/**@short toggle whether plot axes are drawn.
 		*@param show if true, axes will be drawn.
@@ -157,13 +157,13 @@ public:
 		*Set the label to an empty string to omit the axis label.
         *This function is deprecated, set the label property in the BottomAxis directly.
 		*/
-	virtual void setXAxisLabel( QString xlabel ) { BottomAxis.setLabel(xlabel); }
+	virtual void setXAxisLabel( TQString xlabel ) { BottomAxis.setLabel(xlabel); }
 	/**@short (Deprecated) Sets the Y-axis label
 		*@param ylabel a short string describing the data plotted on the y-axis.
 		*Set the label to an empty string to omit the axis label.
         *This function is deprecated, set the label property in the LeftAxis directly.
 		*/
-	virtual void setYAxisLabel( QString ylabel ) { LeftAxis.setLabel(ylabel); }
+	virtual void setYAxisLabel( TQString ylabel ) { LeftAxis.setLabel(ylabel); }
 
 	/**@returns the number of pixels to the left of the plot area.  Padding values
 		*are set to -1 by default; if unchanged, this function will try to guess
@@ -214,23 +214,23 @@ public:
 protected:
 	/**@short the paint event handler, executed when update() or repaint() is called.
 		*/
-	virtual void paintEvent( QPaintEvent* /* e */ );
+	virtual void paintEvent( TQPaintEvent* /* e */ );
 
 	/**@short the resize event handler, called when the widget is resized.
 		*/
-	virtual void resizeEvent( QResizeEvent* /* e */ );
+	virtual void resizeEvent( TQResizeEvent* /* e */ );
 
 	/**@short draws all of the objects onto the widget.  Internal use only; one should simply call update()
 		*to draw the widget with axes and all objects.
 		*@param p pointer to the painter on which we are drawing
 		*/
-	virtual void drawObjects( QPainter *p );
+	virtual void drawObjects( TQPainter *p );
 
 	/**@short draws the plot axes and axis labels.  Internal use only; one should simply call update()
 		*to draw the widget with axes and all objects.
 		*@param p pointer to the painter on which we are drawing
 		*/
-	virtual void drawBox( QPainter *p );
+	virtual void drawBox( TQPainter *p );
 
 	/**@short modulus function for double variables.
 		*For example, dmod( 17.0, 7.0 ) returns 3.0
@@ -244,20 +244,20 @@ protected:
 	int nmajX, nminX, nmajY, nminY;
 
 	//Limits of the plot area in pixel units
-	QRect PixRect;
+	TQRect PixRect;
 	//Limits of the plot area in data units
 	DRect DataRect;
 	//List of KPlotObjects
-	QPtrList<KPlotObject> ObjectList;
+	TQPtrList<KPlotObject> ObjectList;
 
 	//Colors
-	QColor cBackground, cForeground, cGrid;
+	TQColor cBackground, cForeground, cGrid;
 	//draw options
 	bool ShowTickMarks, ShowTickLabels, ShowGrid;
 	//padding
 	int LeftPadding, RightPadding, TopPadding, BottomPadding;
 
-	QPixmap *buffer;
+	TQPixmap *buffer;
 };
 
 #endif

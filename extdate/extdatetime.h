@@ -17,9 +17,9 @@
 #define EXTDATETIME_H
 
 #include <limits.h>
-#include "qstring.h"
-#include "qnamespace.h"
-#include "qdatetime.h"
+#include "tqstring.h"
+#include "tqnamespace.h"
+#include "tqdatetime.h"
 #include <kdemacros.h>
 
 #define INVALID_DAY LONG_MIN
@@ -39,13 +39,13 @@ class KDE_EXPORT ExtDate
 public:
 	ExtDate() : m_jd(INVALID_DAY), m_year(0), m_month(0), m_day(0) {}
 	ExtDate( int y, int m, int d );
-	ExtDate( const QDate &q ) { ExtDate( q.year(), q.month(), q.day() ); }
+	ExtDate( const TQDate &q ) { ExtDate( q.year(), q.month(), q.day() ); }
 	ExtDate( long int jd );
 
 	bool isNull() const { return m_jd == INVALID_DAY; }
 	bool isValid() const;
 
-	QDate qdate() const;
+	TQDate qdate() const;
 
 	int year() const { return m_year; }
 	int month() const { return m_month; }
@@ -59,19 +59,19 @@ public:
 
 #ifndef QT_NO_TEXTDATE
 #ifndef QT_NO_COMPAT
-	static QString monthName( int month ) { return shortMonthName( month ); }
-	static QString dayName( int weekday ) { return shortDayName( weekday ); }
+	static TQString monthName( int month ) { return shortMonthName( month ); }
+	static TQString dayName( int weekday ) { return shortDayName( weekday ); }
 #endif
-	static QString shortMonthName( int month );
-	static QString shortDayName( int weekday );
-	static QString longMonthName( int month );
-	static QString longDayName( int weekday );
+	static TQString shortMonthName( int month );
+	static TQString shortDayName( int weekday );
+	static TQString longMonthName( int month );
+	static TQString longDayName( int weekday );
 #endif //QT_NO_TEXTDATE
 #ifndef QT_NO_TEXTSTRING
 #if !defined(QT_NO_SPRINTF)
-	QString toString( Qt::DateFormat f = Qt::TextDate ) const;
+	TQString toString( Qt::DateFormat f = Qt::TextDate ) const;
 #endif
-	QString toString( const QString& format ) const;
+	TQString toString( const TQString& format ) const;
 #endif
 	bool setYMD( int y, int m, int d );
 	bool setJD( long int _jd );
@@ -90,8 +90,8 @@ public:
 
 	static ExtDate currentDate( Qt::TimeSpec ts = Qt::LocalTime );
 #ifndef QT_NO_DATESTRING
-	static ExtDate fromString( const QString &s );
-	static ExtDate fromString( const QString &s, Qt::DateFormat f );
+	static ExtDate fromString( const TQString &s );
+	static ExtDate fromString( const TQString &s, Qt::DateFormat f );
 #endif
 	static bool isValid( int y, int m, int d );
 	static bool leapYear( int year );
@@ -106,18 +106,18 @@ private:
 	int m_year, m_month, m_day;
 	static uint m_monthLength[12];
 	static uint m_monthOrigin[12];
-	static QString m_shortMonthNames[12];
-	static QString m_shortDayNames[7];
-	static QString m_longMonthNames[12];
-	static QString m_longDayNames[7];
+	static TQString m_shortMonthNames[12];
+	static TQString m_shortDayNames[7];
+	static TQString m_longMonthNames[12];
+	static TQString m_longDayNames[7];
 
 	friend class ExtDateTime;
 
 #ifndef QT_NO_DATASTREAM
-	friend Q_EXPORT QDataStream &operator<<( QDataStream &, const ExtDate & );
-	friend Q_EXPORT QDataStream &operator>>( QDataStream &, ExtDate & );
-	friend Q_EXPORT QDataStream &operator<<( QDataStream &, const ExtDateTime & );
-	friend Q_EXPORT QDataStream &operator>>( QDataStream &, ExtDateTime & );
+	friend Q_EXPORT TQDataStream &operator<<( TQDataStream &, const ExtDate & );
+	friend Q_EXPORT TQDataStream &operator>>( TQDataStream &, ExtDate & );
+	friend Q_EXPORT TQDataStream &operator<<( TQDataStream &, const ExtDateTime & );
+	friend Q_EXPORT TQDataStream &operator>>( TQDataStream &, ExtDateTime & );
 #endif
 };
 
@@ -130,23 +130,23 @@ class KDE_EXPORT ExtDateTime
 public:
     ExtDateTime() {}				// set null date and null time
     ExtDateTime( const ExtDate & );
-    ExtDateTime( const ExtDate &, const QTime & );
+    ExtDateTime( const ExtDate &, const TQTime & );
 
     bool   isNull()	const		{ return d.isNull() && t.isNull(); }
     bool   isValid()	const		{ return d.isValid() && t.isValid(); }
 
     ExtDate  date()	const		{ return d; }
-    QTime  time()	const		{ return t; }
+    TQTime  time()	const		{ return t; }
     uint   toTime_t()	const;
     void   setDate( const ExtDate &date ) { d = date; }
-    void   setTime( const QTime &time ) { t = time; }
+    void   setTime( const TQTime &time ) { t = time; }
     void   setTime_t( uint secsSince1Jan1970UTC );
     void   setTime_t( uint secsSince1Jan1970UTC, Qt::TimeSpec );
 #ifndef QT_NO_DATESTRING
 #ifndef QT_NO_SPRINTF
-    QString toString( Qt::DateFormat f = Qt::TextDate )	const;
+    TQString toString( Qt::DateFormat f = Qt::TextDate )	const;
 #endif
-    QString toString( const QString& format ) const;
+    TQString toString( const TQString& format ) const;
 #endif
     ExtDateTime addDays( int days )	const;
     ExtDateTime addMonths( int months )   const;
@@ -165,15 +165,15 @@ public:
     static ExtDateTime currentDateTime();
     static ExtDateTime currentDateTime( Qt::TimeSpec );
 #ifndef QT_NO_DATESTRING
-    static ExtDateTime fromString( const QString &s );
-    static ExtDateTime fromString( const QString &s, Qt::DateFormat f );
+    static ExtDateTime fromString( const TQString &s );
+    static ExtDateTime fromString( const TQString &s, Qt::DateFormat f );
 #endif
 private:
     ExtDate  d;
-    QTime  t;
+    TQTime  t;
 #ifndef QT_NO_DATASTREAM
-    friend Q_EXPORT QDataStream &operator<<( QDataStream &, const ExtDateTime &);
-    friend Q_EXPORT QDataStream &operator>>( QDataStream &, ExtDateTime & );
+    friend Q_EXPORT TQDataStream &operator<<( TQDataStream &, const ExtDateTime &);
+    friend Q_EXPORT TQDataStream &operator>>( TQDataStream &, ExtDateTime & );
 #endif
 };
 
@@ -182,8 +182,8 @@ private:
  *****************************************************************************/
 
 #ifndef QT_NO_DATASTREAM
-Q_EXPORT QDataStream &operator<<( QDataStream &, const ExtDate & );
-Q_EXPORT QDataStream &operator>>( QDataStream &, ExtDate & );
+Q_EXPORT TQDataStream &operator<<( TQDataStream &, const ExtDate & );
+Q_EXPORT TQDataStream &operator>>( TQDataStream &, ExtDate & );
 #endif // QT_NO_DATASTREAM
 
 #endif // EXTDATE_H

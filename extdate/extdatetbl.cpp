@@ -5,7 +5,7 @@
               (C) 2004 Jason Harris (jharris@30doradus.org)
 
     These classes has been derived from those in kdatetbl.[h|cpp].
-    The only differences are adaptations to use ExtDate instead of QDate,
+    The only differences are adaptations to use ExtDate instead of TQDate,
     to allow for more remote dates.  These changes by Jason Harris.
 
     This library is free software; you can redistribute it and/or
@@ -47,8 +47,8 @@
 #include <kdebug.h>
 #include <knotifyclient.h>
 #include "kpopupmenu.h"
-#include <qpainter.h>
-#include <qdict.h>
+#include <tqpainter.h>
+#include <tqdict.h>
 #include <assert.h>
 
 
@@ -73,30 +73,30 @@ public:
 
    struct DatePaintingMode
    {
-     QColor fgColor;
-     QColor bgColor;
+     TQColor fgColor;
+     TQColor bgColor;
      BackgroundMode bgMode;
    };
-   QDict <DatePaintingMode> customPaintingModes;
+   TQDict <DatePaintingMode> customPaintingModes;
    ExtCalendarSystem *calendar;
 };
 
 
-ExtDateValidator::ExtDateValidator(QWidget* parent, const char* name)
-    : QValidator(parent, name)
+ExtDateValidator::ExtDateValidator(TQWidget* parent, const char* name)
+    : TQValidator(parent, name)
 {
 }
 
-QValidator::State
-ExtDateValidator::validate(QString& text, int&) const
+TQValidator::State
+ExtDateValidator::validate(TQString& text, int&) const
 {
   ExtDate temp;
   // ----- everything is tested in date():
   return date(text, temp);
 }
 
-QValidator::State
-ExtDateValidator::date(const QString& text, ExtDate& ed) const
+TQValidator::State
+ExtDateValidator::date(const TQString& text, ExtDate& ed) const
 {
 	//FIXME: Can't uncomment unless ExtDate is adopted by KDE
 	//ExtDate tmp = KGlobal::locale()->readDate(text);
@@ -111,13 +111,13 @@ ExtDateValidator::date(const QString& text, ExtDate& ed) const
 }
 
 void
-ExtDateValidator::fixup( QString& ) const
+ExtDateValidator::fixup( TQString& ) const
 {
 
 }
 
-ExtDateTable::ExtDateTable(QWidget *parent, ExtDate date_, const char* name, WFlags f)
-  : QGridView(parent, name, f)
+ExtDateTable::ExtDateTable(TQWidget *parent, ExtDate date_, const char* name, WFlags f)
+  : TQGridView(parent, name, f)
 {
   d = new ExtDateTablePrivate;
   setFontSize(10);
@@ -126,7 +126,7 @@ ExtDateTable::ExtDateTable(QWidget *parent, ExtDate date_, const char* name, WFl
       kdDebug() << "ExtDateTable ctor: WARNING: Given date is invalid, using current date." << endl;
       date_=ExtDate::currentDate();
     }
-  setFocusPolicy( QWidget::StrongFocus );
+  setFocusPolicy( TQWidget::StrongFocus );
   setNumRows(7); // 6 weeks max + headline
   setNumCols(7); // 7 days a week
   setHScrollBarMode(AlwaysOff);
@@ -177,19 +177,19 @@ ExtDate ExtDateTable::dateFromPos( int pos )
 }
 
 void
-ExtDateTable::paintCell(QPainter *painter, int row, int col)
+ExtDateTable::paintCell(TQPainter *painter, int row, int col)
 {
 //FIXME: Can't uncomment unless ExtDate is added to kdelibs
 //  const ExtCalendarSystem * calendar = KGlobal::locale()->calendar();
 //  int firstWeekDay = KGlobal::locale()->weekStartDay();
   const int firstWeekDay = 7;
 
-  QRect rect;
-  QString text;
-  QPen pen;
+  TQRect rect;
+  TQString text;
+  TQPen pen;
   int w=cellWidth();
   int h=cellHeight();
-  QFont font=KGlobalSettings::generalFont();
+  TQFont font=KGlobalSettings::generalFont();
   // -----
 
   if(row==0)
@@ -203,10 +203,10 @@ ExtDateTable::paintCell(QPainter *painter, int row, int col)
          ( daynum == 6 && d->calendar->calendarName() == "gregorian" ) )
           normalday=false;
 
-			QBrush brushTitle();
- 			QBrush brushInvertTitle(colorGroup().base());
-			QColor titleColor(isEnabled()?( KGlobalSettings::activeTitleColor() ):( KGlobalSettings::inactiveTitleColor() ) );
-			QColor textColor(isEnabled()?( KGlobalSettings::activeTextColor() ):( KGlobalSettings::inactiveTextColor() ) );
+			TQBrush brushTitle();
+ 			TQBrush brushInvertTitle(colorGroup().base());
+			TQColor titleColor(isEnabled()?( KGlobalSettings::activeTitleColor() ):( KGlobalSettings::inactiveTitleColor() ) );
+			TQColor textColor(isEnabled()?( KGlobalSettings::activeTextColor() ):( KGlobalSettings::inactiveTextColor() ) );
       if (!normalday)
         {
           painter->setPen(textColor);
@@ -248,7 +248,7 @@ ExtDateTable::paintCell(QPainter *painter, int row, int col)
             {
               if (mode->bgMode != NoBgMode)
               {
-                QBrush oldbrush=painter->brush();
+                TQBrush oldbrush=painter->brush();
                 painter->setBrush( mode->bgColor );
                 switch(mode->bgMode)
                 {
@@ -300,7 +300,7 @@ ExtDateTable::paintCell(QPainter *painter, int row, int col)
 }
 
 void
-ExtDateTable::keyPressEvent( QKeyEvent *e )
+ExtDateTable::keyPressEvent( TQKeyEvent *e )
 {
 //FIXME: Can't uncomment unless ExtDate is added to kdelibs
 //    const ExtCalendarSystem * calendar = KGlobal::locale()->calendar();
@@ -361,9 +361,9 @@ ExtDateTable::keyPressEvent( QKeyEvent *e )
 }
 
 void
-ExtDateTable::viewportResizeEvent(QResizeEvent * e)
+ExtDateTable::viewportResizeEvent(TQResizeEvent * e)
 {
-  QGridView::viewportResizeEvent(e);
+  TQGridView::viewportResizeEvent(e);
 
   setCellWidth(viewport()->width()/7);
   setCellHeight(viewport()->height()/7);
@@ -376,8 +376,8 @@ ExtDateTable::setFontSize(int size)
 //  const ExtCalendarSystem * calendar = KGlobal::locale()->calendar();
 
   int count;
-  QFontMetrics metrics(fontMetrics());
-  QRect rect;
+  TQFontMetrics metrics(fontMetrics());
+  TQRect rect;
   // ----- store rectangles:
   fontsize=size;
   // ----- find largest day name:
@@ -390,23 +390,23 @@ ExtDateTable::setFontSize(int size)
       maxCell.setHeight(QMAX(maxCell.height(), rect.height()));
     }
   // ----- compare with a real wide number and add some space:
-  rect=metrics.boundingRect(QString::fromLatin1("88"));
+  rect=metrics.boundingRect(TQString::fromLatin1("88"));
   maxCell.setWidth(QMAX(maxCell.width()+2, rect.width()));
   maxCell.setHeight(QMAX(maxCell.height()+4, rect.height()));
 }
 
 void
-ExtDateTable::wheelEvent ( QWheelEvent * e )
+ExtDateTable::wheelEvent ( TQWheelEvent * e )
 {
     setDate(date.addMonths( -(int)(e->delta()/120)) );
     e->accept();
 }
 
 void
-ExtDateTable::contentsMousePressEvent(QMouseEvent *e)
+ExtDateTable::contentsMousePressEvent(TQMouseEvent *e)
 {
 
-  if(e->type()!=QEvent::MouseButtonPress)
+  if(e->type()!=TQEvent::MouseButtonPress)
     { // the ExtDatePicker only reacts on mouse press events:
       return;
     }
@@ -418,7 +418,7 @@ ExtDateTable::contentsMousePressEvent(QMouseEvent *e)
 
   // -----
   int row, col, pos, temp;
-  QPoint mouseCoord;
+  TQPoint mouseCoord;
   // -----
   mouseCoord = e->pos();
   row=rowAt(mouseCoord.y());
@@ -506,16 +506,16 @@ ExtDateTable::getDate() const
 }
 
 // what are those repaintContents() good for? (pfeiffer)
-void ExtDateTable::focusInEvent( QFocusEvent *e )
+void ExtDateTable::focusInEvent( TQFocusEvent *e )
 {
 //    repaintContents(false);
-    QGridView::focusInEvent( e );
+    TQGridView::focusInEvent( e );
 }
 
-void ExtDateTable::focusOutEvent( QFocusEvent *e )
+void ExtDateTable::focusOutEvent( TQFocusEvent *e )
 {
 //    repaintContents(false);
-    QGridView::focusOutEvent( e );
+    TQGridView::focusOutEvent( e );
 }
 
 QSize
@@ -523,11 +523,11 @@ ExtDateTable::sizeHint() const
 {
   if(maxCell.height()>0 && maxCell.width()>0)
     {
-      return QSize(maxCell.width()*numCols()+2*frameWidth(),
+      return TQSize(maxCell.width()*numCols()+2*frameWidth(),
              (maxCell.height()+2)*numRows()+2*frameWidth());
     } else {
       kdDebug() << "ExtDateTable::sizeHint: obscure failure - " << endl;
-      return QSize(-1, -1);
+      return TQSize(-1, -1);
     }
 }
 
@@ -541,7 +541,7 @@ bool ExtDateTable::popupMenuEnabled() const
    return d->popupMenuEnabled;
 }
 
-void ExtDateTable::setCustomDatePainting(const ExtDate &date, const QColor &fgColor, BackgroundMode bgMode, const QColor &bgColor)
+void ExtDateTable::setCustomDatePainting(const ExtDate &date, const TQColor &fgColor, BackgroundMode bgMode, const TQColor &bgColor)
 {
     if (!fgColor.isValid())
     {
@@ -565,18 +565,18 @@ void ExtDateTable::unsetCustomDatePainting( const ExtDate &date )
 }
 
 ExtDateInternalWeekSelector::ExtDateInternalWeekSelector
-(QWidget* parent, const char* name)
+(TQWidget* parent, const char* name)
   : KLineEdit(parent, name),
-    val(new QIntValidator(this)),
+    val(new TQIntValidator(this)),
     result(0)
 {
-  QFont font;
+  TQFont font;
   // -----
   font=KGlobalSettings::generalFont();
   setFont(font);
-  setFrameStyle(QFrame::NoFrame);
+  setFrameStyle(TQFrame::NoFrame);
   setValidator(val);
-  connect(this, SIGNAL(returnPressed()), SLOT(weekEnteredSlot()));
+  connect(this, TQT_SIGNAL(returnPressed()), TQT_SLOT(weekEnteredSlot()));
 }
 
 void
@@ -604,7 +604,7 @@ ExtDateInternalWeekSelector::getWeek()
 void
 ExtDateInternalWeekSelector::setWeek(int week)
 {
-  QString temp;
+  TQString temp;
   // -----
   temp.setNum(week);
   setText(temp);
@@ -638,15 +638,15 @@ ExtDateInternalMonthPicker::~ExtDateInternalMonthPicker() {
 }
 
 ExtDateInternalMonthPicker::ExtDateInternalMonthPicker
-(const ExtDate & date, QWidget* parent, const char* name)
-  : QGridView(parent, name),
+(const ExtDate & date, TQWidget* parent, const char* name)
+  : TQGridView(parent, name),
     result(0) // invalid
 {
 //FIXME: Can't uncomment the following unless ExtDate is moved to kdelibs
 //  ExtCalendarSystem *calendar = KGlobal::locale()->calendar();
 
-  QRect rect;
-  QFont font;
+  TQRect rect;
+  TQFont font;
   // -----
   activeCol = -1;
   activeRow = -1;
@@ -654,7 +654,7 @@ ExtDateInternalMonthPicker::ExtDateInternalMonthPicker
   setFont(font);
   setHScrollBarMode(AlwaysOff);
   setVScrollBarMode(AlwaysOff);
-  setFrameStyle(QFrame::NoFrame);
+  setFrameStyle(TQFrame::NoFrame);
   setNumCols(3);
   d = new ExtDateInternalMonthPrivate(date.year(), date.month(), date.day());
   // For monthsInYear != 12
@@ -664,10 +664,10 @@ ExtDateInternalMonthPicker::ExtDateInternalMonthPicker
   viewport()->setEraseColor(KGlobalSettings::baseColor()); // for consistency with the datepicker
   // ----- find the preferred size
   //       (this is slow, possibly, but unfortunately it is needed here):
-  QFontMetrics metrics(font);
+  TQFontMetrics metrics(font);
   for(int i = 1; ; ++i)
     {
-      QString str = d->calendar->monthName(i,
+      TQString str = d->calendar->monthName(i,
          d->calendar->year(date), false);
       if (str.isNull()) break;
       rect=metrics.boundingRect(str);
@@ -679,7 +679,7 @@ ExtDateInternalMonthPicker::ExtDateInternalMonthPicker
 QSize
 ExtDateInternalMonthPicker::sizeHint() const
 {
-  return QSize((max.width()+6)*numCols()+2*frameWidth(),
+  return TQSize((max.width()+6)*numCols()+2*frameWidth(),
          (max.height()+6)*numRows()+2*frameWidth());
 }
 
@@ -690,23 +690,23 @@ ExtDateInternalMonthPicker::getResult() const
 }
 
 void
-ExtDateInternalMonthPicker::setupPainter(QPainter *p)
+ExtDateInternalMonthPicker::setupPainter(TQPainter *p)
 {
   p->setPen(KGlobalSettings::textColor());
 }
 
 void
-ExtDateInternalMonthPicker::viewportResizeEvent(QResizeEvent*)
+ExtDateInternalMonthPicker::viewportResizeEvent(TQResizeEvent*)
 {
   setCellWidth(width() / numCols());
   setCellHeight(height() / numRows());
 }
 
 void
-ExtDateInternalMonthPicker::paintCell(QPainter* painter, int row, int col)
+ExtDateInternalMonthPicker::paintCell(TQPainter* painter, int row, int col)
 {
   int index;
-  QString text;
+  TQString text;
   // ----- find the number of the cell:
   index=3*row+col+1;
   text=d->calendar->monthName(index,
@@ -718,7 +718,7 @@ ExtDateInternalMonthPicker::paintCell(QPainter* painter, int row, int col)
 }
 
 void
-ExtDateInternalMonthPicker::contentsMousePressEvent(QMouseEvent *e)
+ExtDateInternalMonthPicker::contentsMousePressEvent(TQMouseEvent *e)
 {
   if(!isEnabled() || e->button() != LeftButton)
     {
@@ -727,7 +727,7 @@ ExtDateInternalMonthPicker::contentsMousePressEvent(QMouseEvent *e)
     }
   // -----
   int row, col;
-  QPoint mouseCoord;
+  TQPoint mouseCoord;
   // -----
   mouseCoord = e->pos();
   row=rowAt(mouseCoord.y());
@@ -745,12 +745,12 @@ ExtDateInternalMonthPicker::contentsMousePressEvent(QMouseEvent *e)
 }
 
 void
-ExtDateInternalMonthPicker::contentsMouseMoveEvent(QMouseEvent *e)
+ExtDateInternalMonthPicker::contentsMouseMoveEvent(TQMouseEvent *e)
 {
   if (e->state() & LeftButton)
     {
       int row, col;
-      QPoint mouseCoord;
+      TQPoint mouseCoord;
       // -----
       mouseCoord = e->pos();
       row=rowAt(mouseCoord.y());
@@ -785,7 +785,7 @@ ExtDateInternalMonthPicker::contentsMouseMoveEvent(QMouseEvent *e)
 }
 
 void
-ExtDateInternalMonthPicker::contentsMouseReleaseEvent(QMouseEvent *e)
+ExtDateInternalMonthPicker::contentsMouseReleaseEvent(TQMouseEvent *e)
 {
   if(!isEnabled())
     {
@@ -793,7 +793,7 @@ ExtDateInternalMonthPicker::contentsMouseReleaseEvent(QMouseEvent *e)
     }
   // -----
   int row, col, pos;
-  QPoint mouseCoord;
+  TQPoint mouseCoord;
   // -----
   mouseCoord = e->pos();
   row=rowAt(mouseCoord.y());
@@ -811,22 +811,22 @@ ExtDateInternalMonthPicker::contentsMouseReleaseEvent(QMouseEvent *e)
 
 
 ExtDateInternalYearSelector::ExtDateInternalYearSelector
-(QWidget* parent, const char* name)
-  : QLineEdit(parent, name),
-    val(new QIntValidator(this)),
+(TQWidget* parent, const char* name)
+  : TQLineEdit(parent, name),
+    val(new TQIntValidator(this)),
     result(0),
     d(new ExtDateInternalYearPrivate())
 {
-  QFont font;
+  TQFont font;
   // -----
   font=KGlobalSettings::generalFont();
   setFont(font);
-  setFrameStyle(QFrame::NoFrame);
+  setFrameStyle(TQFrame::NoFrame);
   // set year limits (perhaps we should get rid of limits altogether)
   //there si also a year limit in ExtCalendarSystemGregorian...
   val->setRange(-50000, 50000);
   setValidator(val);
-  connect(this, SIGNAL(returnPressed()), SLOT(yearEnteredSlot()));
+  connect(this, TQT_SIGNAL(returnPressed()), TQT_SLOT(yearEnteredSlot()));
 }
 
 ExtDateInternalYearSelector::~ExtDateInternalYearSelector() {
@@ -867,23 +867,23 @@ ExtDateInternalYearSelector::getYear()
 void
 ExtDateInternalYearSelector::setYear(int year)
 {
-  QString temp;
+  TQString temp;
   // -----
   temp.setNum(year);
   setText(temp);
 }
 
-KPopupFrame::KPopupFrame(QWidget* parent, const char*  name)
-  : QFrame(parent, name, WType_Popup),
+KPopupFrame::KPopupFrame(TQWidget* parent, const char*  name)
+  : TQFrame(parent, name, WType_Popup),
     result(0), // rejected
     main(0)
 {
-  setFrameStyle(QFrame::Box|QFrame::Raised);
+  setFrameStyle(TQFrame::Box|TQFrame::Raised);
   setMidLineWidth(2);
 }
 
 void
-KPopupFrame::keyPressEvent(QKeyEvent* e)
+KPopupFrame::keyPressEvent(TQKeyEvent* e)
 {
   if(e->key()==Key_Escape)
     {
@@ -900,7 +900,7 @@ KPopupFrame::close(int r)
 }
 
 void
-KPopupFrame::setMainWidget(QWidget* m)
+KPopupFrame::setMainWidget(TQWidget* m)
 {
   main=m;
   if(main!=0)
@@ -910,7 +910,7 @@ KPopupFrame::setMainWidget(QWidget* m)
 }
 
 void
-KPopupFrame::resizeEvent(QResizeEvent*)
+KPopupFrame::resizeEvent(TQResizeEvent*)
 {
   if(main!=0)
     {
@@ -920,10 +920,10 @@ KPopupFrame::resizeEvent(QResizeEvent*)
 }
 
 void
-KPopupFrame::popup(const QPoint &pos)
+KPopupFrame::popup(const TQPoint &pos)
 {
   // Make sure the whole popup is visible.
-  QRect d = KGlobalSettings::desktopGeometry(pos);
+  TQRect d = KGlobalSettings::desktopGeometry(pos);
 
   int x = pos.x();
   int y = pos.y();
@@ -944,7 +944,7 @@ KPopupFrame::popup(const QPoint &pos)
 }
 
 int
-KPopupFrame::exec(QPoint pos)
+KPopupFrame::exec(TQPoint pos)
 {
   popup(pos);
   repaint();
@@ -956,7 +956,7 @@ KPopupFrame::exec(QPoint pos)
 int
 KPopupFrame::exec(int x, int y)
 {
-  return exec(QPoint(x, y));
+  return exec(TQPoint(x, y));
 }
 
 void KPopupFrame::virtual_hook( int, void* )

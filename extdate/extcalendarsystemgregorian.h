@@ -4,7 +4,7 @@
    Copyright (c) 2004 Jason Harris <jharris@30doradus.org>
 
 	 This class has been derived from KCalendarSystemGregorian;
-	 the changesd made just replace QDate objects with ExtDate objects.
+	 the changesd made just replace TQDate objects with ExtDate objects.
 	 These changes by Jason Harris <jharris@30doradus.org>
 
    This library is free software; you can redistribute it and/or
@@ -70,20 +70,20 @@ public:
   virtual int weeksInYear(int year) const;
   virtual int weekNumber(const ExtDate& date, int * yearNum = 0) const;
 
-  virtual int yearStringToInteger(const QString & sNum, int & iLength) const;
+  virtual int yearStringToInteger(const TQString & sNum, int & iLength) const;
 
-  virtual QString monthName (int month, int year, bool shortName = false) const;
-  virtual QString monthName (const ExtDate & date, bool shortName = false ) const;
-  virtual QString monthNamePossessive(int month, int year, bool shortName = false) const;
-  virtual QString monthNamePossessive(const ExtDate & date, bool shortName = false ) const;
-  virtual QString weekDayName (int weekDay, bool shortName = false) const;
-  virtual QString weekDayName (const ExtDate & date, bool shortName = false) const;
+  virtual TQString monthName (int month, int year, bool shortName = false) const;
+  virtual TQString monthName (const ExtDate & date, bool shortName = false ) const;
+  virtual TQString monthNamePossessive(int month, int year, bool shortName = false) const;
+  virtual TQString monthNamePossessive(const ExtDate & date, bool shortName = false ) const;
+  virtual TQString weekDayName (int weekDay, bool shortName = false) const;
+  virtual TQString weekDayName (const ExtDate & date, bool shortName = false) const;
 
   virtual int minValidYear () const;
   virtual int maxValidYear () const;
   virtual int weekDayOfPray () const;
 
-  virtual QString calendarName() const;
+  virtual TQString calendarName() const;
 
   virtual bool isLunar() const;
   virtual bool isLunisolar() const;

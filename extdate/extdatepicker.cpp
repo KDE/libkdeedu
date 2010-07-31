@@ -20,11 +20,11 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qlayout.h>
-#include <qstyle.h>
-#include <qtoolbutton.h>
-#include <qtooltip.h>
-#include <qpopupmenu.h>
+#include <tqlayout.h>
+#include <tqstyle.h>
+#include <tqtoolbutton.h>
+#include <tqtooltip.h>
+#include <tqpopupmenu.h>
 
 #include <kdialog.h>
 #include <klocale.h>
@@ -48,10 +48,10 @@ public:
 
     void fillWeeksCombo(const ExtDate &date);
 
-    QToolButton *closeButton;
-    QComboBox *selectWeek;
-    QToolButton *todayButton;
-    QBoxLayout *navigationLayout;
+    TQToolButton *closeButton;
+    TQComboBox *selectWeek;
+    TQToolButton *todayButton;
+    TQBoxLayout *navigationLayout;
     ExtCalendarSystem *calendar;
 };
 
@@ -77,26 +77,26 @@ void ExtDatePicker::fillWeeksCombo(const ExtDate &date)
   for (; day <= lastDay; day = d->calendar->addDays(day, 7 /*calendar->daysOfWeek()*/) )
   {
     int year = 0;
-    QString week = i18n("Week %1").arg(d->calendar->weekNumber(day, &year));
+    TQString week = i18n("Week %1").arg(d->calendar->weekNumber(day, &year));
     if ( year != date.year() ) week += "*";  // show that this is a week from a different year
     d->selectWeek->insertItem(week);
   }
 }
 
-ExtDatePicker::ExtDatePicker(QWidget *parent, ExtDate dt, const char *name)
-  : QFrame(parent,name)
+ExtDatePicker::ExtDatePicker(TQWidget *parent, ExtDate dt, const char *name)
+  : TQFrame(parent,name)
 {
   init( dt );
 }
 
-ExtDatePicker::ExtDatePicker(QWidget *parent, ExtDate dt, const char *name, WFlags f)
-  : QFrame(parent,name, f)
+ExtDatePicker::ExtDatePicker(TQWidget *parent, ExtDate dt, const char *name, WFlags f)
+  : TQFrame(parent,name, f)
 {
   init( dt );
 }
 
-ExtDatePicker::ExtDatePicker( QWidget *parent, const char *name )
-  : QFrame(parent,name)
+ExtDatePicker::ExtDatePicker( TQWidget *parent, const char *name )
+  : TQFrame(parent,name)
 {
   init( ExtDate::currentDate() );
 }
@@ -107,31 +107,31 @@ void ExtDatePicker::init( const ExtDate &dt )
 
   d->calendar = new ExtCalendarSystemGregorian();
 
-  QBoxLayout * topLayout = new QVBoxLayout(this);
+  TQBoxLayout * topLayout = new TQVBoxLayout(this);
 
-  d->navigationLayout = new QHBoxLayout(topLayout);
+  d->navigationLayout = new TQHBoxLayout(topLayout);
   d->navigationLayout->addStretch();
-  yearBackward = new QToolButton(this);
+  yearBackward = new TQToolButton(this);
   yearBackward->setAutoRaise(true);
   d->navigationLayout->addWidget(yearBackward);
-  monthBackward = new QToolButton(this);
+  monthBackward = new TQToolButton(this);
   monthBackward ->setAutoRaise(true);
   d->navigationLayout->addWidget(monthBackward);
   d->navigationLayout->addSpacing(KDialog::spacingHint());
 
-  selectMonth = new QToolButton(this);
+  selectMonth = new TQToolButton(this);
   selectMonth ->setAutoRaise(true);
   d->navigationLayout->addWidget(selectMonth);
-  selectYear = new QToolButton(this);
+  selectYear = new TQToolButton(this);
   selectYear->setToggleButton(true);
   selectYear->setAutoRaise(true);
   d->navigationLayout->addWidget(selectYear);
   d->navigationLayout->addSpacing(KDialog::spacingHint());
 
-  monthForward = new QToolButton(this);
+  monthForward = new TQToolButton(this);
   monthForward ->setAutoRaise(true);
   d->navigationLayout->addWidget(monthForward);
-  yearForward = new QToolButton(this);
+  yearForward = new TQToolButton(this);
   yearForward ->setAutoRaise(true);
   d->navigationLayout->addWidget(yearForward);
   d->navigationLayout->addStretch();
@@ -141,22 +141,22 @@ void ExtDatePicker::init( const ExtDate &dt )
   table = new ExtDateTable(this);
   fontsize = KGlobalSettings::generalFont().pointSize();
   if (fontsize == -1)
-     fontsize = QFontInfo(KGlobalSettings::generalFont()).pointSize();
+     fontsize = TQFontInfo(KGlobalSettings::generalFont()).pointSize();
 
   fontsize++; // Make a little bigger
 
-  d->selectWeek = new QComboBox(false, this);  // read only week selection
-  d->todayButton = new QToolButton(this);
+  d->selectWeek = new TQComboBox(false, this);  // read only week selection
+  d->todayButton = new TQToolButton(this);
   d->todayButton->setIconSet(SmallIconSet("today"));
 
-  QToolTip::add(yearForward, i18n("Next year"));
-  QToolTip::add(yearBackward, i18n("Previous year"));
-  QToolTip::add(monthForward, i18n("Next month"));
-  QToolTip::add(monthBackward, i18n("Previous month"));
-  QToolTip::add(d->selectWeek, i18n("Select a week"));
-  QToolTip::add(selectMonth, i18n("Select a month"));
-  QToolTip::add(selectYear, i18n("Select a year"));
-  QToolTip::add(d->todayButton, i18n("Select the current day"));
+  TQToolTip::add(yearForward, i18n("Next year"));
+  TQToolTip::add(yearBackward, i18n("Previous year"));
+  TQToolTip::add(monthForward, i18n("Next month"));
+  TQToolTip::add(monthBackward, i18n("Previous month"));
+  TQToolTip::add(d->selectWeek, i18n("Select a week"));
+  TQToolTip::add(selectMonth, i18n("Select a month"));
+  TQToolTip::add(selectYear, i18n("Select a year"));
+  TQToolTip::add(d->todayButton, i18n("Select the current day"));
 
   // -----
   setFontSize(fontsize);
@@ -164,37 +164,37 @@ void ExtDatePicker::init( const ExtDate &dt )
   line->installEventFilter( this );
   line->setReadOnly( true );
 
-  if (  QApplication::reverseLayout() )
+  if (  TQApplication::reverseLayout() )
   {
-      yearForward->setIconSet(BarIconSet(QString::fromLatin1("2leftarrow")));
-      yearBackward->setIconSet(BarIconSet(QString::fromLatin1("2rightarrow")));
-      monthForward->setIconSet(BarIconSet(QString::fromLatin1("1leftarrow")));
-      monthBackward->setIconSet(BarIconSet(QString::fromLatin1("1rightarrow")));
+      yearForward->setIconSet(BarIconSet(TQString::fromLatin1("2leftarrow")));
+      yearBackward->setIconSet(BarIconSet(TQString::fromLatin1("2rightarrow")));
+      monthForward->setIconSet(BarIconSet(TQString::fromLatin1("1leftarrow")));
+      monthBackward->setIconSet(BarIconSet(TQString::fromLatin1("1rightarrow")));
   }
   else
   {
-      yearForward->setIconSet(BarIconSet(QString::fromLatin1("2rightarrow")));
-      yearBackward->setIconSet(BarIconSet(QString::fromLatin1("2leftarrow")));
-      monthForward->setIconSet(BarIconSet(QString::fromLatin1("1rightarrow")));
-      monthBackward->setIconSet(BarIconSet(QString::fromLatin1("1leftarrow")));
+      yearForward->setIconSet(BarIconSet(TQString::fromLatin1("2rightarrow")));
+      yearBackward->setIconSet(BarIconSet(TQString::fromLatin1("2leftarrow")));
+      monthForward->setIconSet(BarIconSet(TQString::fromLatin1("1rightarrow")));
+      monthBackward->setIconSet(BarIconSet(TQString::fromLatin1("1leftarrow")));
   }
-  connect(table, SIGNAL(dateChanged(const ExtDate&)), SLOT(dateChangedSlot(const ExtDate&)));
-  connect(table, SIGNAL(tableClicked()), SLOT(tableClickedSlot()));
-  connect(monthForward, SIGNAL(clicked()), SLOT(monthForwardClicked()));
-  connect(monthBackward, SIGNAL(clicked()), SLOT(monthBackwardClicked()));
-  connect(yearForward, SIGNAL(clicked()), SLOT(yearForwardClicked()));
-  connect(yearBackward, SIGNAL(clicked()), SLOT(yearBackwardClicked()));
-  connect(d->selectWeek, SIGNAL(activated(int)), SLOT(weekSelected(int)));
-  connect(d->todayButton, SIGNAL(clicked()), SLOT(todayButtonClicked()));
-  connect(selectMonth, SIGNAL(clicked()), SLOT(selectMonthClicked()));
-  connect(selectYear, SIGNAL(toggled(bool)), SLOT(selectYearClicked()));
-  connect(line, SIGNAL(returnPressed()), SLOT(lineEnterPressed()));
+  connect(table, TQT_SIGNAL(dateChanged(const ExtDate&)), TQT_SLOT(dateChangedSlot(const ExtDate&)));
+  connect(table, TQT_SIGNAL(tableClicked()), TQT_SLOT(tableClickedSlot()));
+  connect(monthForward, TQT_SIGNAL(clicked()), TQT_SLOT(monthForwardClicked()));
+  connect(monthBackward, TQT_SIGNAL(clicked()), TQT_SLOT(monthBackwardClicked()));
+  connect(yearForward, TQT_SIGNAL(clicked()), TQT_SLOT(yearForwardClicked()));
+  connect(yearBackward, TQT_SIGNAL(clicked()), TQT_SLOT(yearBackwardClicked()));
+  connect(d->selectWeek, TQT_SIGNAL(activated(int)), TQT_SLOT(weekSelected(int)));
+  connect(d->todayButton, TQT_SIGNAL(clicked()), TQT_SLOT(todayButtonClicked()));
+  connect(selectMonth, TQT_SIGNAL(clicked()), TQT_SLOT(selectMonthClicked()));
+  connect(selectYear, TQT_SIGNAL(toggled(bool)), TQT_SLOT(selectYearClicked()));
+  connect(line, TQT_SIGNAL(returnPressed()), TQT_SLOT(lineEnterPressed()));
   table->setFocus();
 
 
   topLayout->addWidget(table);
 
-  QBoxLayout * bottomLayout = new QHBoxLayout(topLayout);
+  TQBoxLayout * bottomLayout = new TQHBoxLayout(topLayout);
   bottomLayout->addWidget(d->todayButton);
   bottomLayout->addWidget(line);
   bottomLayout->addWidget(d->selectWeek);
@@ -209,28 +209,28 @@ ExtDatePicker::~ExtDatePicker()
 }
 
 bool
-ExtDatePicker::eventFilter(QObject *o, QEvent *e )
+ExtDatePicker::eventFilter(TQObject *o, TQEvent *e )
 {
-   if ( e->type() == QEvent::KeyPress ) {
-      QKeyEvent *k = (QKeyEvent *)e;
+   if ( e->type() == TQEvent::KeyPress ) {
+      TQKeyEvent *k = (TQKeyEvent *)e;
 
       if ( (k->key() == Qt::Key_Prior) ||
            (k->key() == Qt::Key_Next)  ||
            (k->key() == Qt::Key_Up)    ||
            (k->key() == Qt::Key_Down) )
        {
-          QApplication::sendEvent( table, e );
+          TQApplication::sendEvent( table, e );
           table->setFocus();
           return true; // eat event
        }
    }
-   return QFrame::eventFilter( o, e );
+   return TQFrame::eventFilter( o, e );
 }
 
 void
-ExtDatePicker::resizeEvent(QResizeEvent* e)
+ExtDatePicker::resizeEvent(TQResizeEvent* e)
 {
-  QWidget::resizeEvent(e);
+  TQWidget::resizeEvent(e);
 }
 
 void
@@ -353,14 +353,14 @@ ExtDatePicker::selectMonthClicked()
   ExtDate date = table->getDate();
   int i, month, months = d->calendar->monthsInYear(date);
 
-  QPopupMenu popup(selectMonth);
+  TQPopupMenu popup(selectMonth);
 
   for (i = 1; i <= months; i++)
     popup.insertItem(d->calendar->monthName(i, d->calendar->year(date)), i);
 
   popup.setActiveItem(d->calendar->month(date) - 1);
 
-  if ( (month = popup.exec(selectMonth->mapToGlobal(QPoint(0, 0)), d->calendar->month(date) - 1)) == -1 ) return;  // canceled
+  if ( (month = popup.exec(selectMonth->mapToGlobal(TQPoint(0, 0)), d->calendar->month(date) - 1)) == -1 ) return;  // canceled
 
   int day = d->calendar->day(date);
   // ----- construct a valid date in this month:
@@ -377,7 +377,7 @@ ExtDatePicker::selectYearClicked()
 {
 //  const ExtCalendarSystem * calendar = KGlobal::locale()->calendar();
 
-  if (selectYear->state() == QButton::Off)
+  if (selectYear->state() == TQButton::Off)
   {
     return;
   }
@@ -388,9 +388,9 @@ ExtDatePicker::selectYearClicked()
   // -----
   picker->resize(picker->sizeHint());
   popup->setMainWidget(picker);
-  connect(picker, SIGNAL(closeMe(int)), popup, SLOT(close(int)));
+  connect(picker, TQT_SIGNAL(closeMe(int)), popup, TQT_SLOT(close(int)));
   picker->setFocus();
-  if(popup->exec(selectYear->mapToGlobal(QPoint(0, selectMonth->height()))))
+  if(popup->exec(selectYear->mapToGlobal(TQPoint(0, selectMonth->height()))))
     {
       ExtDate date;
       int day;
@@ -414,7 +414,7 @@ ExtDatePicker::selectYearClicked()
 void
 ExtDatePicker::setEnabled(bool enable)
 {
-  QWidget *widgets[]= {
+  TQWidget *widgets[]= {
     yearForward, yearBackward, monthForward, monthBackward,
     selectMonth, selectYear,
     line, table, d->selectWeek, d->todayButton };
@@ -432,7 +432,7 @@ ExtDatePicker::lineEnterPressed()
 {
   ExtDate temp;
   // -----
-  if(val->date(line->text(), temp)==QValidator::Acceptable)
+  if(val->date(line->text(), temp)==TQValidator::Acceptable)
     {
         kdDebug(298) << "ExtDatePicker::lineEnterPressed: valid date entered." << endl;
         emit(dateEntered(temp));
@@ -452,13 +452,13 @@ ExtDatePicker::todayButtonClicked()
 QSize
 ExtDatePicker::sizeHint() const
 {
-  return QWidget::sizeHint();
+  return TQWidget::sizeHint();
 }
 
 void
 ExtDatePicker::setFontSize(int s)
 {
-  QWidget *buttons[]= {
+  TQWidget *buttons[]= {
     // yearBackward,
     // monthBackward,
     selectMonth,
@@ -468,8 +468,8 @@ ExtDatePicker::setFontSize(int s)
   };
   const int NoOfButtons=sizeof(buttons)/sizeof(buttons[0]);
   int count;
-  QFont font;
-  QRect r;
+  TQFont font;
+  TQRect r;
   // -----
   fontsize=s;
   for(count=0; count<NoOfButtons; ++count)
@@ -478,11 +478,11 @@ ExtDatePicker::setFontSize(int s)
       font.setPointSize(s);
       buttons[count]->setFont(font);
     }
-  QFontMetrics metrics(selectMonth->fontMetrics());
+  TQFontMetrics metrics(selectMonth->fontMetrics());
 
   for (int i = 1; ; ++i)
     {
-      QString str = d->calendar->monthName(i,
+      TQString str = d->calendar->monthName(i,
          d->calendar->year(table->getDate()), false);
       if (str.isNull()) break;
       r=metrics.boundingRect(str);
@@ -490,7 +490,7 @@ ExtDatePicker::setFontSize(int s)
       maxMonthRect.setHeight(QMAX(r.height(),  maxMonthRect.height()));
     }
 
-  QSize metricBound = style().sizeFromContents(QStyle::CT_ToolButton,
+  TQSize metricBound = style().sizeFromContents(TQStyle::CT_ToolButton,
                                                selectMonth,
                                                maxMonthRect);
   selectMonth->setMinimumSize(metricBound);
@@ -505,14 +505,14 @@ ExtDatePicker::setCloseButton( bool enable )
         return;
 
     if ( enable ) {
-        d->closeButton = new QToolButton( this );
+        d->closeButton = new TQToolButton( this );
         d->closeButton->setAutoRaise(true);
         d->navigationLayout->addSpacing(KDialog::spacingHint());
         d->navigationLayout->addWidget(d->closeButton);
-        QToolTip::add(d->closeButton, i18n("Close"));
+        TQToolTip::add(d->closeButton, i18n("Close"));
         d->closeButton->setPixmap( SmallIcon("remove") );
-        connect( d->closeButton, SIGNAL( clicked() ),
-                 topLevelWidget(), SLOT( close() ) );
+        connect( d->closeButton, TQT_SIGNAL( clicked() ),
+                 topLevelWidget(), TQT_SLOT( close() ) );
     }
     else {
         delete d->closeButton;

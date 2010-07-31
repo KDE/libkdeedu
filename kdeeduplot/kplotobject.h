@@ -25,7 +25,7 @@ class QPainter;
 #include <kdemacros.h>
 
 /**class DRect
-	*@short equivalent of QRect with double x,y coordinates
+	*@short equivalent of TQRect with double x,y coordinates
 	*@author Jason Harris
 	*@version 1.0
 	*/
@@ -52,7 +52,7 @@ private:
 };
 
 /**class DPoint
-	*@short equivalent of QPoint with double x,y coordinates
+	*@short equivalent of TQPoint with double x,y coordinates
 	*@author Jason Harris
 	*@version 1.0
 	*/
@@ -65,10 +65,10 @@ public:
 	double x() const { return X; }
 	double y() const { return Y; }
 
-	QPoint qpoint( QRect pb, DRect db ) {
+	TQPoint qpoint( TQRect pb, DRect db ) {
 		int px = pb.left() + int( pb.width()*( x() -  db.x() )/db.width() );
 		int py = pb.top() + int( pb.height()*( db.y2() - y() )/db.height() );
-		return QPoint( px, py );
+		return TQPoint( px, py );
 	}
 
 	void setX( double x ) { X = x; }
@@ -83,9 +83,9 @@ private:
 	*@author Jason Harris
 	*@version 1.0
 	*Each KPlotObject consists of a list of QPoints, an object type, a color, a size,
-	*and a QString name.  An additional integer (param) specifies something further
+	*and a TQString name.  An additional integer (param) specifies something further
 	*about the object's appearance, depending on its type.  There is a draw function
-	*for plotting the object on a KPlotWidget's QPainter.
+	*for plotting the object on a KPlotWidget's TQPainter.
 	*/
 class KDE_EXPORT KPlotObject{
 public:
@@ -111,7 +111,7 @@ public:
 
 /**Constructor.  Create a KPlotObject according to the arguments.
 	*/
-	KPlotObject( const QString &name, const QString &color, PTYPE otype, unsigned int size=2, unsigned int param=0 );
+	KPlotObject( const TQString &name, const TQString &color, PTYPE otype, unsigned int size=2, unsigned int param=0 );
 
 /**Destructor (empty)
 	*/
@@ -119,21 +119,21 @@ public:
 
 /**@return the KPlotObject's Name
 	*/
-	QString name() const { return Name; }
+	TQString name() const { return Name; }
 
 /**@short set the KPlotObject's Name
 	*@param n the new name
 	*/
-	void setName( const QString &n ) { Name = n; }
+	void setName( const TQString &n ) { Name = n; }
 
 /**@return the KPlotObject's Color
 	*/
-	QString color() const { return Color; }
+	TQString color() const { return Color; }
 
 /**@short set the KPlotObject's Color
 	*@param c the new color
 	*/
-	void setColor( const QString &c ) { Color = c; }
+	void setColor( const TQString &c ) { Color = c; }
 
 /**@return the KPlotObject's Type
 	*/
@@ -169,7 +169,7 @@ public:
 	*/
 	DPoint* point( unsigned int i ) { return pList.at(i); }
 
-	QPtrList<DPoint>* points() { return &pList; }
+	TQPtrList<DPoint>* points() { return &pList; }
 
 /**@short Add a point to the object's list.
 	*@param p the DPoint to add.
@@ -182,7 +182,7 @@ public:
 	*/
 	void addPoint( DPoint *p ) { pList.append( p ); }
 
-/**@short remove the QPoint at position index from the list of points
+/**@short remove the TQPoint at position index from the list of points
 	*@param index the index of the point to be removed.
 	*/
 	void removePoint( unsigned int index );
@@ -196,10 +196,10 @@ public:
 	void clearPoints() { pList.clear(); }
 
 private:
-	QPtrList<DPoint> pList;
+	TQPtrList<DPoint> pList;
 	PTYPE Type;
 	unsigned int Size, Parameter;
-	QString Color, Name;
+	TQString Color, Name;
 };
 
 #endif

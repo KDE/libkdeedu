@@ -18,7 +18,7 @@
 #ifndef KPLOTAXIS_H
 #define KPLOTAXIS_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdemacros.h>
 
@@ -34,7 +34,7 @@ public:
 	KPlotAxis();
 
 	/**@short Constructor, constructs a labeled axis. */
-	KPlotAxis(const QString& label);
+	KPlotAxis(const TQString& label);
 
 	/**@short Destructor. */
 	virtual ~KPlotAxis() {}
@@ -55,12 +55,12 @@ public:
 		*@param label A short string describing the data plotted on the axis.
 		*Set the label to an empty string to omit the axis label.
 		*/
-	virtual void setLabel( const QString& label ) { m_label = label; }
+	virtual void setLabel( const TQString& label ) { m_label = label; }
 
 	/**@short Returns the axis label. */
-	virtual QString label() const { return m_label; }
+	virtual TQString label() const { return m_label; }
 
-	/**@short Set the number format for the tick labels, see QString::arg() for 
+	/**@short Set the number format for the tick labels, see TQString::arg() for 
               description of arguments.	   
         */
 	virtual void setLabelFormat(int fieldWidth, char fmt = 'g', int prec=-1) {
@@ -78,9 +78,9 @@ public:
 private:
 	bool		m_visible;			///< Property "visible" defines if Axis is drawn or not.
 	QString		m_label;			///< The label of the axis.
-	int 		m_labelFieldWidth;	///< Field width for number labels, see QString::arg().
-	char 		m_labelFmt;			///< Number format for number labels, see QString::arg().
-	int 		m_labelPrec;		///< Number precision for number labels, see QString::arg().
+	int 		m_labelFieldWidth;	///< Field width for number labels, see TQString::arg().
+	char 		m_labelFmt;			///< Number format for number labels, see TQString::arg().
+	int 		m_labelPrec;		///< Number precision for number labels, see TQString::arg().
 };
 
 #endif // KPLOTAXIS_H

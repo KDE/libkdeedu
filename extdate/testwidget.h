@@ -32,15 +32,15 @@ class ExtDate;
 class TestWidget : public KMainWindow {
 	Q_OBJECT
 	public:
-		TestWidget( QWidget *parent, const char *name );
+		TestWidget( TQWidget *parent, const char *name );
 		~TestWidget() {}
 
 	public slots:
-		void slotKDateChanged(QDate);
+		void slotKDateChanged(TQDate);
 		void slotExtDateChanged(const ExtDate&);
 
 	private:
-		QGridLayout *glay;
+		TQGridLayout *glay;
 		KDatePicker *kdp;
 		ExtDatePicker *edp;
 		ExtDateWidget *edw;

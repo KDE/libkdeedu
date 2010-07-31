@@ -18,7 +18,7 @@
 
 #include "keduvocdata.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 
@@ -33,7 +33,7 @@ KEduVocDataItem::KEduVocDataItem()
 
 }
 
-KEduVocDataItem::KEduVocDataItem(QDomElement &entry)
+KEduVocDataItem::KEduVocDataItem(TQDomElement &entry)
 {
     domElement = entry;
 }
@@ -43,39 +43,39 @@ KEduVocDataItem::~KEduVocDataItem()
 
 }
 
-QString KEduVocDataItem::originalText() const
+TQString KEduVocDataItem::originalText() const
 {
     return getText("o");
 }
 
-QString KEduVocDataItem::translatedText() const
+TQString KEduVocDataItem::translatedText() const
 {
     return getText("t");
 }
 
 // protected methods
 
-QString KEduVocDataItem::getText(const QString &tagName) const
+TQString KEduVocDataItem::getText(const TQString &tagName) const
 {
     if(!domElement.isNull()) {
 
-        QDomNodeList list = domElement.elementsByTagName(tagName);
+        TQDomNodeList list = domElement.elementsByTagName(tagName);
 
         if(list.count() > 0) {
 
-            QDomElement element = list.item(0).toElement();
+            TQDomElement element = list.item(0).toElement();
 
             if(!element.isNull()) {
                 return element.text();
             }
             else
-                return QString::null;
+                return TQString::null;
         }
         else
-            return QString::null;
+            return TQString::null;
     }
     else
-        return QString::null;
+        return TQString::null;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -84,21 +84,21 @@ QString KEduVocDataItem::getText(const QString &tagName) const
 
 // public static methods
 
-KEduVocDataItemList KEduVocData::parse(const QString &fileName)
+KEduVocDataItemList KEduVocData::parse(const TQString &fileName)
 {
     KEduVocDataItemList list;
 
-    QDomDocument document;
-    QFile file(fileName);
+    TQDomDocument document;
+    TQFile file(fileName);
     document.setContent(&file);
 
-    QDomNodeList entries = document.elementsByTagName("e");
+    TQDomNodeList entries = document.elementsByTagName("e");
 
     // loop through the "e" (entry) tags looking for data
     for(uint i = 0 ; i < entries.count() ; i++) {
 
         // get an entry to operate on
-        QDomElement entry = entries.item(i).toElement();
+        TQDomElement entry = entries.item(i).toElement();
 
         // if the "node" is in fact an element -- i.e. not null
         if(!entry.isNull()) {

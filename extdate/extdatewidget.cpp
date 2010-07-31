@@ -1,7 +1,7 @@
 /*  This file is part of the KDE libraries
     Copyright (C) 2001 Waldo Bastian (bastian@kde.org)
 
-    Modified to use ExtDate instead of QDate.  Modifications
+    Modified to use ExtDate instead of TQDate.  Modifications
     Copyright (C) 2004 Jason Harris (jharris@30doradus.org)
 
     This library is free software; you can redistribute it and/or
@@ -20,9 +20,9 @@
 */
 
 
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qlineedit.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
 
 #include <knuminput.h>
 #include <kdialog.h>
@@ -33,8 +33,8 @@
 class ExtDateWidgetSpinBox : public QSpinBox
 {
 public:
-  ExtDateWidgetSpinBox(int min, int max, QWidget *parent)
-    : QSpinBox(min, max, 1, parent)
+  ExtDateWidgetSpinBox(int min, int max, TQWidget *parent)
+    : TQSpinBox(min, max, 1, parent)
   {
      editor()->setAlignment(AlignRight);
   }
@@ -46,23 +46,23 @@ public:
    ExtDateWidgetPrivate() { calendar = new ExtCalendarSystemGregorian(); }
    ~ExtDateWidgetPrivate() { delete calendar; }
    ExtDateWidgetSpinBox *m_day;
-   QComboBox *m_month;
+   TQComboBox *m_month;
    ExtDateWidgetSpinBox *m_year;
    ExtDate m_dat;
    ExtCalendarSystemGregorian *calendar;
 };
 
 
-ExtDateWidget::ExtDateWidget( QWidget *parent, const char *name )
-  : QWidget( parent, name )
+ExtDateWidget::ExtDateWidget( TQWidget *parent, const char *name )
+  : TQWidget( parent, name )
 {
   init(ExtDate::currentDate());
   setDate(ExtDate());
 }
 
-ExtDateWidget::ExtDateWidget( const ExtDate &date, QWidget *parent,
+ExtDateWidget::ExtDateWidget( const ExtDate &date, TQWidget *parent,
 			    const char *name )
-  : QWidget( parent, name )
+  : TQWidget( parent, name )
 {
   init(date);
   setDate(date);
@@ -74,13 +74,13 @@ ExtDateWidget::ExtDateWidget( const ExtDate &date, QWidget *parent,
 // {
 //   d = new ExtDateWidgetPrivate;
 //   KLocale *locale = KGlobal::locale();
-//   QHBoxLayout *layout = new QHBoxLayout(this, 0, KDialog::spacingHint());
+//   TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
 //   layout->setAutoAdd(true);
 //   d->m_day = new ExtDateWidgetSpinBox(1, 1, this);
-//   d->m_month = new QComboBox(false, this);
+//   d->m_month = new TQComboBox(false, this);
 //   for (int i = 1; ; ++i)
 //   {
-//     QString str = d->calendar->monthName(i,
+//     TQString str = d->calendar->monthName(i,
 //        d->calendar->year(ExtDate()));
 //     if (str.isNull()) break;
 //     d->m_month->insertItem(str);
@@ -89,22 +89,22 @@ ExtDateWidget::ExtDateWidget( const ExtDate &date, QWidget *parent,
 //   d->m_year = new ExtDateWidgetSpinBox(d->calendar->minValidYear(),
 // 				     d->calendar->maxValidYear(), this);
 //
-//   connect(d->m_day, SIGNAL(valueChanged(int)), this, SLOT(slotDateChanged()));
-//   connect(d->m_month, SIGNAL(activated(int)), this, SLOT(slotDateChanged()));
-//   connect(d->m_year, SIGNAL(valueChanged(int)), this, SLOT(slotDateChanged()));
+//   connect(d->m_day, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotDateChanged()));
+//   connect(d->m_month, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotDateChanged()));
+//   connect(d->m_year, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotDateChanged()));
 // }
 
 void ExtDateWidget::init(const ExtDate& date)
 {
   d = new ExtDateWidgetPrivate;
   //KLocale *locale = KGlobal::locale();
-  QHBoxLayout *layout = new QHBoxLayout(this, 0, KDialog::spacingHint());
+  TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
   layout->setAutoAdd(true);
   d->m_day = new ExtDateWidgetSpinBox(1, 1, this);
-  d->m_month = new QComboBox(false, this);
+  d->m_month = new TQComboBox(false, this);
   for (int i = 1; ; ++i)
   {
-    QString str = d->calendar->monthName(i,
+    TQString str = d->calendar->monthName(i,
        d->calendar->year(date));
     if (str.isNull()) break;
     d->m_month->insertItem(str);
@@ -113,9 +113,9 @@ void ExtDateWidget::init(const ExtDate& date)
   d->m_year = new ExtDateWidgetSpinBox(d->calendar->minValidYear(),
 				     d->calendar->maxValidYear(), this);
 
-  connect(d->m_day, SIGNAL(valueChanged(int)), this, SLOT(slotDateChanged()));
-  connect(d->m_month, SIGNAL(activated(int)), this, SLOT(slotDateChanged()));
-  connect(d->m_year, SIGNAL(valueChanged(int)), this, SLOT(slotDateChanged()));
+  connect(d->m_day, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotDateChanged()));
+  connect(d->m_month, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotDateChanged()));
+  connect(d->m_year, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotDateChanged()));
 }
 
 ExtDateWidget::~ExtDateWidget()

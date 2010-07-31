@@ -4,7 +4,7 @@
    Copyright (c) 2004 Jason Harris <jharris@30doradus.org>
 
 	 This class has been derived from ExtCalendarSystem;
-	 the changesd made just replace QDate objects with ExtDate objects.
+	 the changesd made just replace TQDate objects with ExtDate objects.
 	 These changes by Jason Harris <jharris@30doradus.org>
 
    This library is free software; you can redistribute it and/or
@@ -57,9 +57,9 @@ const KLocale * ExtCalendarSystem::locale() const
   return KGlobal::locale();
 }
 
-QString ExtCalendarSystem::dayString(const ExtDate & pDate, bool bShort) const
+TQString ExtCalendarSystem::dayString(const ExtDate & pDate, bool bShort) const
 {
-  QString sResult;
+  TQString sResult;
 
   sResult.setNum(day(pDate));
   if (!bShort && sResult.length() == 1 )
@@ -68,9 +68,9 @@ QString ExtCalendarSystem::dayString(const ExtDate & pDate, bool bShort) const
   return sResult;
 }
 
-QString ExtCalendarSystem::monthString(const ExtDate & pDate, bool bShort) const
+TQString ExtCalendarSystem::monthString(const ExtDate & pDate, bool bShort) const
 {
-  QString sResult;
+  TQString sResult;
 
   sResult.setNum(month(pDate));
   if (!bShort && sResult.length() == 1 )
@@ -79,9 +79,9 @@ QString ExtCalendarSystem::monthString(const ExtDate & pDate, bool bShort) const
   return sResult;
 }
 
-QString ExtCalendarSystem::yearString(const ExtDate & pDate, bool bShort) const
+TQString ExtCalendarSystem::yearString(const ExtDate & pDate, bool bShort) const
 {
-  QString sResult;
+  TQString sResult;
 
   sResult.setNum(year(pDate));
   if (bShort && sResult.length() == 4 )
@@ -90,7 +90,7 @@ QString ExtCalendarSystem::yearString(const ExtDate & pDate, bool bShort) const
   return sResult;
 }
 
-static int stringToInteger(const QString & sNum, int & iLength)
+static int stringToInteger(const TQString & sNum, int & iLength)
 {
   unsigned int iPos = 0;
 
@@ -106,22 +106,22 @@ static int stringToInteger(const QString & sNum, int & iLength)
 }
 
 
-int ExtCalendarSystem::dayStringToInteger(const QString & sNum, int & iLength) const
+int ExtCalendarSystem::dayStringToInteger(const TQString & sNum, int & iLength) const
 {
   return stringToInteger(sNum, iLength);
 }
 
-int ExtCalendarSystem::monthStringToInteger(const QString & sNum, int & iLength) const
+int ExtCalendarSystem::monthStringToInteger(const TQString & sNum, int & iLength) const
 {
   return stringToInteger(sNum, iLength);
 }
 
-int ExtCalendarSystem::yearStringToInteger(const QString & sNum, int & iLength) const
+int ExtCalendarSystem::yearStringToInteger(const TQString & sNum, int & iLength) const
 {
   return stringToInteger(sNum, iLength);
 }
 
-QString ExtCalendarSystem::weekDayName (int weekDay, bool shortName) const
+TQString ExtCalendarSystem::weekDayName (int weekDay, bool shortName) const
 {
   if ( shortName )
     switch ( weekDay )
@@ -146,6 +146,6 @@ QString ExtCalendarSystem::weekDayName (int weekDay, bool shortName) const
       case 7:  return locale()->translate("Sunday");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 

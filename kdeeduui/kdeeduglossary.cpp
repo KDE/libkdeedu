@@ -20,14 +20,14 @@
 #include <kstandarddirs.h>
 #include <kactioncollection.h>
 
-#include <qfile.h>
-#include <qlabel.h>
-#include <qheader.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qsplitter.h>
-#include <qstringlist.h>
-#include <qtoolbutton.h>
+#include <tqfile.h>
+#include <tqlabel.h>
+#include <tqheader.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqsplitter.h>
+#include <tqstringlist.h>
+#include <tqtoolbutton.h>
 
 Glossary::Glossary()
 {
@@ -39,9 +39,9 @@ Glossary::~Glossary()
 {
 }
 
-bool Glossary::loadLayout( QDomDocument &Document, const KURL& url )
+bool Glossary::loadLayout( TQDomDocument &Document, const KURL& url )
 {
-        QFile layoutFile( url.path() );
+        TQFile layoutFile( url.path() );
 
         if (!layoutFile.exists())
 	{
@@ -70,9 +70,9 @@ bool Glossary::isEmpty() const
 }
 
 
-Glossary* Glossary::readFromXML( const KURL& url, const QString& path )
+Glossary* Glossary::readFromXML( const KURL& url, const TQString& path )
 {
-	QDomDocument doc( "document" );
+	TQDomDocument doc( "document" );
 
 	Glossary *glossary = new Glossary();
 	
@@ -80,7 +80,7 @@ Glossary* Glossary::readFromXML( const KURL& url, const QString& path )
 
 	if ( glossary->loadLayout( doc, url ) )
 	{
-		QValueList<GlossaryItem*> itemList;
+		TQValueList<GlossaryItem*> itemList;
 		itemList = glossary->readItems( doc );
 		glossary->setItemlist( itemList );
 		glossary->fixImagePath();
@@ -92,10 +92,10 @@ Glossary* Glossary::readFromXML( const KURL& url, const QString& path )
 void Glossary::fixImagePath()
 {
 	kdDebug() << "Glossary::fixImagePath()" << endl;
-	QValueList<GlossaryItem*>::iterator it = m_itemlist.begin();
-	const QValueList<GlossaryItem*>::iterator itEnd = m_itemlist.end();
-	QString path = m_picturepath;
-	QString firstpart = "<img src=\"";
+	TQValueList<GlossaryItem*>::iterator it = m_itemlist.begin();
+	const TQValueList<GlossaryItem*>::iterator itEnd = m_itemlist.end();
+	TQString path = m_picturepath;
+	TQString firstpart = "<img src=\"";
 	firstpart += path;
 
 	for ( ; it != itEnd ; ++it )
@@ -105,14 +105,14 @@ void Glossary::fixImagePath()
 	}
 }
 	
-QValueList<GlossaryItem*> Glossary::readItems( QDomDocument &itemDocument )
+TQValueList<GlossaryItem*> Glossary::readItems( TQDomDocument &itemDocument )
 {
-	QValueList<GlossaryItem*> list;
+	TQValueList<GlossaryItem*> list;
 
-	QDomNodeList itemList;
-	QDomNodeList refNodeList;
-	QDomElement itemElement;
-	QStringList reflist;
+	TQDomNodeList itemList;
+	TQDomNodeList refNodeList;
+	TQDomElement itemElement;
+	TQStringList reflist;
 
 	itemList = itemDocument.elementsByTagName( "item" );
 
@@ -122,15 +122,15 @@ QValueList<GlossaryItem*> Glossary::readItems( QDomDocument &itemDocument )
 		reflist.clear();
 		GlossaryItem *item = new GlossaryItem();
 		
-		itemElement = ( const QDomElement& ) itemList.item( i ).toElement();
+		itemElement = ( const TQDomElement& ) itemList.item( i ).toElement();
 		
-		QDomNode nameNode = itemElement.namedItem( "name" );
-		QDomNode descNode = itemElement.namedItem( "desc" );
+		TQDomNode nameNode = itemElement.namedItem( "name" );
+		TQDomNode descNode = itemElement.namedItem( "desc" );
 		
-		QString picName = itemElement.namedItem( "picture" ).toElement().text();
-		QDomElement refNode = ( const QDomElement& ) itemElement.namedItem( "references" ).toElement();
+		TQString picName = itemElement.namedItem( "picture" ).toElement().text();
+		TQDomElement refNode = ( const TQDomElement& ) itemElement.namedItem( "references" ).toElement();
 
-		QString desc = i18n( descNode.toElement().text().utf8() );
+		TQString desc = i18n( descNode.toElement().text().utf8() );
 		if ( !picName.isEmpty() )
 			desc.prepend("[img]"+picName +"[/img]" );
 
@@ -162,7 +162,7 @@ QValueList<GlossaryItem*> Glossary::readItems( QDomDocument &itemDocument )
 
 
 
-GlossaryDialog::GlossaryDialog( bool folded, QWidget *parent, const char *name)
+GlossaryDialog::GlossaryDialog( bool folded, TQWidget *parent, const char *name)
     : KDialogBase( Plain, i18n( "Glossary" ), Close, NoDefault, parent, name, false )
 {
 	//this string will be used for all items. If a backgroundpicture should
@@ -171,17 +171,17 @@ GlossaryDialog::GlossaryDialog( bool folded, QWidget *parent, const char *name)
 
 	m_folded = folded;
 	
-	QVBoxLayout *vbox = new QVBoxLayout( plainPage(), 0, KDialog::spacingHint() );
+	TQVBoxLayout *vbox = new TQVBoxLayout( plainPage(), 0, KDialog::spacingHint() );
 	vbox->activate();
 
-	QHBoxLayout *hbox = new QHBoxLayout( 0L, 0, KDialog::spacingHint() );
+	TQHBoxLayout *hbox = new TQHBoxLayout( 0L, 0, KDialog::spacingHint() );
 	hbox->activate();
 
-	QToolButton *clear = new QToolButton( plainPage() );
+	TQToolButton *clear = new TQToolButton( plainPage() );
 	clear->setIconSet( SmallIconSet( "locationbar_erase" ) );
 	hbox->addWidget( clear );
 
-	QLabel *lbl = new QLabel( plainPage() );
+	TQLabel *lbl = new TQLabel( plainPage() );
 	lbl->setText( i18n( "Search:" ) );
 	hbox->addWidget( lbl );
 
@@ -190,7 +190,7 @@ GlossaryDialog::GlossaryDialog( bool folded, QWidget *parent, const char *name)
 	vbox->addLayout( hbox );
 	setFocusProxy(m_search);
  
-	QSplitter *vs = new QSplitter( plainPage() );
+	TQSplitter *vs = new TQSplitter( plainPage() );
 	vbox->addWidget( vs );
 
 	m_glosstree = new KListView( vs, "treeview" );
@@ -203,9 +203,9 @@ GlossaryDialog::GlossaryDialog( bool folded, QWidget *parent, const char *name)
  
 	m_htmlpart = new KHTMLPart( vs, "html-part" );
  
-	connect( m_htmlpart->browserExtension(), SIGNAL( openURLRequestDelayed( const KURL &, const KParts::URLArgs & ) ), this, SLOT( displayItem( const KURL &, const KParts::URLArgs & ) ) );
-	connect( m_glosstree, SIGNAL(clicked( QListViewItem * )), this, SLOT(slotClicked( QListViewItem * )));
-	connect( clear, SIGNAL(clicked()), m_search, SLOT(clear()));
+	connect( m_htmlpart->browserExtension(), TQT_SIGNAL( openURLRequestDelayed( const KURL &, const KParts::URLArgs & ) ), this, TQT_SLOT( displayItem( const KURL &, const KParts::URLArgs & ) ) );
+	connect( m_glosstree, TQT_SIGNAL(clicked( TQListViewItem * )), this, TQT_SLOT(slotClicked( TQListViewItem * )));
+	connect( clear, TQT_SIGNAL(clicked()), m_search, TQT_SLOT(clear()));
  
 	resize( 600, 400 );
 }
@@ -214,7 +214,7 @@ GlossaryDialog::~GlossaryDialog()
 {
 }
 
-void GlossaryDialog::keyPressEvent(QKeyEvent* e)
+void GlossaryDialog::keyPressEvent(TQKeyEvent* e)
 {
 	if (e->key() == Qt::Key_Return) {
 		e->ignore();
@@ -225,12 +225,12 @@ void GlossaryDialog::keyPressEvent(QKeyEvent* e)
 void GlossaryDialog::displayItem( const KURL& url, const KParts::URLArgs& )
 {
 	// using the "host" part of a kurl as reference
-	QString myurl = url.host().lower();
+	TQString myurl = url.host().lower();
 	m_search->setText( "" );
 	m_search->updateSearch( "" );
-	QListViewItem *found = 0;
-	QListViewItemIterator it( m_glosstree );
-	QListViewItem *item;
+	TQListViewItem *found = 0;
+	TQListViewItemIterator it( m_glosstree );
+	TQListViewItem *item;
 	while ( it.current() )
 	{
 		item = it.current();
@@ -253,16 +253,16 @@ void GlossaryDialog::updateTree()
 {
 	m_glosstree->clear();
 
-	QValueList<Glossary*>::const_iterator itGl = m_glossaries.begin();
-	const QValueList<Glossary*>::const_iterator itGlEnd = m_glossaries.end();
+	TQValueList<Glossary*>::const_iterator itGl = m_glossaries.begin();
+	const TQValueList<Glossary*>::const_iterator itGlEnd = m_glossaries.end();
 	
 	for ( ; itGl != itGlEnd ; ++itGl )
 	{
-		QValueList<GlossaryItem*> items = ( *itGl )->itemlist();
-		QValueList<GlossaryItem*>::iterator it = items.begin();
-		const QValueList<GlossaryItem*>::iterator itEnd = items.end();
+		TQValueList<GlossaryItem*> items = ( *itGl )->itemlist();
+		TQValueList<GlossaryItem*>::iterator it = items.begin();
+		const TQValueList<GlossaryItem*>::iterator itEnd = items.end();
 
-		QListViewItem *main = new QListViewItem( m_glosstree, ( *itGl )->name() );
+		TQListViewItem *main = new TQListViewItem( m_glosstree, ( *itGl )->name() );
 		main->setExpandable( true );
 		main->setSelectable( false );
 		//XXX TMP!!!
@@ -272,18 +272,18 @@ void GlossaryDialog::updateTree()
 		{
 			if ( foldinsubtrees )
 			{
-				QChar thisletter = ( *it )->name().upper()[0];
-				QListViewItem *thisletteritem = findTreeWithLetter( thisletter, main );
+				TQChar thisletter = ( *it )->name().upper()[0];
+				TQListViewItem *thisletteritem = findTreeWithLetter( thisletter, main );
 				if ( !thisletteritem )
 				{
-					thisletteritem = new QListViewItem( main, thisletter );
+					thisletteritem = new TQListViewItem( main, thisletter );
 					thisletteritem->setExpandable( true );
 					thisletteritem->setSelectable( false );
 				}
-				new QListViewItem( thisletteritem, ( *it )->name() );
+				new TQListViewItem( thisletteritem, ( *it )->name() );
 			}
 			else
-				new QListViewItem( main, ( *it )->name() );
+				new TQListViewItem( main, ( *it )->name() );
 		}
 		main->sort();
 	}
@@ -301,9 +301,9 @@ void GlossaryDialog::addGlossary( Glossary* newgloss )
 	updateTree();
 }
 
-QListViewItem* GlossaryDialog::findTreeWithLetter( const QChar& l, QListViewItem* i )
+TQListViewItem* GlossaryDialog::findTreeWithLetter( const TQChar& l, TQListViewItem* i )
 {
-	QListViewItem *it = i->firstChild();
+	TQListViewItem *it = i->firstChild();
 	while ( it )
 	{
 		if ( it->text(0)[0] == l )
@@ -313,7 +313,7 @@ QListViewItem* GlossaryDialog::findTreeWithLetter( const QChar& l, QListViewItem
 	return 0;
 }
 
-void GlossaryDialog::slotClicked( QListViewItem *item )
+void GlossaryDialog::slotClicked( TQListViewItem *item )
 {
 	if ( !item )
 		return;
@@ -323,18 +323,18 @@ void GlossaryDialog::slotClicked( QListViewItem *item )
 	 * in the m_itemList. When it is found the HTML will be
 	 * generated
 	 */
-	QValueList<Glossary*>::iterator itGl = m_glossaries.begin();
-	const QValueList<Glossary*>::iterator itGlEnd = m_glossaries.end();
+	TQValueList<Glossary*>::iterator itGl = m_glossaries.begin();
+	const TQValueList<Glossary*>::iterator itGlEnd = m_glossaries.end();
 	bool found = false;
 	GlossaryItem *i = 0;
 
-	QString bg_picture;
+	TQString bg_picture;
 	
 	while ( !found && itGl != itGlEnd )
 	{
-		QValueList<GlossaryItem*> items = ( *itGl )->itemlist();
-		QValueList<GlossaryItem*>::const_iterator it = items.begin();
-		const QValueList<GlossaryItem*>::const_iterator itEnd = items.end();
+		TQValueList<GlossaryItem*> items = ( *itGl )->itemlist();
+		TQValueList<GlossaryItem*>::const_iterator it = items.begin();
+		const TQValueList<GlossaryItem*>::const_iterator itEnd = items.end();
 		while ( !found && it != itEnd )
 		{
 			if ( ( *it )->name() == item->text( 0 ) )
@@ -349,7 +349,7 @@ void GlossaryDialog::slotClicked( QListViewItem *item )
 	}
 	if ( found && i )
 	{
-		QString html;
+		TQString html;
 		if ( !bg_picture.isEmpty() )
 		{
 			html = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"><html><body background=\"" ;
@@ -373,21 +373,21 @@ void GlossaryDialog::slotClose()
 	accept();
 }
 
-QString GlossaryItem::toHtml() const
+TQString GlossaryItem::toHtml() const
 {
-	QString code = "<h1>" + m_name + "</h1>" + m_desc;
+	TQString code = "<h1>" + m_name + "</h1>" + m_desc;
 
 	if ( !m_ref.isEmpty() )
 	{
-		QString refcode = parseReferences();
+		TQString refcode = parseReferences();
 		code += refcode;
 	}
 	return code;
 }
 
-QString GlossaryItem::parseReferences() const
+TQString GlossaryItem::parseReferences() const
 {
-	QString htmlcode = "<h3>" + i18n( "References" ) + "</h3>";
+	TQString htmlcode = "<h3>" + i18n( "References" ) + "</h3>";
 	
 	bool first = true;
 	for ( uint i = 0; i < m_ref.size(); i++ )
@@ -396,7 +396,7 @@ QString GlossaryItem::parseReferences() const
 			htmlcode += "<br>";
 		else
 			first = false;
-		htmlcode += QString( "<a href=\"item://%1\">%2</a>" ).arg( m_ref[i], m_ref[i] );
+		htmlcode += TQString( "<a href=\"item://%1\">%2</a>" ).arg( m_ref[i], m_ref[i] );
 	}
 
 	return htmlcode;

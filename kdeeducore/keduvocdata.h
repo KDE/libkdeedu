@@ -19,33 +19,33 @@
 #ifndef KEDUVOCDATA_H
 #define KEDUVOCDATA_H
 
-#include <qdom.h>
-#include <qvaluelist.h>
+#include <tqdom.h>
+#include <tqvaluelist.h>
 #include <kdemacros.h>
 
 class KDE_EXPORT KEduVocDataItem
 {
 public:
     KEduVocDataItem();
-    KEduVocDataItem(QDomElement &entry);
+    KEduVocDataItem(TQDomElement &entry);
     virtual ~KEduVocDataItem();
 
-    QString originalText() const;
-    QString translatedText() const;
+    TQString originalText() const;
+    TQString translatedText() const;
 
 protected:
-    QString getText(const QString &tagName) const;
+    TQString getText(const TQString &tagName) const;
 
 private:
-    QDomElement domElement;
+    TQDomElement domElement;
 };
 
-typedef QValueList<KEduVocDataItem> KEduVocDataItemList;
+typedef TQValueList<KEduVocDataItem> KEduVocDataItemList;
 
 class KDE_EXPORT KEduVocData
 {
 public:
-    static KEduVocDataItemList parse(const QString &fileName);
+    static KEduVocDataItemList parse(const TQString &fileName);
 };
 
 #endif // KEDUVOCDATA_H

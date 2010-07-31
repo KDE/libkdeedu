@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qpainter.h>
+#include <tqpainter.h>
 #include <kdebug.h>
 #include "kplotobject.h"
 
@@ -23,7 +23,7 @@ KPlotObject::KPlotObject() {
 	KPlotObject( "", "white", POINTS );
 }
 
-KPlotObject::KPlotObject( const QString &n, const QString &c, PTYPE t, unsigned int s, unsigned int p ) {
+KPlotObject::KPlotObject( const TQString &n, const TQString &c, PTYPE t, unsigned int s, unsigned int p ) {
 	//We use the set functions because they may include data validation
 	setName( n );
 	setColor( c );

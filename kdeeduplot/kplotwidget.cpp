@@ -17,34 +17,34 @@
 
 #include <math.h> //for log10(), pow(), modf()
 #include <kdebug.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
 
 #include "kplotwidget.h"
 #include "kplotwidget.moc"
 
-KPlotWidget::KPlotWidget( double x1, double x2, double y1, double y2, QWidget *parent, const char* name )
- : QWidget( parent, name, WNoAutoErase ),
+KPlotWidget::KPlotWidget( double x1, double x2, double y1, double y2, TQWidget *parent, const char* name )
+ : TQWidget( parent, name, WNoAutoErase ),
    dXtick(0.0), dYtick(0.0),
    nmajX(0), nminX(0), nmajY(0), nminY(0),
    ShowTickMarks( true ), ShowTickLabels( true ), ShowGrid( false )
  {
-	setBackgroundMode( QWidget::NoBackground );
+	setBackgroundMode( TQWidget::NoBackground );
 
 	//set DataRect
 	setLimits( x1, x2, y1, y2 );
 	setDefaultPadding();
 
 	//Set PixRect (starts at (0,0) because we will translate by leftPadding(), topPadding() )
-	PixRect = QRect( 0, 0, width() - leftPadding() - rightPadding(),
+	PixRect = TQRect( 0, 0, width() - leftPadding() - rightPadding(),
 	                       height() - topPadding() - bottomPadding() );
 
-	buffer = new QPixmap();
+	buffer = new TQPixmap();
 
 	//default colors:
-	setBGColor( QColor( "black" ) );
-	setFGColor( QColor( "white" ) );
-	setGridColor( QColor( "grey" ) );
+	setBGColor( TQColor( "black" ) );
+	setFGColor( TQColor( "white" ) );
+	setGridColor( TQColor( "grey" ) );
 
 	ObjectList.setAutoDelete( true );
 }
@@ -131,16 +131,16 @@ void KPlotWidget::updateTickmarks() {
 	} //end for iaxis
 }
 
-void KPlotWidget::resizeEvent( QResizeEvent* /* e */ ) {
+void KPlotWidget::resizeEvent( TQResizeEvent* /* e */ ) {
 	int newWidth = width() - leftPadding() - rightPadding();
 	int newHeight = height() - topPadding() - bottomPadding();
-	PixRect = QRect( 0, 0, newWidth, newHeight );
+	PixRect = TQRect( 0, 0, newWidth, newHeight );
 
 	buffer->resize( width(), height() );
 }
 
-void KPlotWidget::paintEvent( QPaintEvent* /* e */ ) {
-	QPainter p;
+void KPlotWidget::paintEvent( TQPaintEvent* /* e */ ) {
+	TQPainter p;
 
 	p.begin( buffer );
 	p.fillRect( 0, 0, width(), height(), bgColor() );
@@ -153,20 +153,20 @@ void KPlotWidget::paintEvent( QPaintEvent* /* e */ ) {
 	bitBlt( this, 0, 0, buffer );
 }
 
-void KPlotWidget::drawObjects( QPainter *p ) {
+void KPlotWidget::drawObjects( TQPainter *p ) {
 	for ( KPlotObject *po = ObjectList.first(); po; po = ObjectList.next() ) {
 
 		if ( po->points()->count() ) {
 			//draw the plot object
-			p->setPen( QColor( po->color() ) );
+			p->setPen( TQColor( po->color() ) );
 
 			switch ( po->type() ) {
 				case KPlotObject::POINTS :
 				{
-					p->setBrush( QColor( po->color() ) );
+					p->setBrush( TQColor( po->color() ) );
 
 					for ( DPoint *dp = po->points()->first(); dp; dp = po->points()->next() ) {
-						QPoint q = dp->qpoint( PixRect, DataRect );
+						TQPoint q = dp->qpoint( PixRect, DataRect );
 						int x1 = q.x() - po->size()/2;
 						int y1 = q.y() - po->size()/2;
 
@@ -184,7 +184,7 @@ void KPlotWidget::drawObjects( QPainter *p ) {
 
 				case KPlotObject::CURVE :
 				{
-					p->setPen( QPen( QColor( po->color() ), po->size(), (QPen::PenStyle)po->param() ) );
+					p->setPen( TQPen( TQColor( po->color() ), po->size(), (TQPen::PenStyle)po->param() ) );
 					DPoint *dp = po->points()->first();
 					p->moveTo( dp->qpoint( PixRect, DataRect ) );
 					for ( dp = po->points()->next(); dp; dp = po->points()->next() )
@@ -194,17 +194,17 @@ void KPlotWidget::drawObjects( QPainter *p ) {
 
 				case KPlotObject::LABEL : //draw label centered at point in x, and slightly below point in y.
 				{
-					QPoint q = po->points()->first()->qpoint( PixRect, DataRect );
+					TQPoint q = po->points()->first()->qpoint( PixRect, DataRect );
 					p->drawText( q.x()-20, q.y()+6, 40, 10, Qt::AlignCenter | Qt::DontClip, po->name() );
 					break;
 				}
 
 				case KPlotObject::POLYGON :
 				{
-					p->setPen( QPen( QColor( po->color() ), po->size(), (QPen::PenStyle)po->param() ) );
+					p->setPen( TQPen( TQColor( po->color() ), po->size(), (TQPen::PenStyle)po->param() ) );
 					p->setBrush( po->color() );
 
-					QPointArray a( po->count() );
+					TQPointArray a( po->count() );
 
 					unsigned int i=0;
 					for ( DPoint *dp = po->points()->first(); dp; dp = po->points()->next() )
@@ -222,7 +222,7 @@ void KPlotWidget::drawObjects( QPainter *p ) {
 
 double KPlotWidget::dmod( double a, double b ) { return ( b * ( ( a / b ) - int( a / b ) ) ); }
 
-void KPlotWidget::drawBox( QPainter *p ) {
+void KPlotWidget::drawBox( TQPainter *p ) {
 	//First, fill in padding region with bgColor() to mask out-of-bounds plot data
 	p->setPen( bgColor() );
 	p->setBrush( bgColor() );
@@ -269,7 +269,7 @@ void KPlotWidget::drawBox( QPainter *p ) {
 		double dminY = dYtick/nminY;
 
 		//set small font for tick labels
-		QFont f = p->font();
+		TQFont f = p->font();
 		int s = f.pointSize();
 		f.setPointSize( s - 2 );
 		p->setFont( f );
@@ -294,9 +294,9 @@ void KPlotWidget::drawBox( QPainter *p ) {
 					double lab = x0 + ix*dXtick;
 					if ( fabs(lab)/dXtick < 0.00001 ) lab = 0.0; //fix occassional roundoff error with "0.0" label
 		
-					QString str = QString( "%1" ).arg( lab, BottomAxis.labelFieldWidth(), BottomAxis.labelFmt(), BottomAxis.labelPrec() );
+					TQString str = TQString( "%1" ).arg( lab, BottomAxis.labelFieldWidth(), BottomAxis.labelFmt(), BottomAxis.labelPrec() );
 					if ( px > 0 && px < PixRect.width() ) {
-						QRect r( px - BIGTICKSIZE, PixRect.height()+BIGTICKSIZE, 2*BIGTICKSIZE, BIGTICKSIZE );
+						TQRect r( px - BIGTICKSIZE, PixRect.height()+BIGTICKSIZE, 2*BIGTICKSIZE, BIGTICKSIZE );
 						p->drawText( r, Qt::AlignCenter | Qt::DontClip, str );
 					}
 				}
@@ -315,7 +315,7 @@ void KPlotWidget::drawBox( QPainter *p ) {
 
 			// Draw X Axis Label
 			if ( ! BottomAxis.label().isEmpty() ) {
-				QRect r( 0, PixRect.height() + 2*YPADDING, PixRect.width(), YPADDING );
+				TQRect r( 0, PixRect.height() + 2*YPADDING, PixRect.width(), YPADDING );
 				p->drawText( r, Qt::AlignCenter, BottomAxis.label() );
 			}
 
@@ -340,9 +340,9 @@ void KPlotWidget::drawBox( QPainter *p ) {
 					double lab = y0 + iy*dYtick;
 					if ( fabs(lab)/dYtick < 0.00001 ) lab = 0.0; //fix occassional roundoff error with "0.0" label
 	
-					QString str = QString( "%1" ).arg( lab, LeftAxis.labelFieldWidth(), LeftAxis.labelFmt(), LeftAxis.labelPrec() );
+					TQString str = TQString( "%1" ).arg( lab, LeftAxis.labelFieldWidth(), LeftAxis.labelFmt(), LeftAxis.labelPrec() );
 					if ( py > 0 && py < PixRect.height() ) {
-						QRect r( -2*BIGTICKSIZE, py-SMALLTICKSIZE, 2*BIGTICKSIZE, 2*SMALLTICKSIZE );
+						TQRect r( -2*BIGTICKSIZE, py-SMALLTICKSIZE, 2*BIGTICKSIZE, 2*SMALLTICKSIZE );
 						p->drawText( r, Qt::AlignCenter | Qt::DontClip, str );
 					}
 				}
@@ -367,7 +367,7 @@ void KPlotWidget::drawBox( QPainter *p ) {
 				p->translate( -3*XPADDING, PixRect.height() );
 				p->rotate( -90.0 );
 		
-				QRect r( 0, 0, PixRect.height(), XPADDING );
+				TQRect r( 0, 0, PixRect.height(), XPADDING );
 				p->drawText( r, Qt::AlignCenter, LeftAxis.label() ); //draw the label, now that we are sideways
 		
 				p->restore();  //restore translation/rotation state

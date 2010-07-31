@@ -5,7 +5,7 @@
               (C) 2004 Jason Harris (jharris@30doradus.org)
 
     These classes has been derived from those in kdatetbl.[h|cpp].
-    The only differences are adaptations to use ExtDate instead of QDate,
+    The only differences are adaptations to use ExtDate instead of TQDate,
     to allow for more remote dates.  These changes by Jason Harris.
 
     This library is free software; you can redistribute it and/or
@@ -26,8 +26,8 @@
 #ifndef EXTDATETBL_H
 #define EXTDATETBL_H
 
-#include <qvalidator.h>
-#include <qgridview.h>
+#include <tqvalidator.h>
+#include <tqgridview.h>
 #include <klineedit.h>
 #include "extcalendarsystemgregorian.h"
 
@@ -42,7 +42,7 @@ class ExtDateInternalWeekSelector : public KLineEdit
 {
   Q_OBJECT
 protected:
-  QIntValidator *val;
+  TQIntValidator *val;
   int result;
 public slots:
   void weekEnteredSlot();
@@ -50,7 +50,7 @@ public slots:
 signals:
   void closeMe(int);
 public:
-  ExtDateInternalWeekSelector( QWidget* parent=0, const char* name=0);
+  ExtDateInternalWeekSelector( TQWidget* parent=0, const char* name=0);
   int getWeek();
   void setWeek(int week);
 
@@ -81,7 +81,7 @@ protected:
   /**
    * Contains the largest rectangle needed by the month names.
    */
-  QRect max;
+  TQRect max;
 signals:
   /**
    * This is send from the mouse click event handler.
@@ -91,7 +91,7 @@ public:
   /**
    * The constructor.
    */
-  ExtDateInternalMonthPicker(const ExtDate& date, QWidget* parent, const char* name=0);
+  ExtDateInternalMonthPicker(const ExtDate& date, TQWidget* parent, const char* name=0);
   /**
    * The destructor.
    */
@@ -99,7 +99,7 @@ public:
   /**
    * The size hint.
    */
-  QSize sizeHint() const;
+  TQSize sizeHint() const;
   /**
    * Return the result. 0 means no selection (reject()), 1..12 are the
    * months.
@@ -109,24 +109,24 @@ protected:
   /**
    * Set up the painter.
    */
-  void setupPainter(QPainter *p);
+  void setupPainter(TQPainter *p);
   /**
    * The resize event.
    */
-  virtual void viewportResizeEvent(QResizeEvent*);
+  virtual void viewportResizeEvent(TQResizeEvent*);
   /**
    * Paint a cell. This simply draws the month names in it.
    */
-  virtual void paintCell(QPainter* painter, int row, int col);
+  virtual void paintCell(TQPainter* painter, int row, int col);
   /**
    * Catch mouse click and move events to paint a rectangle around the item.
    */
-  virtual void contentsMousePressEvent(QMouseEvent *e);
-  virtual void contentsMouseMoveEvent(QMouseEvent *e);
+  virtual void contentsMousePressEvent(TQMouseEvent *e);
+  virtual void contentsMouseMoveEvent(TQMouseEvent *e);
   /**
    * Emit monthSelected(int) when a cell has been released.
    */
-  virtual void contentsMouseReleaseEvent(QMouseEvent *e);
+  virtual void contentsMouseReleaseEvent(TQMouseEvent *e);
 
 private:
   class ExtDateInternalMonthPrivate;
@@ -142,14 +142,14 @@ class ExtDateInternalYearSelector : public QLineEdit
 {
   Q_OBJECT
 protected:
-  QIntValidator *val;
+  TQIntValidator *val;
   int result;
 public slots:
   void yearEnteredSlot();
 signals:
   void closeMe(int);
 public:
-  ExtDateInternalYearSelector( QWidget* parent=0, const char* name=0);
+  ExtDateInternalYearSelector( TQWidget* parent=0, const char* name=0);
   ~ExtDateInternalYearSelector();
 	int getYear();
   void setYear(int year);
@@ -185,11 +185,11 @@ protected:
   /**
    * Catch key press events.
    */
-  virtual void keyPressEvent(QKeyEvent* e);
+  virtual void keyPressEvent(TQKeyEvent* e);
   /**
    * The only subwidget that uses the whole dialog window.
    */
-  QWidget *main;
+  TQWidget *main;
 public slots:
   /**
    * Close the popup window. This is called from the main widget, usually.
@@ -200,7 +200,7 @@ public:
   /**
    * The contructor. Creates a dialog without buttons.
    */
-  KPopupFrame(QWidget* parent=0, const char*  name=0);
+  KPopupFrame(TQWidget* parent=0, const char*  name=0);
   /**
    * Set the main widget. You cannot set the main widget from the constructor,
    * since it must be a child of the frame itselfes.
@@ -208,20 +208,20 @@ public:
    * set the main widgets correct size before setting it as the main
    * widget.
    */
-  void setMainWidget(QWidget* m);
+  void setMainWidget(TQWidget* m);
   /**
    * The resize event. Simply resizes the main widget to the whole
    * widgets client size.
    */
-  virtual void resizeEvent(QResizeEvent*);
+  virtual void resizeEvent(TQResizeEvent*);
   /**
    * Open the popup window at position pos.
    */
-  void popup(const QPoint &pos);
+  void popup(const TQPoint &pos);
   /**
    * Execute the popup window.
    */
-  int exec(QPoint p);
+  int exec(TQPoint p);
   /**
    * Dito.
    */
@@ -229,7 +229,7 @@ public:
 
 private:
 
-  virtual bool close(bool alsoDelete) { return QFrame::close(alsoDelete); }
+  virtual bool close(bool alsoDelete) { return TQFrame::close(alsoDelete); }
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
@@ -243,10 +243,10 @@ private:
 class ExtDateValidator : public QValidator
 {
 public:
-    ExtDateValidator(QWidget* parent=0, const char* name=0);
-    virtual State validate(QString&, int&) const;
-    virtual void fixup ( QString & input ) const;
-    State date(const QString&, ExtDate&) const;
+    ExtDateValidator(TQWidget* parent=0, const char* name=0);
+    virtual State validate(TQString&, int&) const;
+    virtual void fixup ( TQString & input ) const;
+    State date(const TQString&, ExtDate&) const;
 };
 
 /**
@@ -272,7 +272,7 @@ public:
     /**
      * The constructor.
      */
-    ExtDateTable(QWidget *parent=0,
+    ExtDateTable(TQWidget *parent=0,
 	       ExtDate date=ExtDate::currentDate(),
 	       const char* name=0, WFlags f=0);
 
@@ -288,7 +288,7 @@ public:
      * to be done there anyway. The size is stored in maxCell. The
      * sizeHint() simply returns a multiple of maxCell.
      */
-    virtual QSize sizeHint() const;
+    virtual TQSize sizeHint() const;
     /**
      * Set the font size of the date table.
      */
@@ -323,7 +323,7 @@ public:
      *
      * @since 3.2
      */
-    void setCustomDatePainting( const ExtDate &date, const QColor &fgColor, BackgroundMode bgMode=NoBgMode, const QColor &bgColor=QColor());
+    void setCustomDatePainting( const ExtDate &date, const TQColor &fgColor, BackgroundMode bgMode=NoBgMode, const TQColor &bgColor=TQColor());
 
     /**
      * Unsets the custom painting of a date so that the date is painted as usual.
@@ -346,19 +346,19 @@ protected:
     /**
      * Paint a cell.
      */
-    virtual void paintCell(QPainter*, int, int);
+    virtual void paintCell(TQPainter*, int, int);
     /**
      * Handle the resize events.
      */
-    virtual void viewportResizeEvent(QResizeEvent *);
+    virtual void viewportResizeEvent(TQResizeEvent *);
     /**
      * React on mouse clicks that select a date.
      */
-    virtual void contentsMousePressEvent(QMouseEvent *);
-    virtual void wheelEvent( QWheelEvent * e );
-    virtual void keyPressEvent( QKeyEvent *e );
-    virtual void focusInEvent( QFocusEvent *e );
-    virtual void focusOutEvent( QFocusEvent *e );
+    virtual void contentsMousePressEvent(TQMouseEvent *);
+    virtual void wheelEvent( TQWheelEvent * e );
+    virtual void keyPressEvent( TQKeyEvent *e );
+    virtual void focusInEvent( TQFocusEvent *e );
+    virtual void focusOutEvent( TQFocusEvent *e );
 
     // ### KDE 4.0 make the following private and mark as members
 
@@ -390,7 +390,7 @@ protected:
     /**
      * Save the size of the largest used cell content.
      */
-    QRect maxCell;
+    TQRect maxCell;
 signals:
     /**
      * The selected date changed.

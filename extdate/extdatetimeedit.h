@@ -26,8 +26,8 @@
 #define EXTDATETIMEEDIT_H
 
 #ifndef QT_H
-#include <qwidget.h>
-#include <qstring.h>
+#include <tqwidget.h>
+#include <tqstring.h>
 #endif // QT_H
 
 #include "extdatetime.h"
@@ -40,11 +40,11 @@ class ExtDateTimeEditBase : public QWidget
 {
     Q_OBJECT
 public:
-    ExtDateTimeEditBase( QWidget* parent=0, const char* name=0 )
-	: QWidget( parent, name ) {}
+    ExtDateTimeEditBase( TQWidget* parent=0, const char* name=0 )
+	: TQWidget( parent, name ) {}
 
     virtual bool setFocusSection( int sec ) = 0;
-    virtual QString sectionFormattedText( int sec ) = 0;
+    virtual TQString sectionFormattedText( int sec ) = 0;
     virtual void addNumber( int sec, int num ) = 0;
     virtual void removeLastNumber( int sec ) = 0;
 
@@ -72,8 +72,8 @@ class KDE_EXPORT ExtDateEdit : public ExtDateTimeEditBase
 //    Q_PROPERTY( ExtDate minValue READ minValue WRITE setMinValue )
 
 public:
-    ExtDateEdit( QWidget* parent=0,  const char* name=0 );
-    ExtDateEdit( const ExtDate& date, QWidget* parent=0,  const char* name=0 );
+    ExtDateEdit( TQWidget* parent=0,  const char* name=0 );
+    ExtDateEdit( const ExtDate& date, TQWidget* parent=0,  const char* name=0 );
     ~ExtDateEdit();
 
     enum Order { DMY /**< Day-Month-Year */, 
@@ -81,8 +81,8 @@ public:
       YMD /**< Year-Month-Day, also the default */, 
       YDM /**< Year-Day-Month @deprecated Included for completeness. */ };
 
-    QSize sizeHint() const;
-    QSize minimumSizeHint() const;
+    TQSize sizeHint() const;
+    TQSize minimumSizeHint() const;
 
 public slots:
     virtual void setDate( const ExtDate& date );
@@ -99,8 +99,8 @@ public:
     virtual void setMaxValue( const ExtDate& d ) { setRange( minValue(), d ); }
     ExtDate maxValue() const;
     virtual void setRange( const ExtDate& min, const ExtDate& max );
-    QString separator() const;
-    virtual void setSeparator( const QString& s );
+    TQString separator() const;
+    virtual void setSeparator( const TQString& s );
 
     // Make removeFirstNumber() virtual in ExtDateTimeEditBase in 4.0
     void removeFirstNumber( int sec );
@@ -109,12 +109,12 @@ signals:
     void valueChanged( const ExtDate& date );
 
 protected:
-    bool event( QEvent *e );
-    void timerEvent( QTimerEvent * );
-    void resizeEvent( QResizeEvent * );
+    bool event( TQEvent *e );
+    void timerEvent( TQTimerEvent * );
+    void resizeEvent( TQResizeEvent * );
     void stepUp();
     void stepDown();
-    QString sectionFormattedText( int sec );
+    TQString sectionFormattedText( int sec );
     void addNumber( int sec, int num );
 
     void removeLastNumber( int sec );
@@ -133,7 +133,7 @@ private:
     void init();
     int sectionOffsetEnd( int sec ) const;
     int sectionLength( int sec ) const;
-    QString sectionText( int sec ) const;
+    TQString sectionText( int sec ) const;
     ExtDateEditPrivate* d;
 
 #if defined(Q_DISABLE_COPY)
@@ -148,10 +148,10 @@ private:
 // {
 //     Q_OBJECT
 //     Q_SETS( Display )
-//     Q_PROPERTY( QTime time READ time WRITE setTime )
+//     Q_PROPERTY( TQTime time READ time WRITE setTime )
 //     Q_PROPERTY( bool autoAdvance READ autoAdvance WRITE setAutoAdvance )
-//     Q_PROPERTY( QTime maxValue READ maxValue WRITE setMaxValue )
-//     Q_PROPERTY( QTime minValue READ minValue WRITE setMinValue )
+//     Q_PROPERTY( TQTime maxValue READ maxValue WRITE setMaxValue )
+//     Q_PROPERTY( TQTime minValue READ minValue WRITE setMinValue )
 //     Q_PROPERTY( Display display READ display WRITE setDisplay )
 //
 // public:
@@ -163,28 +163,28 @@ private:
 // 	AMPM	= 0x10
 //     };
 //
-//     QTimeEdit( QWidget* parent=0,  const char* name=0 );
-//     QTimeEdit( const QTime& time, QWidget* parent=0,  const char* name=0 );
+//     QTimeEdit( TQWidget* parent=0,  const char* name=0 );
+//     QTimeEdit( const TQTime& time, TQWidget* parent=0,  const char* name=0 );
 //     ~QTimeEdit();
 //
-//     QSize sizeHint() const;
-//     QSize minimumSizeHint() const;
+//     TQSize sizeHint() const;
+//     TQSize minimumSizeHint() const;
 //
 // public slots:
-//     virtual void setTime( const QTime& time );
+//     virtual void setTime( const TQTime& time );
 //
 // public:
-//     QTime time() const;
+//     TQTime time() const;
 //     virtual void setAutoAdvance( bool advance );
 //     bool autoAdvance() const;
 //
-//     virtual void setMinValue( const QTime& d ) { setRange( d, maxValue() ); }
-//     QTime minValue() const;
-//     virtual void setMaxValue( const QTime& d ) { setRange( minValue(), d ); }
-//     QTime maxValue() const;
-//     virtual void setRange( const QTime& min, const QTime& max );
-//     QString separator() const;
-//     virtual void setSeparator( const QString& s );
+//     virtual void setMinValue( const TQTime& d ) { setRange( d, maxValue() ); }
+//     TQTime minValue() const;
+//     virtual void setMaxValue( const TQTime& d ) { setRange( minValue(), d ); }
+//     TQTime maxValue() const;
+//     virtual void setRange( const TQTime& min, const TQTime& max );
+//     TQString separator() const;
+//     virtual void setSeparator( const TQString& s );
 //
 //     uint display() const;
 //     void setDisplay( uint disp );
@@ -193,15 +193,15 @@ private:
 //     void removeFirstNumber( int sec );
 //
 // signals:
-//     void valueChanged( const QTime& time );
+//     void valueChanged( const TQTime& time );
 //
 // protected:
-//     bool event( QEvent *e );
-//     void timerEvent( QTimerEvent *e );
-//     void resizeEvent( QResizeEvent * );
+//     bool event( TQEvent *e );
+//     void timerEvent( TQTimerEvent *e );
+//     void resizeEvent( TQResizeEvent * );
 //     void stepUp();
 //     void stepDown();
-//     QString sectionFormattedText( int sec );
+//     TQString sectionFormattedText( int sec );
 //     void addNumber( int sec, int num );
 //     void removeLastNumber( int sec );
 //     bool setFocusSection( int s );
@@ -216,7 +216,7 @@ private:
 //
 // private:
 //     void init();
-//     QString sectionText( int sec );
+//     TQString sectionText( int sec );
 //     QTimeEditPrivate* d;
 //
 // #if defined(Q_DISABLE_COPY)
@@ -234,13 +234,13 @@ class KDE_EXPORT ExtDateTimeEdit : public QWidget
 //    Q_PROPERTY( ExtDateTime dateTime READ dateTime WRITE setDateTime )
 
 public:
-    ExtDateTimeEdit( QWidget* parent=0, const char* name=0 );
-    ExtDateTimeEdit( const ExtDateTime& datetime, QWidget* parent=0,
+    ExtDateTimeEdit( TQWidget* parent=0, const char* name=0 );
+    ExtDateTimeEdit( const ExtDateTime& datetime, TQWidget* parent=0,
 		   const char* name=0 );
     ~ExtDateTimeEdit();
 
-    QSize sizeHint() const;
-    QSize minimumSizeHint() const;
+    TQSize sizeHint() const;
+    TQSize minimumSizeHint() const;
 
 public slots:
     virtual void setDateTime( const ExtDateTime & dt );
@@ -260,13 +260,13 @@ signals:
 protected:
     // ### make init() private in Qt 4.0
     void init();
-    void resizeEvent( QResizeEvent * );
+    void resizeEvent( TQResizeEvent * );
 
 protected slots:
     // ### make these two functions private in Qt 4.0,
     //     and merge them into one with no parameter
     void newValue( const ExtDate& d );
-    void newValue( const QTime& t );
+    void newValue( const TQTime& t );
 
 private:
     ExtDateEdit* de;
@@ -313,24 +313,24 @@ public:
 //    void setControlWidget( ExtDateTimeEditBase * widget );
 //    ExtDateTimeEditBase * controlWidget() const;
 
-    void setSeparator( const QString& s );
-    QString separator() const;
+    void setSeparator( const TQString& s );
+    TQString separator() const;
 
     int  focusSection() const;
     bool setFocusSection( int s );
     void appendSection( const QNumberSection& sec );
     void clearSections();
     void setSectionSelection( int sec, int selstart, int selend );
-    bool eventFilter( QObject *o, QEvent *e );
-    int  sectionAt( const QPoint &p );
+    bool eventFilter( TQObject *o, TQEvent *e );
+    int  sectionAt( const TQPoint &p );
     int mapSection( int sec );
 
 protected:
     void init();
-    bool event( QEvent *e );
-    void resizeEvent( QResizeEvent * );
-    void paintEvent( QPaintEvent * );
-    void mousePressEvent( QMouseEvent *e );
+    bool event( TQEvent *e );
+    void resizeEvent( TQResizeEvent * );
+    void paintEvent( TQPaintEvent * );
+    void mousePressEvent( TQMouseEvent *e );
 
 private:
     ExtDateTimeEditBase* cw;

@@ -1,7 +1,7 @@
 /* This file is part of the KDE libraries
     Copyright (C) 2001 Waldo Bastian (bastian@kde.org)
 
-    Modified to use ExtDate instead of QDate.  Modifications
+    Modified to use ExtDate instead of TQDate.  Modifications
     Copyright (C) 2004 Jason Harris (jharris@30doradus.org)
 
     This library is free software; you can redistribute it and/or
@@ -41,12 +41,12 @@ public:
   /**
    * Constructs a date selection widget, initialized to the current CPU date.
    */
-  ExtDateWidget( QWidget *parent=0, const char *name=0 );
+  ExtDateWidget( TQWidget *parent=0, const char *name=0 );
 
   /**
    * Constructs a date selection widget with the initial date set to @p date.
    */
-  ExtDateWidget( const ExtDate &date, QWidget *parent=0, const char *name=0 );
+  ExtDateWidget( const ExtDate &date, TQWidget *parent=0, const char *name=0 );
 
   /**
    * Destructs the date selection widget.

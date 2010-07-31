@@ -25,6 +25,6 @@ int main( int argc, char *argv[] )
 	KApplication a;
 	TestWidget *t = new TestWidget(0,0);
 	t->show();
-	QObject::connect(kapp, SIGNAL(lastWindowClosed()), kapp, SLOT(quit()));
+	TQObject::connect(kapp, TQT_SIGNAL(lastWindowClosed()), kapp, TQT_SLOT(quit()));
 	return a.exec();
 }

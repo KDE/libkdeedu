@@ -18,20 +18,20 @@
 #include <kdatepicker.h>
 #include <kdatewidget.h>
 #include <klineedit.h>
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 
 #include "extdatepicker.h"
 #include "extdatewidget.h"
 #include "testwidget.h"
 
-TestWidget::TestWidget( QWidget *p=0, const char *name=0 ) : KMainWindow( p, name ) {
-	QWidget *w = new QWidget(this);
+TestWidget::TestWidget( TQWidget *p=0, const char *name=0 ) : KMainWindow( p, name ) {
+	TQWidget *w = new TQWidget(this);
 
-	glay = new QGridLayout(w, 3, 2);
+	glay = new TQGridLayout(w, 3, 2);
 
-	QLabel *kdpLabel = new QLabel( QString("KDatePicker"), w );
-	QLabel *edpLabel = new QLabel( QString("ExtDatePicker"), w );
+	TQLabel *kdpLabel = new TQLabel( TQString("KDatePicker"), w );
+	TQLabel *edpLabel = new TQLabel( TQString("ExtDatePicker"), w );
 	kdp = new KDatePicker(w);
 	edp = new ExtDatePicker(w);
 	kdpEdit = new KLineEdit(w);
@@ -39,7 +39,7 @@ TestWidget::TestWidget( QWidget *p=0, const char *name=0 ) : KMainWindow( p, nam
 	edpEdit = new KLineEdit(w);
 	edpEdit->setReadOnly( TRUE );
 
-	kdw = new KDateWidget( QDate::currentDate(), w );
+	kdw = new KDateWidget( TQDate::currentDate(), w );
 	edw = new ExtDateWidget( ExtDate::currentDate(), w );
 
 	glay->addWidget( kdpLabel, 0, 0 );
@@ -53,11 +53,11 @@ TestWidget::TestWidget( QWidget *p=0, const char *name=0 ) : KMainWindow( p, nam
 
 	setCentralWidget(w);
 
-	connect( kdp, SIGNAL( dateChanged(QDate) ), this, SLOT( slotKDateChanged(QDate) ) );
-	connect( edp, SIGNAL( dateChanged(const ExtDate&) ), this, SLOT( slotExtDateChanged(const ExtDate&) ) );
+	connect( kdp, TQT_SIGNAL( dateChanged(TQDate) ), this, TQT_SLOT( slotKDateChanged(TQDate) ) );
+	connect( edp, TQT_SIGNAL( dateChanged(const ExtDate&) ), this, TQT_SLOT( slotExtDateChanged(const ExtDate&) ) );
 }
 
-void TestWidget::slotKDateChanged(QDate d) {
+void TestWidget::slotKDateChanged(TQDate d) {
 	kdpEdit->setText( d.toString() );
 }
 

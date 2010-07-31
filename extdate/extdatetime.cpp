@@ -14,7 +14,7 @@
 **********************************************************************/
 
 #include "extdatetime.h"
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -45,7 +45,7 @@ static const uint MSECS_PER_MIN = 60000;
 uint ExtDate::m_monthLength[] = {31, 28, 31, 30,  31,  30,  31,  31,  30,  31,  30,  31};
 uint ExtDate::m_monthOrigin[] = { 0, 30, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
 
-QString ExtDate::m_shortMonthNames[12] = {
+TQString ExtDate::m_shortMonthNames[12] = {
 	i18n("Short month name", "Jan"), i18n("Short month name", "Feb"), 
 	i18n("Short month name", "Mar"), i18n("Short month name", "Apr"), 
 	i18n("Short month name", "May"), i18n("Short month name", "Jun"),
@@ -53,13 +53,13 @@ QString ExtDate::m_shortMonthNames[12] = {
 	i18n("Short month name", "Sep"), i18n("Short month name", "Oct"), 
 	i18n("Short month name", "Nov"), i18n("Short month name", "Dec")
 };
-QString ExtDate::m_shortDayNames[7] = {
+TQString ExtDate::m_shortDayNames[7] = {
 	i18n("Short day name", "Mon"), i18n("Short day name", "Tue"), 
 	i18n("Short day name", "Wed"), i18n("Short day name", "Thu"), 
 	i18n("Short day name", "Fri"), i18n("Short day name", "Sat"), 
 	i18n("Short day name", "Sun")
 };
-QString ExtDate::m_longMonthNames[12] = {
+TQString ExtDate::m_longMonthNames[12] = {
 	i18n("Long month name", "January"), i18n("Long month name", "February"), 
 	i18n("Long month name", "March"), i18n("Long month name", "April"), 
 	i18n("Long month name", "May"), i18n("Long month name", "June"), 
@@ -67,7 +67,7 @@ QString ExtDate::m_longMonthNames[12] = {
 	i18n("Long month name", "September"), i18n("Long month name", "October"),
 	i18n("Long month name", "November"), i18n("Long month name", "December")
 };
-QString ExtDate::m_longDayNames[7] = {
+TQString ExtDate::m_longDayNames[7] = {
 	i18n("Long day name", "Monday"), i18n("Long day name", "Tuesday"), 
 	i18n("Long day name", "Wednesday"), i18n("Long day name", "Thursday"),
 	i18n("Long day name", "Friday"), i18n("Long day name", "Saturday"), 
@@ -233,19 +233,19 @@ int ExtDate::weekNumber( int *yearNum ) const
 }
 
 #ifndef QT_NO_TEXTDATE
-QString ExtDate::shortMonthName( int month ) {return m_shortMonthNames[month-1];}
-QString ExtDate::shortDayName( int weekday ) {return m_shortDayNames[weekday-1];}
-QString ExtDate::longMonthName( int month ) {return m_longMonthNames[month-1];}
-QString ExtDate::longDayName( int weekday ) {return m_longDayNames[weekday-1];}
+TQString ExtDate::shortMonthName( int month ) {return m_shortMonthNames[month-1];}
+TQString ExtDate::shortDayName( int weekday ) {return m_shortDayNames[weekday-1];}
+TQString ExtDate::longMonthName( int month ) {return m_longMonthNames[month-1];}
+TQString ExtDate::longDayName( int weekday ) {return m_longDayNames[weekday-1];}
 #endif //QT_NO_TEXTDATE
 
 #ifndef QT_NO_TEXTSTRING
 #if !defined(QT_NO_SPRINTF)
-QString ExtDate::toString( Qt::DateFormat f) const
+TQString ExtDate::toString( Qt::DateFormat f) const
 {
 	QString	a_format;
 
-	if ( ! isValid() ) return QString::null;
+	if ( ! isValid() ) return TQString::null;
 
 	switch (f)
 	{
@@ -270,9 +270,9 @@ QString ExtDate::toString( Qt::DateFormat f) const
 }
 #endif
 
-QString ExtDate::toString( const QString& format ) const
+TQString ExtDate::toString( const TQString& format ) const
 {
-	if ( ! isValid() ) return QString::null;
+	if ( ! isValid() ) return TQString::null;
 
 	//We use the KDE Date format specs.
 	//Replace occurences of the following tokens with their
@@ -291,14 +291,14 @@ QString ExtDate::toString( const QString& format ) const
 
 	//All other characters are left as-is.
 
-	QString result( format );
+	TQString result( format );
 
-	result.replace( "%Y", QString().sprintf( "%d", year() ) );
-	result.replace( "%y", QString().sprintf( "%02d", (year() % 100) ) );
-	result.replace( "%n", QString().sprintf( "%d", month() ) );
-	result.replace( "%m", QString().sprintf( "%02d", month() ) );
-	result.replace( "%e", QString().sprintf( "%d", day() ) );
-	result.replace( "%d", QString().sprintf( "%02d", day() ) );
+	result.replace( "%Y", TQString().sprintf( "%d", year() ) );
+	result.replace( "%y", TQString().sprintf( "%02d", (year() % 100) ) );
+	result.replace( "%n", TQString().sprintf( "%d", month() ) );
+	result.replace( "%m", TQString().sprintf( "%02d", month() ) );
+	result.replace( "%e", TQString().sprintf( "%d", day() ) );
+	result.replace( "%d", TQString().sprintf( "%02d", day() ) );
 	result.replace( "%b", shortMonthName( month() ) );
 	result.replace( "%B", longMonthName( month() ) );
 	result.replace( "%a", shortDayName( dayOfWeek() ) );
@@ -402,7 +402,7 @@ ExtDate ExtDate::currentDate(Qt::TimeSpec ts)
 
 #ifndef QT_NO_DATESTRING
 //Try both DateFormat values
-ExtDate ExtDate::fromString( const QString& s )
+ExtDate ExtDate::fromString( const TQString& s )
 {
 	ExtDate dResult = ExtDate::fromString( s, Qt::TextDate );
 	if ( dResult.isValid() ) return dResult;
@@ -412,13 +412,13 @@ ExtDate ExtDate::fromString( const QString& s )
 	else return ExtDate(); //invalid	
 }
 
-ExtDate ExtDate::fromString( const QString& s, Qt::DateFormat f )
+ExtDate ExtDate::fromString( const TQString& s, Qt::DateFormat f )
 {
 	ExtDate dt = ExtDate();  //initialize invalid date
 	if ( s.isEmpty() ) { return dt; }
 	if ( f == Qt::LocalDate ) { //can't use LocalFormat
 #if defined(QT_CHECK_RANGE)
-		qWarning( "QDate::fromString: Parameter out of range" );
+		qWarning( "TQDate::fromString: Parameter out of range" );
 #endif
 		return dt;
 	}
@@ -442,7 +442,7 @@ ExtDate ExtDate::fromString( const QString& s, Qt::DateFormat f )
 			//Three possible date formats:
 			//dd mth yyyy; mth dd yyyy; wkd mth dd yyyy
 			//"mth" is the word for the month (long or short form)
-			QStringList ss = QStringList::split( " ", s );
+			TQStringList ss = TQStringList::split( " ", s );
 			bool ok = false;
 			int month = -1;
 			uint imonth = 0;
@@ -515,13 +515,13 @@ bool ExtDate::isValid( int y, int m, int d )
 	return true;
 }
 
-QDate ExtDate::qdate() const {
-	QDate q( year(), month(), day() );
+TQDate ExtDate::qdate() const {
+	TQDate q( year(), month(), day() );
 
 	if ( q.isValid() )
 		return q;
 	else
-		return QDate();
+		return TQDate();
 }
 
 bool	ExtDate::leapYear( int year )
@@ -552,7 +552,7 @@ int ExtDate::dayOfYear(int y, int m, int d)
     \ingroup time
 
     A ExtDateTime object contains a calendar date and a clock time (a
-    "datetime"). It is a combination of the ExtDate and QTime classes.
+    "datetime"). It is a combination of the ExtDate and TQTime classes.
     It can read the current datetime from the system clock. It
     provides functions for comparing datetimes and for manipulating a
     datetime by adding a number of seconds, days, months or years.
@@ -582,11 +582,11 @@ int ExtDate::dayOfYear(int y, int m, int d)
     number of seconds between two datetimes.
 
     The range of a datetime object is constrained to the ranges of the
-    ExtDate and QTime objects which it embodies.
+    ExtDate and TQTime objects which it embodies.
 
     Methods in this class are reentrant.
 
-    \sa ExtDate QTime ExtDateTimeEdit
+    \sa ExtDate TQTime ExtDateTimeEdit
 */
 
 
@@ -614,7 +614,7 @@ ExtDateTime::ExtDateTime( const ExtDate &date )
     Constructs a datetime with date \a date and time \a time.
 */
 
-ExtDateTime::ExtDateTime( const ExtDate &date, const QTime &time )
+ExtDateTime::ExtDateTime( const ExtDate &date, const TQTime &time )
     : d(date), t(time)
 {
 }
@@ -626,7 +626,7 @@ ExtDateTime::ExtDateTime( const ExtDate &date, const QTime &time )
     Returns TRUE if both the date and the time are null; otherwise
     returns FALSE. A null datetime is invalid.
 
-    \sa ExtDate::isNull(), QTime::isNull()
+    \sa ExtDate::isNull(), TQTime::isNull()
 */
 
 /*!
@@ -635,7 +635,7 @@ ExtDateTime::ExtDateTime( const ExtDate &date, const QTime &time )
     Returns TRUE if both the date and the time are valid; otherwise
     returns FALSE.
 
-    \sa ExtDate::isValid(), QTime::isValid()
+    \sa ExtDate::isValid(), TQTime::isValid()
 */
 
 /*!
@@ -647,7 +647,7 @@ ExtDateTime::ExtDateTime( const ExtDate &date, const QTime &time )
 */
 
 /*!
-    \fn QTime ExtDateTime::time() const
+    \fn TQTime ExtDateTime::time() const
 
     Returns the time part of the datetime.
 
@@ -663,7 +663,7 @@ ExtDateTime::ExtDateTime( const ExtDate &date, const QTime &time )
 */
 
 /*!
-    \fn void ExtDateTime::setTime( const QTime &time )
+    \fn void ExtDateTime::setTime( const TQTime &time )
 
     Sets the time part of this datetime to \a time.
 
@@ -773,7 +773,7 @@ void ExtDateTime::setTime_t( uint secsSince1Jan1970UTC, Qt::TimeSpec ts )
 
     If \a f is \c Qt::TextDate, the string format is "Wed May 20
     03:40:13 1998" (using ExtDate::shortDayName(), ExtDate::shortMonthName(),
-    and QTime::toString() to generate the string, so the day and month
+    and TQTime::toString() to generate the string, so the day and month
     names will have localized names).
 
     If \a f is \c Qt::ISODate, the string format corresponds to the
@@ -786,13 +786,13 @@ void ExtDateTime::setTime_t( uint secsSince1Jan1970UTC, Qt::TimeSpec ts )
     If the format \a f is invalid or the datetime is invalid, toString()
     returns a null string.
 
-    \sa ExtDate::toString() QTime::toString()
+    \sa ExtDate::toString() TQTime::toString()
 */
 
-QString ExtDateTime::toString( Qt::DateFormat f ) const
+TQString ExtDateTime::toString( Qt::DateFormat f ) const
 {
 	if ( !isValid() )
-		return QString::null;
+		return TQString::null;
 
 	if ( f == Qt::ISODate ) {
 		return d.toString( Qt::ISODate ) + "T" + t.toString( Qt::ISODate );
@@ -807,17 +807,17 @@ QString ExtDateTime::toString( Qt::DateFormat f ) const
 						+ " " + KGlobal::locale()->timeFormat() );
 	}
 
-	return QString::null;
+	return TQString::null;
 }
 #endif
 
-QString ExtDateTime::toString( const QString& format ) const
+TQString ExtDateTime::toString( const TQString& format ) const
 {
 	if ( !isValid() )
-		return QString::null;
+		return TQString::null;
 
 	//Parse the date portion of the format string
-	QString result = date().toString( format );
+	TQString result = date().toString( format );
 
 	//For the time format, use the following KDE format specs:
 	//Replace occurences of the following tokens with their
@@ -833,13 +833,13 @@ QString ExtDateTime::toString( const QString& format ) const
 
 	int h = time().hour();
 
-	result.replace( "%H", QString().sprintf( "%02d", h ) );
-	result.replace( "%k", QString().sprintf( "%d", h ) );
-	result.replace( "%I", QString().sprintf( "%02d", ( h > 12 ) ? h-12 : h ) );
-	result.replace( "%l", QString().sprintf( "%d", ( h > 12 ) ? h-12 : h ) );
-	result.replace( "%M", QString().sprintf( "%02d", time().minute() ) );
-	result.replace( "%S", QString().sprintf( "%02d", time().second() ) );
-	result.replace( "%p", QString().sprintf( "%s", ( h > 12 ) ? "pm" : "am" ) );
+	result.replace( "%H", TQString().sprintf( "%02d", h ) );
+	result.replace( "%k", TQString().sprintf( "%d", h ) );
+	result.replace( "%I", TQString().sprintf( "%02d", ( h > 12 ) ? h-12 : h ) );
+	result.replace( "%l", TQString().sprintf( "%d", ( h > 12 ) ? h-12 : h ) );
+	result.replace( "%M", TQString().sprintf( "%02d", time().minute() ) );
+	result.replace( "%S", TQString().sprintf( "%02d", time().second() ) );
+	result.replace( "%p", TQString().sprintf( "%s", ( h > 12 ) ? "pm" : "am" ) );
 
 	return result;
 }
@@ -909,7 +909,7 @@ ExtDateTime ExtDateTime::addSecs( int nsecs ) const
 	}
 
 	ExtDateTime ret;
-	ret.setTime( QTime().addMSecs( tt ) );
+	ret.setTime( TQTime().addMSecs( tt ) );
 	ret.setDate( ExtDate( dd ) );
 
 	return ret;
@@ -934,11 +934,11 @@ int ExtDateTime::daysTo( const ExtDateTime &dt ) const
     Example:
     \code
     ExtDateTime dt = ExtDateTime::currentDateTime();
-    ExtDateTime xmas( ExtDate(dt.date().year(),12,24), QTime(17,00) );
+    ExtDateTime xmas( ExtDate(dt.date().year(),12,24), TQTime(17,00) );
     kdDebug( ) << "There are " << dt.secsTo(xmas) << " seconds to Christmas" << endl;
     \endcode
 
-    \sa addSecs(), daysTo(), QTime::secsTo()
+    \sa addSecs(), daysTo(), TQTime::secsTo()
 */
 
 int ExtDateTime::secsTo( const ExtDateTime &dt ) const
@@ -1023,7 +1023,7 @@ bool ExtDateTime::operator>=( const ExtDateTime &dt ) const
 
     Returns the current datetime, as reported by the system clock.
 
-    \sa ExtDate::currentDate(), QTime::currentTime()
+    \sa ExtDate::currentDate(), TQTime::currentTime()
 */
 
 ExtDateTime ExtDateTime::currentDateTime()
@@ -1035,14 +1035,14 @@ ExtDateTime ExtDateTime::currentDateTime()
   Returns the current datetime, as reported by the system clock, for the
   TimeSpec \a ts. The default TimeSpec is LocalTime.
 
-  \sa ExtDate::currentDate(), QTime::currentTime(), Qt::TimeSpec
+  \sa ExtDate::currentDate(), TQTime::currentTime(), Qt::TimeSpec
 */
 
 ExtDateTime ExtDateTime::currentDateTime( Qt::TimeSpec ts )
 {
     ExtDateTime dt;
     dt.setDate( ExtDate::currentDate(ts) );
-    QTime t = t.currentTime(ts);
+    TQTime t = t.currentTime(ts);
     if ( t.hour()==0 && t.minute()==0 )         // midnight or right after?
         dt.setDate( ExtDate::currentDate(ts) ); // fetch date again
     dt.setTime( t );
@@ -1060,7 +1060,7 @@ ExtDateTime ExtDateTime::currentDateTime( Qt::TimeSpec ts )
 
     \warning Note that \c Qt::LocalDate cannot be used here.
 */
-ExtDateTime ExtDateTime::fromString( const QString& s )
+ExtDateTime ExtDateTime::fromString( const TQString& s )
 {
 	ExtDateTime dtResult = ExtDateTime::fromString( s, Qt::TextDate );
 	if ( dtResult.isValid() ) return dtResult;
@@ -1071,7 +1071,7 @@ ExtDateTime ExtDateTime::fromString( const QString& s )
 	else return ExtDateTime(); //invalid
 }
 
-ExtDateTime ExtDateTime::fromString( const QString& s, Qt::DateFormat f )
+ExtDateTime ExtDateTime::fromString( const TQString& s, Qt::DateFormat f )
 {
 	ExtDateTime dt;
 
@@ -1085,21 +1085,21 @@ ExtDateTime ExtDateTime::fromString( const QString& s, Qt::DateFormat f )
 
 	if ( f == Qt::ISODate ) {
 		if ( s.length() <= 10 || ! s.contains( ':' )  ) { //no time specified
-			QTime t = QTime(0,0,0);
+			TQTime t = TQTime(0,0,0);
 			return ExtDateTime( ExtDate::fromString( s.mid(0,10), Qt::ISODate ) );
 		} else {
 			return ExtDateTime( ExtDate::fromString( s.mid(0,10), Qt::ISODate ),
-					QTime::fromString( s.mid(11), Qt::ISODate ) );
+					TQTime::fromString( s.mid(11), Qt::ISODate ) );
 		}
 	}
 #if !defined(QT_NO_REGEXP) && !defined(QT_NO_TEXTDATE)
 	else if ( f == Qt::TextDate ) {
 
 		//parse the time, if it exists.
-		QTime time;
-		QString sd = s;
+		TQTime time;
+		TQString sd = s;
 		int hour, minute, second;
-		int pivot = s.find( QRegExp(QString::fromLatin1("[0-9][0-9]:[0-9][0-9]:[0-9][0-9]")) );
+		int pivot = s.find( TQRegExp(TQString::fromLatin1("[0-9][0-9]:[0-9][0-9]:[0-9][0-9]")) );
 		if ( pivot != -1 ) {
 			hour = s.mid( pivot, 2 ).toInt();
 			minute = s.mid( pivot+3, 2 ).toInt();
@@ -1121,12 +1121,12 @@ ExtDateTime ExtDateTime::fromString( const QString& s, Qt::DateFormat f )
 
 
 #ifndef QT_NO_DATASTREAM
-KDE_EXPORT QDataStream &operator<<( QDataStream & ostream, const ExtDate & date)
+KDE_EXPORT TQDataStream &operator<<( TQDataStream & ostream, const ExtDate & date)
 {
 	return ostream << (Q_UINT32)(date.jd());
 }
 
-KDE_EXPORT QDataStream &operator>>( QDataStream & ostream, ExtDate & date)
+KDE_EXPORT TQDataStream &operator>>( TQDataStream & ostream, ExtDate & date)
 {
 	Q_UINT32 julday;
 	ostream >> julday;
@@ -1134,12 +1134,12 @@ KDE_EXPORT QDataStream &operator>>( QDataStream & ostream, ExtDate & date)
 	return ostream;
 }
 
-KDE_EXPORT QDataStream &operator<<( QDataStream & ostream, const ExtDateTime & dt)
+KDE_EXPORT TQDataStream &operator<<( TQDataStream & ostream, const ExtDateTime & dt)
 {
 	return ostream << dt.d << dt.t;
 }
 
-KDE_EXPORT QDataStream &operator>>( QDataStream & ostream, ExtDateTime & dt)
+KDE_EXPORT TQDataStream &operator>>( TQDataStream & ostream, ExtDateTime & dt)
 {
 	ostream >> dt.d >> dt.t;
 	return ostream;

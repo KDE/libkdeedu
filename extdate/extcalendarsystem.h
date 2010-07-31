@@ -4,7 +4,7 @@
    Copyright (c) 2004 Jason Harris <jharris@30doradus.org>
 
 	 This class has been derived from KCalendarSystem;
-	 the changesd made just replace QDate objects with ExtDate objects.
+	 the changesd made just replace TQDate objects with ExtDate objects.
 	 These changes by Jason Harris <jharris@30doradus.org>
 
    This library is free software; you can redistribute it and/or
@@ -73,7 +73,7 @@ public:
    * @param bShort If the short version of should be used
    * @return The year literal of the date
    */
-  virtual QString yearString(const ExtDate & pDate, bool bShort) const;
+  virtual TQString yearString(const ExtDate & pDate, bool bShort) const;
 
   /**
    * Converts a year literal of a part of a string into a integer starting at the beginning of the string
@@ -82,7 +82,7 @@ public:
    * @param iLength The number of QChars used, and 0 if no valid symbols was found in the string
    * @return An integer corresponding to the year
    */
-  virtual int yearStringToInteger(const QString & sNum, int & iLength) const;
+  virtual int yearStringToInteger(const TQString & sNum, int & iLength) const;
 
   /**
    * Gets specific calendar type month for a given gregorian date
@@ -99,7 +99,7 @@ public:
    * @param bShort If the short version of should be used
    * @return The month literal of the date
    */
-  virtual QString monthString(const ExtDate & pDate, bool bShort) const;
+  virtual TQString monthString(const ExtDate & pDate, bool bShort) const;
 
   /**
    * Converts a month literal of a part of a string into a integer starting at the beginning of the string
@@ -108,7 +108,7 @@ public:
    * @param iLength The number of QChars used, and 0 if no valid symbols was found in the string
    * @return An integer corresponding to the month
    */
-  virtual int monthStringToInteger(const QString & sNum, int & iLength) const;
+  virtual int monthStringToInteger(const TQString & sNum, int & iLength) const;
 
   /**
    * Gets specific calendar type day number of month for a given date
@@ -125,7 +125,7 @@ public:
    * @param bShort If the short version of should be used
    * @return The day literal of the date
    */
-  virtual QString dayString(const ExtDate & pDate, bool bShort) const;
+  virtual TQString dayString(const ExtDate & pDate, bool bShort) const;
 
   /**
    * Converts a day literal of a part of a string into a integer starting at the beginning of the string
@@ -134,7 +134,7 @@ public:
    * @param iLength The number of QChars used, and 0 if no valid symbols was found in the string
    * @return An integer corresponding to the day
    */
-  virtual int dayStringToInteger(const QString & sNum, int & iLength) const;
+  virtual int dayStringToInteger(const TQString & sNum, int & iLength) const;
 
   /**
    * Gets specific calendar type number of day of week number for a given
@@ -166,7 +166,7 @@ public:
   virtual bool setYMD(ExtDate & date, int y, int m, int d) const = 0;
 
   /**
-   * Returns a QDate object containing a date nyears later.
+   * Returns a TQDate object containing a date nyears later.
    *
    * @param date The old date
    * @param nyears The number of years to add
@@ -175,7 +175,7 @@ public:
   virtual ExtDate addYears(const ExtDate & date, int nyears) const = 0;
 
   /**
-   * Returns a QDate object containing a date nmonths later.
+   * Returns a TQDate object containing a date nmonths later.
    *
    * @param date The old date
    * @param nmonths The number of months to add
@@ -184,7 +184,7 @@ public:
   virtual ExtDate addMonths(const ExtDate & date, int nmonths) const = 0;
 
   /**
-   * Returns a QDate object containing a date ndays later.
+   * Returns a TQDate object containing a date ndays later.
    *
    * @param date The old date
    * @param ndays The number of days to add
@@ -235,14 +235,14 @@ public:
 
   /**
    * Gets specific calendar type month name for a given month number
-   * If an invalid month is specified, QString::null is returned.
+   * If an invalid month is specified, TQString::null is returned.
    *
    * @param month The month number
    * @param year The year the month belongs to
    * @param shortName Specifies if the short month name should be used
    * @return The name of the month
    */
-  virtual QString monthName (int month, int year, bool shortName = false) const = 0;
+  virtual TQString monthName (int month, int year, bool shortName = false) const = 0;
 
   /**
    * Gets specific calendar type month name for a given gregorian date
@@ -251,13 +251,13 @@ public:
    * @param shortName Specifies if the short month name should be used
    * @return The name of the month
    */
-  virtual QString monthName (const ExtDate & date, bool shortName = false ) const = 0;
+  virtual TQString monthName (const ExtDate & date, bool shortName = false ) const = 0;
 
   /**
    * Returns a string containing the possessive form of the month name.
    * ("of January", "of February", etc.)
    * It's needed in long format dates in some languages.
-   * If an invalid month is specified, QString::null is returned.
+   * If an invalid month is specified, TQString::null is returned.
    *
    * @param month The month number
    * @param year The year the month belongs to
@@ -265,7 +265,7 @@ public:
    *
    * @return The possessive form of the name of the month
    */
-  virtual QString monthNamePossessive(int month, int year, bool shortName = false) const = 0;
+  virtual TQString monthNamePossessive(int month, int year, bool shortName = false) const = 0;
 
   /**
    * Returns a string containing the possessive form of the month name.
@@ -277,17 +277,17 @@ public:
    *
    * @return The possessive form of the name of the month
    */
-  virtual QString monthNamePossessive(const ExtDate & date, bool shortName = false) const = 0;
+  virtual TQString monthNamePossessive(const ExtDate & date, bool shortName = false) const = 0;
 
   /**
    * Gets specific calendar type week day name
-   * If an invalid week day is specified, QString::null is returned.
+   * If an invalid week day is specified, TQString::null is returned.
    *
    * @param weekDay number of day in week (1 -> Monday)
    * @param shortName short or complete day name
    * @return day name
    */
-  virtual QString weekDayName (int weekDay, bool shortName = false) const = 0;
+  virtual TQString weekDayName (int weekDay, bool shortName = false) const = 0;
 
   /**
    * Gets specific calendar type week day name
@@ -296,7 +296,7 @@ public:
    * @param shortName short or complete day name
    * @return day name
    */
-  virtual QString weekDayName (const ExtDate & date, bool shortName = false) const = 0;
+  virtual TQString weekDayName (const ExtDate & date, bool shortName = false) const = 0;
 
   /**
    * Gets the first year value supported by specific calendar type
@@ -308,7 +308,7 @@ public:
 
   /**
    * Gets the maximum year value supported by specific calendar type
-   * algorithms (QDate, 8000)
+   * algorithms (TQDate, 8000)
    *
    * @return maximum year supported
    */
@@ -324,7 +324,7 @@ public:
   /**
    * Gets the string representing the calendar
    */
-  virtual QString calendarName() const = 0;
+  virtual TQString calendarName() const = 0;
 
   /**
    * Gets if the calendar is lunar based

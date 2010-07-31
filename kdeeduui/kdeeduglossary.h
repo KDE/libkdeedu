@@ -47,7 +47,7 @@ class Glossary
 			m_itemlist.append( item );
 		}
 
-		QValueList<GlossaryItem*> itemlist()const{
+		TQValueList<GlossaryItem*> itemlist()const{
 			return m_itemlist;
 		}
 
@@ -67,21 +67,21 @@ class Glossary
 		 * Every glossary can have a name. It will be
 		 * set to @p name
 		 */
-		void setName( const QString& name ){
+		void setName( const TQString& name ){
 			m_name = name;
 		}
 
 		/**
 		 * @returns the name of the glossary
 		 */
-		QString name()const{
+		TQString name()const{
 			return m_name;
 		}
 
 		/**
 		 * sets the internal list of items to @p list
 		 */
-		void setItemlist( QValueList<GlossaryItem*> list ){
+		void setItemlist( TQValueList<GlossaryItem*> list ){
 			m_itemlist = list;
 		}
 
@@ -94,18 +94,18 @@ class Glossary
 		 * @return a pointer to the loaded glossary. Even in case of
 		 *         error, this won't return 0 but an empty Glossary.
 		 */
-		static Glossary* readFromXML( const KURL& url, const QString& path = 0 );
+		static Glossary* readFromXML( const KURL& url, const TQString& path = 0 );
 
 		/**
 		 * Every glossaryitem can show pictures. [img src="foo.png]
 		 * will look for the file foo.png in the path defined be
 		 * @p path
 		 */
-		void setPicturePath( const QString& path ){
+		void setPicturePath( const TQString& path ){
 			m_picturepath = path;
 		}
 
-		QString picturePath()const{
+		TQString picturePath()const{
 			return m_picturepath;
 		}
 
@@ -114,7 +114,7 @@ class Glossary
 		 * of the htmlview. The dialog
 		 * will use the file specifiec by the @p filename
 		 */
-		void setBackgroundPicture( const QString& filename ){
+		void setBackgroundPicture( const TQString& filename ){
 			m_backgroundpicture = filename;
 		}
 
@@ -122,7 +122,7 @@ class Glossary
 		 * @return the picuture used as the background in 
 		 * this background
 		 */
-		QString backgroundPicture()const{
+		TQString backgroundPicture()const{
 			return m_backgroundpicture;
 		}
 	
@@ -130,11 +130,11 @@ class Glossary
 		/**
 		 * This methods parses the given xml-code. It will extract
 		 * the information of the items and return them as a
-		 * QValueList<GlossaryItem*>
+		 * TQValueList<GlossaryItem*>
 		 */
-		virtual QValueList<GlossaryItem*> readItems( QDomDocument &itemDocument );
+		virtual TQValueList<GlossaryItem*> readItems( TQDomDocument &itemDocument );
 		
-		QString m_backgroundpicture;
+		TQString m_backgroundpicture;
 
 		/**
 		 * replaces the [img]-pseudocode with valid html. The path where
@@ -145,26 +145,26 @@ class Glossary
 		/**
 		 * the path in which pictures of the glossary will be searched
 		 */
-		QString m_picturepath;
+		TQString m_picturepath;
 		
 		/**
 		 * Load the layout from an XML file.
 		 *
-		 * @param doc The QDomDocument which will contain the read XML
+		 * @param doc The TQDomDocument which will contain the read XML
 		 *            contents.
 		 * @param url The path of the file to load
 		 *
 		 * @return a bool indicating whether the loading of the XML was
 		 *         successfull or not
 		 */
-		bool loadLayout( QDomDocument& doc, const KURL& url );
+		bool loadLayout( TQDomDocument& doc, const KURL& url );
 	
-		QValueList<GlossaryItem*> m_itemlist;
+		TQValueList<GlossaryItem*> m_itemlist;
 		
 		/**
 		 * the name of the glossary
 		 */
-		QString m_name;
+		TQString m_name;
 };
 
 /**
@@ -182,54 +182,54 @@ class GlossaryItem
 		GlossaryItem(){}
 		~GlossaryItem(){}
 
-		void setName( const QString& s ){
+		void setName( const TQString& s ){
 			m_name = s;
 		}
 
-		void setDesc( const QString& s){
+		void setDesc( const TQString& s){
 			m_desc = s;
 		}
 
-		void setRef( const QStringList& s){
+		void setRef( const TQStringList& s){
 			m_ref = s;
 		}
 	
-		void setPictures( const QString& s ){
+		void setPictures( const TQString& s ){
 			m_pic = s;
 		}
 
-		QString name() const {
+		TQString name() const {
 			return m_name;
 		}
 		
-		QString desc() const {
+		TQString desc() const {
 			return m_desc;
 		}
 		
-		QStringList ref() const {
+		TQStringList ref() const {
 			return m_ref;
 		}
 		
-		QStringList pictures() const {
+		TQStringList pictures() const {
 			return m_pic;
 		}
 		
 		/**
 		 * @return the formated HTML code for current item.
 		 **/
-		QString toHtml() const;
+		TQString toHtml() const;
 
 		/**
 		 * This method parses the references.
 		 * @return the HTML code with the references as HTML links
 		 */
-		QString parseReferences() const;
+		TQString parseReferences() const;
 
 	private:
-		QString m_name;
-		QString m_desc;
-		QStringList m_ref;
-		QStringList m_pic;
+		TQString m_name;
+		TQString m_desc;
+		TQStringList m_ref;
+		TQStringList m_pic;
 };
 
 /**
@@ -242,10 +242,10 @@ class GlossaryDialog : public KDialogBase
 	Q_OBJECT
 
 	public:
-		GlossaryDialog( bool folded = true, QWidget *parent=0, const char *name=0);
+		GlossaryDialog( bool folded = true, TQWidget *parent=0, const char *name=0);
 		~GlossaryDialog();
 
-		void keyPressEvent(QKeyEvent*);
+		void keyPressEvent(TQKeyEvent*);
 
 		/**
 		 * add a new glossary
@@ -255,7 +255,7 @@ class GlossaryDialog : public KDialogBase
 		void addGlossary( Glossary* newgloss );
 
 	private:
-		QValueList<Glossary*> m_glossaries;
+		TQValueList<Glossary*> m_glossaries;
 
 		/**
 		 * if true the items will be displayed folded
@@ -266,16 +266,16 @@ class GlossaryDialog : public KDialogBase
 
 		KHTMLPart *m_htmlpart;
 		KListView *m_glosstree;
-		QString m_htmlbasestring;
+		TQString m_htmlbasestring;
 
 		KActionCollection* m_actionCollection;
 
-		QListViewItem* findTreeWithLetter( const QChar&, QListViewItem* );
+		TQListViewItem* findTreeWithLetter( const TQChar&, TQListViewItem* );
 
 		KListViewSearchLine *m_search;
 
 	private slots:
-		void slotClicked( QListViewItem * );
+		void slotClicked( TQListViewItem * );
 		/**
 		 * The user clicked on a href. Emit the corresponding item
 		 */

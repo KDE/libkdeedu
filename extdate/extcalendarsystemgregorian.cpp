@@ -4,7 +4,7 @@
    Copyright (c) 2004 Jason Harris <jharris@30doradus.org>
 
 	 This class has been derived from KCalendarSystemGregorian;
-	 the changesd made just replace QDate objects with ExtDate objects.
+	 the changesd made just replace TQDate objects with ExtDate objects.
 	 These changes by Jason Harris <jharris@30doradus.org>
 
    This library is free software; you can redistribute it and/or
@@ -72,18 +72,18 @@ int ExtCalendarSystemGregorian::weekNumber(const ExtDate& date,
   return date.weekNumber(yearNum);
 }
 
-QString ExtCalendarSystemGregorian::monthName(const ExtDate& date,
+TQString ExtCalendarSystemGregorian::monthName(const ExtDate& date,
                                             bool shortName) const
 {
   return monthName(month(date), year(date), shortName);
 }
 
-QString ExtCalendarSystemGregorian::monthNamePossessive(const ExtDate& date, bool shortName) const
+TQString ExtCalendarSystemGregorian::monthNamePossessive(const ExtDate& date, bool shortName) const
 {
   return monthNamePossessive(month(date), year(date), shortName);
 }
 
-QString ExtCalendarSystemGregorian::monthName(int month, int year, bool shortName) const
+TQString ExtCalendarSystemGregorian::monthName(int month, int year, bool shortName) const
 {
   Q_UNUSED(year);
 
@@ -144,10 +144,10 @@ QString ExtCalendarSystemGregorian::monthName(int month, int year, bool shortNam
         return locale()->translate("December");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 
-QString ExtCalendarSystemGregorian::monthNamePossessive(int month, int year,
+TQString ExtCalendarSystemGregorian::monthNamePossessive(int month, int year,
                                                       bool shortName) const
 {
   Q_UNUSED(year);
@@ -209,7 +209,7 @@ QString ExtCalendarSystemGregorian::monthNamePossessive(int month, int year,
         return locale()->translate("of December");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 
 bool ExtCalendarSystemGregorian::setYMD(ExtDate & date, int y, int m, int d) const
@@ -233,7 +233,7 @@ ExtDate ExtCalendarSystemGregorian::addDays(const ExtDate & date, int ndays) con
   return date.addDays(ndays);
 }
 
-QString ExtCalendarSystemGregorian::weekDayName(int col, bool shortName) const
+TQString ExtCalendarSystemGregorian::weekDayName(int col, bool shortName) const
 {
   // ### Should this really be different to each calendar system? Or are we
   //     only going to support weeks with 7 days?
@@ -241,7 +241,7 @@ QString ExtCalendarSystemGregorian::weekDayName(int col, bool shortName) const
   return ExtCalendarSystem::weekDayName(col, shortName);
 }
 
-QString ExtCalendarSystemGregorian::weekDayName(const ExtDate& date, bool shortName) const
+TQString ExtCalendarSystemGregorian::weekDayName(const ExtDate& date, bool shortName) const
 {
   return weekDayName(dayOfWeek(date), shortName);
 }
@@ -292,9 +292,9 @@ int ExtCalendarSystemGregorian::weekDayOfPray() const
   return 7; // sunday
 }
 
-QString ExtCalendarSystemGregorian::calendarName() const
+TQString ExtCalendarSystemGregorian::calendarName() const
 {
-  return QString::fromLatin1("gregorian");
+  return TQString::fromLatin1("gregorian");
 }
 
 bool ExtCalendarSystemGregorian::isLunar() const
@@ -312,7 +312,7 @@ bool ExtCalendarSystemGregorian::isSolar() const
   return true;
 }
 
-int ExtCalendarSystemGregorian::yearStringToInteger(const QString & sNum, int & iLength) const
+int ExtCalendarSystemGregorian::yearStringToInteger(const TQString & sNum, int & iLength) const
 {
   int iYear;
   iYear = ExtCalendarSystem::yearStringToInteger(sNum, iLength);

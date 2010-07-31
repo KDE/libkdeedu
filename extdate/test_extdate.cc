@@ -5,7 +5,7 @@
 
 void test1_unit(int a_year)
 {
-	std::cout << a_year << "  (QDate|ExtDate): " << ((QDate::leapYear(a_year)) ? "yes" : "no")
+	std::cout << a_year << "  (QDate|ExtDate): " << ((TQDate::leapYear(a_year)) ? "yes" : "no")
 			<<"|"<< ((ExtDate::leapYear(a_year)) ? "yes" : "no") << std::endl;
 }
 
@@ -117,7 +117,7 @@ void test2()
 		{2003, 11, 2}
 	};
 	uint i;
-	std::cout << "(y, m, d) :: QDate : Q.dayOfWeek() : Q.weekNumber() : Q.dayOfYear() :: ExtDate : E.dayOfWeek() : E.weekNumber() : E.dayOfYear()\n" << std::endl;
+	std::cout << "(y, m, d) :: TQDate : Q.dayOfWeek() : Q.weekNumber() : Q.dayOfYear() :: ExtDate : E.dayOfWeek() : E.weekNumber() : E.dayOfYear()\n" << std::endl;
 
 	for (i = 0 ; i < sizeof(a_set_of_dates)/sizeof(a_set_of_dates[0]) ; i++)
 	{
@@ -130,11 +130,11 @@ void test3_unit(int y, int m, int d, int dm)
 {
 	QDate	q(y, m, d);
 	ExtDate	e(y, m, d);
-	QDate q2 = q.addMonths(dm);
+	TQDate q2 = q.addMonths(dm);
 	ExtDate e2 = e.addMonths(dm);
 	std::cout << e.toString("%d.%b.%Y").local8Bit() << " + " << dm
 		<< " months :: ExtDate : " << e2.toString("%d.%b.%Y").local8Bit()
-		<< "   QDate : " << q2.toString("dd.MMM.yyyy").local8Bit() << std::endl;
+		<< "   TQDate : " << q2.toString("dd.MMM.yyyy").local8Bit() << std::endl;
 }
 
 void test3()
@@ -162,7 +162,7 @@ void test4_unit(int y, int m, int d, int dy)
 	QDate	q2 = q.addYears(dy);
 	ExtDate	e2 = e.addYears(dy);
 	std::cout << e.toString("%d.%m.%Y").local8Bit() << " + " << dy << " years :: ExtDate : "
-		<< e2.toString().local8Bit() << "   QDate : "
+		<< e2.toString().local8Bit() << "   TQDate : "
 		<< q2.toString().local8Bit() << std::endl;
 }
 
@@ -189,10 +189,10 @@ void test4()
 
 void test5_unit(int y, int m, int d, const char *qformat, const char *eformat)
 {
-	QDate q(y, m, d);
+	TQDate q(y, m, d);
 	ExtDate e(y, m, d);
 
-	if ( QString(qformat) == "<default>" )
+	if ( TQString(qformat) == "<default>" )
 		std::cout << eformat << " : " << e.toString().local8Bit() << " :: "
 				<< qformat << " : " << q.toString().local8Bit() << std::endl;
 	else
@@ -238,7 +238,7 @@ void test6_unit(int y, int m, int d)
 {
 	std::cout << d << "/" << m << "/" << y << " :: "
 		<< ( ExtDate::isValid(y, m, d) ? "TRUE" : "FALSE" ) << " : "
-		<< ( QDate::isValid(y, m, d) ? "TRUE" : "FALSE" ) << std::endl;
+		<< ( TQDate::isValid(y, m, d) ? "TRUE" : "FALSE" ) << std::endl;
 }
 
 void test6()
@@ -265,7 +265,7 @@ void test6()
 	};
 	uint i;
 	std::cout << "Date.isValid()" << std::endl;
-	std::cout << "d/m/y :: ExtDate.isValid() : QDate.isValid()\n" << std::endl;
+	std::cout << "d/m/y :: ExtDate.isValid() : TQDate.isValid()\n" << std::endl;
 
 	for (i = 0 ; i < sizeof(a_set_of_dates)/sizeof(a_set_of_dates[0]) ; i++)
 	{
@@ -277,29 +277,29 @@ void test6()
 void test7()
 {
 	std::cout << "Express the current date:\n" << std::endl;
-	QDate q = QDate::currentDate(Qt::LocalTime);
+	TQDate q = TQDate::currentDate(Qt::LocalTime);
 	ExtDate e = ExtDate::currentDate(Qt::TimeSpec(Qt::LocalTime));
-	std::cout << "Qt::LocalTime :: ExtDate : " << e.toString().local8Bit() << "   QDate : "
+	std::cout << "Qt::LocalTime :: ExtDate : " << e.toString().local8Bit() << "   TQDate : "
 		<< q.toString().local8Bit() << std::endl;
-	q = QDate::currentDate(Qt::UTC);
+	q = TQDate::currentDate(Qt::UTC);
 	e = ExtDate::currentDate(Qt::UTC);
-	std::cout << "Qt::UTC       :: ExtDate : " << e.toString().local8Bit() << "   QDate : "
+	std::cout << "Qt::UTC       :: ExtDate : " << e.toString().local8Bit() << "   TQDate : "
 		<< q.toString().local8Bit() << std::endl;
-	q = QDate::currentDate();
+	q = TQDate::currentDate();
 	e = ExtDate::currentDate();
-	std::cout << "<default>     :: ExtDate : " << e.toString().local8Bit() << "   QDate : "
+	std::cout << "<default>     :: ExtDate : " << e.toString().local8Bit() << "   TQDate : "
 		<< q.toString().local8Bit() << std::endl;
 	std::cout << "--------------------" << std::endl;
 }
 
 void test8() {
 	std::cout << "Set dates using days 1-32 for Jan and Feb (some will be invalid): \n" << std::endl;
-	std::cout << "    QDate      :     ExtDate" << std::endl;
+	std::cout << "    TQDate      :     ExtDate" << std::endl;
 
 	for ( uint m=1; m<=2; ++m ) {
 		for ( uint d=1; d<=32; ++d ) {
 
-			QDate   test1( 2004, m, d );
+			TQDate   test1( 2004, m, d );
 			ExtDate test2( 2004, m, d );
 			std::cout << test1.toString( "ddd dd.MMM.yy" ).local8Bit() << "  :  "
 		<< test2.toString( "%a %d.%b.%y" ).local8Bit() << std::endl;
@@ -310,8 +310,8 @@ void test8() {
 }
 
 void test9() {
-	std::cout << "QDateTime : ExtDateTime: \n" << std::endl;
-	QDateTime q = QDateTime::currentDateTime();
+	std::cout << "TQDateTime : ExtDateTime: \n" << std::endl;
+	TQDateTime q = TQDateTime::currentDateTime();
 	ExtDateTime e = ExtDateTime::currentDateTime();
 
 	std::cout << q.toString().local8Bit() << " : " << e.toString().local8Bit() << std::endl;

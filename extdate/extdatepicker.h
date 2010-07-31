@@ -60,7 +60,7 @@ public:
   /** The usual constructor.  The given date will be displayed
    * initially.
    **/
-  ExtDatePicker(QWidget *parent=0,
+  ExtDatePicker(TQWidget *parent=0,
 	      ExtDate=ExtDate::currentDate(),
 	      const char *name=0);
 
@@ -68,7 +68,7 @@ public:
    * initially.
    * @since 3.1
    **/
-  ExtDatePicker(QWidget *parent,
+  ExtDatePicker(TQWidget *parent,
 	      ExtDate,
 	      const char *name,
 	      WFlags f); // ### KDE 4.0: Merge
@@ -78,7 +78,7 @@ public:
    * current date.
    * @since 3.1
    */
-  ExtDatePicker( QWidget *parent, const char *name );
+  ExtDatePicker( TQWidget *parent, const char *name );
 
   /**
    * The destructor.
@@ -91,7 +91,7 @@ public:
    *  size hint, try adding 28 to each of the reported numbers of
    *  pixels.
    **/
-  QSize sizeHint() const;
+  TQSize sizeHint() const;
 
   /**
    * Sets the date.
@@ -153,22 +153,22 @@ public:
   bool hasCloseButton() const;
 
 protected:
-  /// to catch move keyEvents when QLineEdit has keyFocus
-  virtual bool eventFilter(QObject *o, QEvent *e );
+  /// to catch move keyEvents when TQLineEdit has keyFocus
+  virtual bool eventFilter(TQObject *o, TQEvent *e );
   /// the resize event
-  virtual void resizeEvent(QResizeEvent*);
+  virtual void resizeEvent(TQResizeEvent*);
   /// the year forward button
-  QToolButton *yearForward;
+  TQToolButton *yearForward;
   /// the year backward button
-  QToolButton *yearBackward;
+  TQToolButton *yearBackward;
   /// the month forward button
-  QToolButton *monthForward;
+  TQToolButton *monthForward;
   /// the month backward button
-  QToolButton *monthBackward;
+  TQToolButton *monthBackward;
   /// the button for selecting the month directly
-  QToolButton *selectMonth;
+  TQToolButton *selectMonth;
   /// the button for selecting the year directly
-  QToolButton *selectYear;
+  TQToolButton *selectYear;
   /// the line edit to enter the date directly
   KLineEdit *line;
   /// the validator for the line edit:
@@ -176,9 +176,9 @@ protected:
   /// the date table
   ExtDateTable *table;
   /// the size calculated during resize events
-    //  QSize sizehint;
+    //  TQSize sizehint;
   /// the widest month string in pixels:
-  QSize maxMonthRect;
+  TQSize maxMonthRect;
 protected slots:
   void dateChangedSlot(const ExtDate&);
   void tableClickedSlot();
