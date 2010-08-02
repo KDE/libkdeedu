@@ -26,7 +26,7 @@
 #include "extdatetime.h"
 
 class KLineEdit;
-class QToolButton;
+class TQToolButton;
 class ExtDateValidator;
 class ExtDateTable;
 

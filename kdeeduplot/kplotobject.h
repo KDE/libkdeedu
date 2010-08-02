@@ -19,8 +19,8 @@
 #define KPLOTOBJECT_H
 
 
-class QString;
-class QPainter;
+class TQString;
+class TQPainter;
 
 #include <kdemacros.h>
 

@@ -25,8 +25,8 @@ class KLineEdit;
 class KDateWidget;
 class ExtDatePicker;
 class ExtDateWidget;
-class QGridLayout;
-class QDate;
+class TQGridLayout;
+class TQDate;
 class ExtDate;
 
 class TestWidget : public KMainWindow {

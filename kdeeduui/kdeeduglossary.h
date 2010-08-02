@@ -19,9 +19,9 @@
 #include <khtml_part.h>
 #include <kdialogbase.h>
 
-class QChar;
-class QDomDocument;
-class QListViewItem;
+class TQChar;
+class TQDomDocument;
+class TQListViewItem;
 class KListView;
 class KListViewSearchLine;
 class KActionCollection;

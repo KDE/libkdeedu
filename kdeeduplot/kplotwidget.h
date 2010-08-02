@@ -27,8 +27,8 @@
 #define XPADDING 20
 #define YPADDING 20
 
-class QColor;
-class QPixmap;
+class TQColor;
+class TQPixmap;
 
 /**@class KPlotWidget
 	*@short Genric data plotting widget.
