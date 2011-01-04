@@ -4,7 +4,7 @@
    Copyright (c) 2004 Jason Harris <jharris@30doradus.org>
 
 	 This class has been derived from ExtCalendarSystem;
-	 the changesd made just replace TQDate objects with ExtDate objects.
+	 the changesd made just tqreplace TQDate objects with ExtDate objects.
 	 These changes by Jason Harris <jharris@30doradus.org>
 
    This library is free software; you can redistribute it and/or

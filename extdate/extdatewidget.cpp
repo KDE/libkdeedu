@@ -36,7 +36,7 @@ public:
   ExtDateWidgetSpinBox(int min, int max, TQWidget *parent)
     : TQSpinBox(min, max, 1, parent)
   {
-     editor()->setAlignment(AlignRight);
+     editor()->tqsetAlignment(AlignRight);
   }
 };
 
@@ -56,7 +56,7 @@ public:
 ExtDateWidget::ExtDateWidget( TQWidget *parent, const char *name )
   : TQWidget( parent, name )
 {
-  init(ExtDate::currentDate());
+  init(ExtDate::tqcurrentDate());
   setDate(ExtDate());
 }
 
@@ -74,8 +74,8 @@ ExtDateWidget::ExtDateWidget( const ExtDate &date, TQWidget *parent,
 // {
 //   d = new ExtDateWidgetPrivate;
 //   KLocale *locale = KGlobal::locale();
-//   TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
-//   layout->setAutoAdd(true);
+//   TQHBoxLayout *tqlayout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
+//   tqlayout->setAutoAdd(true);
 //   d->m_day = new ExtDateWidgetSpinBox(1, 1, this);
 //   d->m_month = new TQComboBox(false, this);
 //   for (int i = 1; ; ++i)
@@ -98,8 +98,8 @@ void ExtDateWidget::init(const ExtDate& date)
 {
   d = new ExtDateWidgetPrivate;
   //KLocale *locale = KGlobal::locale();
-  TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
-  layout->setAutoAdd(true);
+  TQHBoxLayout *tqlayout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
+  tqlayout->setAutoAdd(true);
   d->m_day = new ExtDateWidgetSpinBox(1, 1, this);
   d->m_month = new TQComboBox(false, this);
   for (int i = 1; ; ++i)

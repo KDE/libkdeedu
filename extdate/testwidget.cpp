@@ -39,8 +39,8 @@ TestWidget::TestWidget( TQWidget *p=0, const char *name=0 ) : KMainWindow( p, na
 	edpEdit = new KLineEdit(w);
 	edpEdit->setReadOnly( TRUE );
 
-	kdw = new KDateWidget( TQDate::currentDate(), w );
-	edw = new ExtDateWidget( ExtDate::currentDate(), w );
+	kdw = new KDateWidget( TQDate::tqcurrentDate(), w );
+	edw = new ExtDateWidget( ExtDate::tqcurrentDate(), w );
 
 	glay->addWidget( kdpLabel, 0, 0 );
 	glay->addWidget( edpLabel, 0, 1 );

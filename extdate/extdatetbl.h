@@ -99,7 +99,7 @@ public:
   /**
    * The size hint.
    */
-  TQSize sizeHint() const;
+  TQSize tqsizeHint() const;
   /**
    * Return the result. 0 means no selection (reject()), 1..12 are the
    * months.
@@ -273,7 +273,7 @@ public:
      * The constructor.
      */
     ExtDateTable(TQWidget *parent=0,
-	       ExtDate date=ExtDate::currentDate(),
+	       ExtDate date=ExtDate::tqcurrentDate(),
 	       const char* name=0, WFlags f=0);
 
     /**
@@ -286,9 +286,9 @@ public:
      * To save some time, the size of the largest used cell content is
      * calculated in each paintCell() call, since all calculations have
      * to be done there anyway. The size is stored in maxCell. The
-     * sizeHint() simply returns a multiple of maxCell.
+     * tqsizeHint() simply returns a multiple of maxCell.
      */
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
     /**
      * Set the font size of the date table.
      */

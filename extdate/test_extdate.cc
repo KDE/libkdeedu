@@ -277,16 +277,16 @@ void test6()
 void test7()
 {
 	std::cout << "Express the current date:\n" << std::endl;
-	TQDate q = TQDate::currentDate(Qt::LocalTime);
-	ExtDate e = ExtDate::currentDate(Qt::TimeSpec(Qt::LocalTime));
+	TQDate q = TQDate::tqcurrentDate(Qt::LocalTime);
+	ExtDate e = ExtDate::tqcurrentDate(Qt::TimeSpec(Qt::LocalTime));
 	std::cout << "Qt::LocalTime :: ExtDate : " << e.toString().local8Bit() << "   TQDate : "
 		<< q.toString().local8Bit() << std::endl;
-	q = TQDate::currentDate(Qt::UTC);
-	e = ExtDate::currentDate(Qt::UTC);
+	q = TQDate::tqcurrentDate(Qt::UTC);
+	e = ExtDate::tqcurrentDate(Qt::UTC);
 	std::cout << "Qt::UTC       :: ExtDate : " << e.toString().local8Bit() << "   TQDate : "
 		<< q.toString().local8Bit() << std::endl;
-	q = TQDate::currentDate();
-	e = ExtDate::currentDate();
+	q = TQDate::tqcurrentDate();
+	e = ExtDate::tqcurrentDate();
 	std::cout << "<default>     :: ExtDate : " << e.toString().local8Bit() << "   TQDate : "
 		<< q.toString().local8Bit() << std::endl;
 	std::cout << "--------------------" << std::endl;
@@ -311,8 +311,8 @@ void test8() {
 
 void test9() {
 	std::cout << "TQDateTime : ExtDateTime: \n" << std::endl;
-	TQDateTime q = TQDateTime::currentDateTime();
-	ExtDateTime e = ExtDateTime::currentDateTime();
+	TQDateTime q = TQDateTime::tqcurrentDateTime();
+	ExtDateTime e = ExtDateTime::tqcurrentDateTime();
 
 	std::cout << q.toString().local8Bit() << " : " << e.toString().local8Bit() << std::endl;
 	std::cout << "--------------------" << std::endl;

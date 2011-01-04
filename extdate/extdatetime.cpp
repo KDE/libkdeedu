@@ -212,7 +212,7 @@ int ExtDate::weekNumber( int *yearNum ) const
   if ( day1.daysTo( *this ) < 0 ) {
     if ( yearNum ) *yearNum = year() - 1;
 
-    //The last week of the year always contains Dec 28th (ISO 8601)
+    //The last week of the year always tqcontains Dec 28th (ISO 8601)
     ExtDate lastDec28( year()-1, 12, 28 );
     return lastDec28.weekNumber();
   }
@@ -293,16 +293,16 @@ TQString ExtDate::toString( const TQString& format ) const
 
 	TQString result( format );
 
-	result.replace( "%Y", TQString().sprintf( "%d", year() ) );
-	result.replace( "%y", TQString().sprintf( "%02d", (year() % 100) ) );
-	result.replace( "%n", TQString().sprintf( "%d", month() ) );
-	result.replace( "%m", TQString().sprintf( "%02d", month() ) );
-	result.replace( "%e", TQString().sprintf( "%d", day() ) );
-	result.replace( "%d", TQString().sprintf( "%02d", day() ) );
-	result.replace( "%b", shortMonthName( month() ) );
-	result.replace( "%B", longMonthName( month() ) );
-	result.replace( "%a", shortDayName( dayOfWeek() ) );
-	result.replace( "%A", longDayName( dayOfWeek() ) );
+	result.tqreplace( "%Y", TQString().sprintf( "%d", year() ) );
+	result.tqreplace( "%y", TQString().sprintf( "%02d", (year() % 100) ) );
+	result.tqreplace( "%n", TQString().sprintf( "%d", month() ) );
+	result.tqreplace( "%m", TQString().sprintf( "%02d", month() ) );
+	result.tqreplace( "%e", TQString().sprintf( "%d", day() ) );
+	result.tqreplace( "%d", TQString().sprintf( "%02d", day() ) );
+	result.tqreplace( "%b", shortMonthName( month() ) );
+	result.tqreplace( "%B", longMonthName( month() ) );
+	result.tqreplace( "%a", shortDayName( dayOfWeek() ) );
+	result.tqreplace( "%A", longDayName( dayOfWeek() ) );
 
 	return result;
 }
@@ -377,7 +377,7 @@ int   ExtDate::daysTo( const ExtDate & a_date) const
 	return a_date.jd() - jd();
 }
 
-ExtDate ExtDate::currentDate(Qt::TimeSpec ts)
+ExtDate ExtDate::tqcurrentDate(Qt::TimeSpec ts)
 {
 	time_t a_current_time;
 	struct tm a_current_time_tm;
@@ -551,7 +551,7 @@ int ExtDate::dayOfYear(int y, int m, int d)
 
     \ingroup time
 
-    A ExtDateTime object contains a calendar date and a clock time (a
+    A ExtDateTime object tqcontains a calendar date and a clock time (a
     "datetime"). It is a combination of the ExtDate and TQTime classes.
     It can read the current datetime from the system clock. It
     provides functions for comparing datetimes and for manipulating a
@@ -559,7 +559,7 @@ int ExtDate::dayOfYear(int y, int m, int d)
 
     A ExtDateTime object is typically created either by giving a date
     and time explicitly in the constructor, or by using the static
-    function currentDateTime(), which returns a ExtDateTime object set
+    function tqcurrentDateTime(), which returns a ExtDateTime object set
     to the system clock's time. The date and time can be changed with
     setDate() and setTime(). A datetime can also be set using the
     setTime_t() function, which takes a POSIX-standard "number of
@@ -833,13 +833,13 @@ TQString ExtDateTime::toString( const TQString& format ) const
 
 	int h = time().hour();
 
-	result.replace( "%H", TQString().sprintf( "%02d", h ) );
-	result.replace( "%k", TQString().sprintf( "%d", h ) );
-	result.replace( "%I", TQString().sprintf( "%02d", ( h > 12 ) ? h-12 : h ) );
-	result.replace( "%l", TQString().sprintf( "%d", ( h > 12 ) ? h-12 : h ) );
-	result.replace( "%M", TQString().sprintf( "%02d", time().minute() ) );
-	result.replace( "%S", TQString().sprintf( "%02d", time().second() ) );
-	result.replace( "%p", TQString().sprintf( "%s", ( h > 12 ) ? "pm" : "am" ) );
+	result.tqreplace( "%H", TQString().sprintf( "%02d", h ) );
+	result.tqreplace( "%k", TQString().sprintf( "%d", h ) );
+	result.tqreplace( "%I", TQString().sprintf( "%02d", ( h > 12 ) ? h-12 : h ) );
+	result.tqreplace( "%l", TQString().sprintf( "%d", ( h > 12 ) ? h-12 : h ) );
+	result.tqreplace( "%M", TQString().sprintf( "%02d", time().minute() ) );
+	result.tqreplace( "%S", TQString().sprintf( "%02d", time().second() ) );
+	result.tqreplace( "%p", TQString().sprintf( "%s", ( h > 12 ) ? "pm" : "am" ) );
 
 	return result;
 }
@@ -933,7 +933,7 @@ int ExtDateTime::daysTo( const ExtDateTime &dt ) const
 
     Example:
     \code
-    ExtDateTime dt = ExtDateTime::currentDateTime();
+    ExtDateTime dt = ExtDateTime::tqcurrentDateTime();
     ExtDateTime xmas( ExtDate(dt.date().year(),12,24), TQTime(17,00) );
     kdDebug( ) << "There are " << dt.secsTo(xmas) << " seconds to Christmas" << endl;
     \endcode
@@ -1023,28 +1023,28 @@ bool ExtDateTime::operator>=( const ExtDateTime &dt ) const
 
     Returns the current datetime, as reported by the system clock.
 
-    \sa ExtDate::currentDate(), TQTime::currentTime()
+    \sa ExtDate::tqcurrentDate(), TQTime::currentTime()
 */
 
-ExtDateTime ExtDateTime::currentDateTime()
+ExtDateTime ExtDateTime::tqcurrentDateTime()
 {
-    return currentDateTime( Qt::LocalTime );
+    return tqcurrentDateTime( Qt::LocalTime );
 }
 
 /*!
   Returns the current datetime, as reported by the system clock, for the
   TimeSpec \a ts. The default TimeSpec is LocalTime.
 
-  \sa ExtDate::currentDate(), TQTime::currentTime(), Qt::TimeSpec
+  \sa ExtDate::tqcurrentDate(), TQTime::currentTime(), Qt::TimeSpec
 */
 
-ExtDateTime ExtDateTime::currentDateTime( Qt::TimeSpec ts )
+ExtDateTime ExtDateTime::tqcurrentDateTime( Qt::TimeSpec ts )
 {
     ExtDateTime dt;
-    dt.setDate( ExtDate::currentDate(ts) );
+    dt.setDate( ExtDate::tqcurrentDate(ts) );
     TQTime t = t.currentTime(ts);
     if ( t.hour()==0 && t.minute()==0 )         // midnight or right after?
-        dt.setDate( ExtDate::currentDate(ts) ); // fetch date again
+        dt.setDate( ExtDate::tqcurrentDate(ts) ); // fetch date again
     dt.setTime( t );
     return dt;
 }
@@ -1084,7 +1084,7 @@ ExtDateTime ExtDateTime::fromString( const TQString& s, Qt::DateFormat f )
 	}
 
 	if ( f == Qt::ISODate ) {
-		if ( s.length() <= 10 || ! s.contains( ':' )  ) { //no time specified
+		if ( s.length() <= 10 || ! s.tqcontains( ':' )  ) { //no time specified
 			TQTime t = TQTime(0,0,0);
 			return ExtDateTime( ExtDate::fromString( s.mid(0,10), Qt::ISODate ) );
 		} else {
@@ -1099,7 +1099,7 @@ ExtDateTime ExtDateTime::fromString( const TQString& s, Qt::DateFormat f )
 		TQTime time;
 		TQString sd = s;
 		int hour, minute, second;
-		int pivot = s.find( TQRegExp(TQString::fromLatin1("[0-9][0-9]:[0-9][0-9]:[0-9][0-9]")) );
+		int pivot = s.find( TQRegExp(TQString::tqfromLatin1("[0-9][0-9]:[0-9][0-9]:[0-9][0-9]")) );
 		if ( pivot != -1 ) {
 			hour = s.mid( pivot, 2 ).toInt();
 			minute = s.mid( pivot+3, 2 ).toInt();
@@ -1123,12 +1123,12 @@ ExtDateTime ExtDateTime::fromString( const TQString& s, Qt::DateFormat f )
 #ifndef QT_NO_DATASTREAM
 KDE_EXPORT TQDataStream &operator<<( TQDataStream & ostream, const ExtDate & date)
 {
-	return ostream << (Q_UINT32)(date.jd());
+	return ostream << (TQ_UINT32)(date.jd());
 }
 
 KDE_EXPORT TQDataStream &operator>>( TQDataStream & ostream, ExtDate & date)
 {
-	Q_UINT32 julday;
+	TQ_UINT32 julday;
 	ostream >> julday;
 	date.setJD( julday );
 	return ostream;

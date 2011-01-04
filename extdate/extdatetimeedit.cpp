@@ -135,7 +135,7 @@ static void readLocaleSettings()
 
 #ifndef Q_WS_WIN
 	TQString sep = d.mid( QMIN( dpos, mpos ) + 2, QABS( dpos - mpos ) - 2 );
-	if ( d.contains( sep ) == 2 ) {
+	if ( d.tqcontains( sep ) == 2 ) {
 	    *lDateSep = sep;
 	}
 #endif
@@ -266,7 +266,7 @@ public:
     {
 	int fw = 0;
 	if ( frm )
-	    fw = style.pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	    fw = style.tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 
 	parag->truncate( 0 );
 	parag->append( txt );
@@ -295,7 +295,7 @@ public:
 
 	TQRect r( rect.x(), rect.y(), rect.width() - 2 * ( 2 + fw ), rect.height() );
 	parag->pseudoDocument()->docRect = r;
-	parag->invalidate(0);
+	parag->tqinvalidate(0);
 	parag->format();
 
 	int xoff = 2 + fw - offset;
@@ -411,7 +411,7 @@ bool ExtDateTimeEditor::event( TQEvent *e )
 {
     if ( e->type() == TQEvent::FocusIn || e->type() == TQEvent::FocusOut ) {
  	if ( e->type() == TQEvent::FocusOut )
-  	    qApp->sendEvent( cw, e );
+  	    tqApp->sendEvent( cw, e );
 	update( rect() );
     } else if ( e->type() == TQEvent::AccelOverride ) {
 	TQKeyEvent* ke = (TQKeyEvent*) e;
@@ -460,9 +460,9 @@ void ExtDateTimeEditor::paintEvent( TQPaintEvent * )
 
     QSharedDoubleBuffer buffer( this );
     const TQBrush &bg =
-	colorGroup().brush( isEnabled() ? TQColorGroup::Base : TQColorGroup::Background );
+	tqcolorGroup().brush( isEnabled() ? TQColorGroup::Base : TQColorGroup::Background );
     buffer.painter()->fillRect( 0, 0, width(), height(), bg );
-    d->paint( txt, hasFocus(), *buffer.painter(), colorGroup(), rect(),
+    d->paint( txt, hasFocus(), *buffer.painter(), tqcolorGroup(), rect(),
 	      style() );
     buffer.end();
 }
@@ -492,7 +492,7 @@ void ExtDateTimeEditor::mousePressEvent( TQMouseEvent *e )
     int sec = sectionAt( p );
     if ( sec != -1 ) {
 	cw->setFocusSection( sec );
-	repaint( rect(), FALSE );
+	tqrepaint( rect(), FALSE );
     }
 }
 
@@ -508,13 +508,13 @@ bool ExtDateTimeEditor::eventFilter( TQObject *o, TQEvent *e )
 	    case Key_Right:
 		if ( d->focusSection() < (int)d->sectionCount()-1 ) {
 		    if ( cw->setFocusSection( focusSection()+1 ) )
-			repaint( rect(), FALSE );
+			tqrepaint( rect(), FALSE );
 		}
 		return TRUE;
 	    case Key_Left:
 		if ( d->focusSection() > 0 ) {
 		    if ( cw->setFocusSection( focusSection()-1 ) )
-			repaint( rect(), FALSE );
+			tqrepaint( rect(), FALSE );
 		}
 		return TRUE;
 	    case Key_Up:
@@ -544,12 +544,12 @@ bool ExtDateTimeEditor::eventFilter( TQObject *o, TQEvent *e )
 			 ::qt_cast<ExtDateTimeEdit*>(w) )
 			break;
 		    hadDateEdit = hadDateEdit || ::qt_cast<ExtDateEdit*>(w);
-		    w = w->parentWidget();
+		    w = w->tqparentWidget();
 		}
 
 		if ( w ) {
 		    if ( !::qt_cast<ExtDateTimeEdit*>(w) ) {
-			w = w->parentWidget();
+			w = w->tqparentWidget();
 		    } else {
 			ExtDateTimeEdit *ed = (ExtDateTimeEdit*)w;
 			if ( hadDateEdit && ke->key() == Key_Tab ) {
@@ -560,11 +560,11 @@ bool ExtDateTimeEditor::eventFilter( TQObject *o, TQEvent *e )
 			    return TRUE;
 			} else {
 			    while ( w && !::qt_cast<ExtDateTimeEdit*>(w) )
-				w = w->parentWidget();
+				w = w->tqparentWidget();
 			}
 		    }
 
-		    qApp->sendEvent( w, e );
+		    tqApp->sendEvent( w, e );
 		    return TRUE;
 		}
 	    } break;
@@ -574,7 +574,7 @@ bool ExtDateTimeEditor::eventFilter( TQObject *o, TQEvent *e )
 		    // do the same thing as KEY_RIGHT when the user presses the separator key
 		    if ( d->focusSection() < 2 ) {
 			if ( cw->setFocusSection( focusSection()+1 ) )
-			    repaint( rect(), FALSE );
+			    tqrepaint( rect(), FALSE );
 		    }
 		    return TRUE;
 		} else if ( !txt.isEmpty() && ::qt_cast<QTimeEdit*>(cw) && focusSection() == (int) d->sectionCount()-1 ) {
@@ -767,9 +767,9 @@ public:
     with a date, e.g.
 
     \code
-    ExtDateEdit *dateEdit = new ExtDateEdit( ExtDate::currentDate(), this );
-    dateEdit->setRange( ExtDate::currentDate().addDays( -365 ),
-			ExtDate::currentDate().addDays(  365 ) );
+    ExtDateEdit *dateEdit = new ExtDateEdit( ExtDate::tqcurrentDate(), this );
+    dateEdit->setRange( ExtDate::tqcurrentDate().addDays( -365 ),
+			ExtDate::tqcurrentDate().addDays(  365 ) );
     dateEdit->setOrder( ExtDateEdit::MDY );
     dateEdit->setAutoAdvance( TRUE );
     \endcode
@@ -883,7 +883,7 @@ void ExtDateEdit::init()
   d->max = ExtDate( 50000, 12, 31 );
   d->changed = FALSE;
 
-  setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
+  tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
 
   refcount++;
 }
@@ -997,11 +997,11 @@ void ExtDateEdit::resizeEvent( TQResizeEvent * )
 /*! \reimp
 
 */
-TQSize ExtDateEdit::sizeHint() const
+TQSize ExtDateEdit::tqsizeHint() const
 {
   constPolish();
   TQFontMetrics fm( font() );
-  int fw = style().pixelMetric( TQStyle::PM_DefaultFrameWidth, this );
+  int fw = style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, this );
   int h = QMAX( fm.lineSpacing(), 14 ) + 2;
   int w = 2 + fm.width( '9' ) * 8 + fm.width( d->ed->separator() ) * 2 
             + d->controls->upRect().width() + fw * 4;
@@ -1012,9 +1012,9 @@ TQSize ExtDateEdit::sizeHint() const
 /*! \reimp
 
 */
-TQSize ExtDateEdit::minimumSizeHint() const
+TQSize ExtDateEdit::tqminimumSizeHint() const
 {
-  return sizeHint();
+  return tqsizeHint();
 }
 
 
@@ -1160,7 +1160,7 @@ void ExtDateEdit::setOrder( ExtDateEdit::Order order )
   }
   
   if ( isVisible() )
-    d->ed->repaint( d->ed->rect(), FALSE );
+    d->ed->tqrepaint( d->ed->rect(), FALSE );
 }
 
 
@@ -1198,7 +1198,7 @@ void ExtDateEdit::stepUp()
     emit valueChanged( date() );
   }
   
-  d->ed->repaint( d->ed->rect(), FALSE );
+  d->ed->tqrepaint( d->ed->rect(), FALSE );
 }
 
 
@@ -1232,7 +1232,7 @@ void ExtDateEdit::stepDown()
     emit valueChanged( date() );
   }
   
-  d->ed->repaint( d->ed->rect(), FALSE );
+  d->ed->tqrepaint( d->ed->rect(), FALSE );
 }
 
 /*!
@@ -1295,7 +1295,7 @@ void ExtDateEdit::setDay( int day )
     If the date property is not valid, the editor displays all zeroes
     and ExtDateEdit::date() will return an invalid date. It is strongly
     recommended that the editor is given a default date value (e.g.
-    currentDate()). That way, attempts to set the date property to an
+    tqcurrentDate()). That way, attempts to set the date property to an
     invalid date will fail.
 
     When changing the date property, if the date is less than
@@ -1319,7 +1319,7 @@ void ExtDateEdit::setDate( const ExtDate& date )
     emit valueChanged( date );
   }
   d->changed = FALSE;
-  d->ed->repaint( d->ed->rect(), FALSE );
+  d->ed->tqrepaint( d->ed->rect(), FALSE );
 }
 
 ExtDate ExtDateEdit::date() const
@@ -1341,8 +1341,8 @@ ExtDate ExtDateEdit::date() const
 bool ExtDateEdit::outOfRange( int y, int m, int d ) const
 {
   if ( ExtDate::isValid( y, m, d ) ) {
-    ExtDate currentDate( y, m, d );
-    if ( currentDate > maxValue() || currentDate < minValue() ) {
+    ExtDate tqcurrentDate( y, m, d );
+    if ( tqcurrentDate > maxValue() || tqcurrentDate < minValue() ) {
 	    //## outOfRange should set overwrite?
 	    return TRUE;
     }
@@ -1454,8 +1454,8 @@ void ExtDateEdit::addNumber( int sec, int num )
 	emit valueChanged( date() );
     }
     d->overwrite = overwrite;
-    d->timerId = startTimer( qApp->doubleClickInterval()*4 );
-    d->ed->repaint( d->ed->rect(), FALSE );
+    d->timerId = startTimer( tqApp->doubleClickInterval()*4 );
+    d->ed->tqrepaint( d->ed->rect(), FALSE );
 }
 
 
@@ -1502,7 +1502,7 @@ void ExtDateEdit::fix()
     changed = TRUE;
   }
   
-  int currentYear = ExtDate::currentDate().year();
+  int currentYear = ExtDate::tqcurrentDate().year();
   int year = d->y;
 /* No longer valid for extended dates
   if ( year < 100 ) {
@@ -1608,7 +1608,7 @@ void ExtDateEdit::removeFirstNumber( int sec )
 	d->d = txt.toInt();
 	d->dayCache = d->d;
     }
-    d->ed->repaint( d->ed->rect(), FALSE );
+    d->ed->tqrepaint( d->ed->rect(), FALSE );
 }
 
 /*! \reimp
@@ -1634,7 +1634,7 @@ void ExtDateEdit::removeLastNumber( int sec )
 	d->d = txt.toInt();
 	d->dayCache = d->d;
     }
-    d->ed->repaint( d->ed->rect(), FALSE );
+    d->ed->tqrepaint( d->ed->rect(), FALSE );
 }
 
 /*!
@@ -1791,7 +1791,7 @@ public:
 //     d->max = TQTime( 23, 59, 59 );
 //     d->changed = FALSE;
 //
-//     setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
+//     tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
 //
 //     refcount++;
 // }
@@ -1909,7 +1909,7 @@ public:
 // 	emit valueChanged( time );
 //     }
 //     d->changed = FALSE;
-//     d->ed->repaint( d->ed->rect(), FALSE );
+//     d->ed->tqrepaint( d->ed->rect(), FALSE );
 // }
 //
 // TQTime QTimeEdit::time() const
@@ -2039,7 +2039,7 @@ public:
 // 	d->changed = TRUE;
 // 	emit valueChanged( time() );
 //     }
-//     d->ed->repaint( d->ed->rect(), FALSE );
+//     d->ed->tqrepaint( d->ed->rect(), FALSE );
 // }
 //
 //
@@ -2088,7 +2088,7 @@ public:
 // 	d->changed = TRUE;
 // 	emit valueChanged( time() );
 //     }
-//     d->ed->repaint( d->ed->rect(), FALSE );
+//     d->ed->tqrepaint( d->ed->rect(), FALSE );
 // }
 //
 //
@@ -2214,12 +2214,12 @@ public:
 // 	    if ( lAM )
 // 		txt = *lAM;
 // 	    else
-// 		txt = TQString::fromLatin1( "AM" );
+// 		txt = TQString::tqfromLatin1( "AM" );
 // 	} else {
 // 	    if ( lPM )
 // 		txt = *lPM;
 // 	    else
-// 		txt = TQString::fromLatin1( "PM" );
+// 		txt = TQString::tqfromLatin1( "PM" );
 // 	}
 // 	break;
 //     default:
@@ -2369,8 +2369,8 @@ public:
 //     if ( accepted )
 // 	emit valueChanged( time() );
 //     d->overwrite = overwrite;
-//     d->timerId = startTimer( qApp->doubleClickInterval()*4 );
-//     d->ed->repaint( d->ed->rect(), FALSE );
+//     d->timerId = startTimer( tqApp->doubleClickInterval()*4 );
+//     d->ed->tqrepaint( d->ed->rect(), FALSE );
 // }
 //
 //
@@ -2410,7 +2410,7 @@ public:
 // 	d->s = txt.toInt();
 // 	break;
 //     }
-//     d->ed->repaint( d->ed->rect(), FALSE );
+//     d->ed->tqrepaint( d->ed->rect(), FALSE );
 // }
 //
 // /*! \reimp
@@ -2445,7 +2445,7 @@ public:
 // 	d->s = txt.toInt();
 // 	break;
 //     }
-//     d->ed->repaint( d->ed->rect(), FALSE );
+//     d->ed->tqrepaint( d->ed->rect(), FALSE );
 // }
 //
 // /*! \reimp
@@ -2457,11 +2457,11 @@ public:
 //
 // /*! \reimp
 // */
-// TQSize QTimeEdit::sizeHint() const
+// TQSize QTimeEdit::tqsizeHint() const
 // {
 //     constPolish();
 //     TQFontMetrics fm( font() );
-//     int fw = style().pixelMetric( TQStyle::PM_DefaultFrameWidth, this );
+//     int fw = style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, this );
 //     int h = fm.lineSpacing() + 2;
 //     int w = 2 + fm.width( '9' ) * 6 + fm.width( d->ed->separator() ) * 2 +
 // 	d->controls->upRect().width() + fw * 4;
@@ -2469,7 +2469,7 @@ public:
 // 	if ( lAM )
 // 	    w += fm.width( *lAM ) + 4;
 // 	else
-// 	    w += fm.width( TQString::fromLatin1( "AM" ) ) + 4;
+// 	    w += fm.width( TQString::tqfromLatin1( "AM" ) ) + 4;
 //     }
 //
 //     return TQSize( w, QMAX(h + fw * 2,20) ).expandedTo( TQApplication::globalStrut() );
@@ -2477,9 +2477,9 @@ public:
 //
 // /*! \reimp
 // */
-// TQSize QTimeEdit::minimumSizeHint() const
+// TQSize QTimeEdit::tqminimumSizeHint() const
 // {
-//     return sizeHint();
+//     return tqsizeHint();
 // }
 //
 // /*!
@@ -2534,9 +2534,9 @@ public:
     It is recommended that the ExtDateTimeEdit is initialised with a
     datetime, e.g.
     \code
-    ExtDateTimeEdit *dateTimeEdit = new ExtDateTimeEdit( ExtDateTime::currentDateTime(), this );
-    dateTimeEdit->dateEdit()->setRange( ExtDateTime::currentDate(),
-					ExtDateTime::currentDate().addDays( 7 ) );
+    ExtDateTimeEdit *dateTimeEdit = new ExtDateTimeEdit( ExtDateTime::tqcurrentDateTime(), this );
+    dateTimeEdit->dateEdit()->setRange( ExtDateTime::tqcurrentDate(),
+					ExtDateTime::tqcurrentDate().addDays( 7 ) );
     \endcode
     Here we've created a new ExtDateTimeEdit set to the current date and
     time, and set the date to have a minimum date of now and a maximum
@@ -2600,8 +2600,8 @@ ExtDateTimeEdit::~ExtDateTimeEdit()
 
 void ExtDateTimeEdit::resizeEvent( TQResizeEvent * )
 {
-    int dw = de->sizeHint().width();
-    int tw = te->sizeHint().width();
+    int dw = de->tqsizeHint().width();
+    int tw = te->tqsizeHint().width();
     int w = width();
     int h = height();
     int extra = w - ( dw + tw );
@@ -2620,10 +2620,10 @@ void ExtDateTimeEdit::resizeEvent( TQResizeEvent * )
 /*! \reimp
 */
 
-TQSize ExtDateTimeEdit::minimumSizeHint() const
+TQSize ExtDateTimeEdit::tqminimumSizeHint() const
 {
-    TQSize dsh = de->minimumSizeHint();
-    TQSize tsh = te->minimumSizeHint();
+    TQSize dsh = de->tqminimumSizeHint();
+    TQSize tsh = te->tqminimumSizeHint();
     return TQSize( dsh.width() + tsh.width(),
 		  QMAX( dsh.height(), tsh.height() ) );
 }
@@ -2642,17 +2642,17 @@ void ExtDateTimeEdit::init()
     connect( te, TQT_SIGNAL( valueChanged( const TQTime& ) ),
 	     this, TQT_SLOT( newValue( const TQTime& ) ) );
     setFocusProxy( de );
-    setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
+    tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
 }
 
 /*! \reimp
  */
 
-TQSize ExtDateTimeEdit::sizeHint() const
+TQSize ExtDateTimeEdit::tqsizeHint() const
 {
     constPolish();
-    TQSize dsh = de->sizeHint();
-    TQSize tsh = te->sizeHint();
+    TQSize dsh = de->tqsizeHint();
+    TQSize tsh = te->tqsizeHint();
     return TQSize( dsh.width() + tsh.width(),
 		  QMAX( dsh.height(), tsh.height() ) );
 }

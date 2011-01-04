@@ -88,7 +88,7 @@ public:
 	bool operator>( const ExtDate &d )  const { return m_jd  > d.jd(); }
 	bool operator>=( const ExtDate &d ) const { return m_jd >= d.jd(); }
 
-	static ExtDate currentDate( Qt::TimeSpec ts = Qt::LocalTime );
+	static ExtDate tqcurrentDate( Qt::TimeSpec ts = Qt::LocalTime );
 #ifndef QT_NO_DATESTRING
 	static ExtDate fromString( const TQString &s );
 	static ExtDate fromString( const TQString &s, Qt::DateFormat f );
@@ -162,8 +162,8 @@ public:
     bool   operator>( const ExtDateTime &dt )  const;
     bool   operator>=( const ExtDateTime &dt ) const;
 
-    static ExtDateTime currentDateTime();
-    static ExtDateTime currentDateTime( Qt::TimeSpec );
+    static ExtDateTime tqcurrentDateTime();
+    static ExtDateTime tqcurrentDateTime( Qt::TimeSpec );
 #ifndef QT_NO_DATESTRING
     static ExtDateTime fromString( const TQString &s );
     static ExtDateTime fromString( const TQString &s, Qt::DateFormat f );

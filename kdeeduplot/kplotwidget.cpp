@@ -223,7 +223,7 @@ void KPlotWidget::drawObjects( TQPainter *p ) {
 double KPlotWidget::dmod( double a, double b ) { return ( b * ( ( a / b ) - int( a / b ) ) ); }
 
 void KPlotWidget::drawBox( TQPainter *p ) {
-	//First, fill in padding region with bgColor() to mask out-of-bounds plot data
+	//First, fill in padding region with bgColor() to tqmask out-of-bounds plot data
 	p->setPen( bgColor() );
 	p->setBrush( bgColor() );
 

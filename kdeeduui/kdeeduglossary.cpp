@@ -41,25 +41,25 @@ Glossary::~Glossary()
 
 bool Glossary::loadLayout( TQDomDocument &Document, const KURL& url )
 {
-        TQFile layoutFile( url.path() );
+        TQFile tqlayoutFile( url.path() );
 
-        if (!layoutFile.exists())
+        if (!tqlayoutFile.exists())
 	{
-		kdDebug() << "no such file: " << layoutFile.name() << endl;
+		kdDebug() << "no such file: " << tqlayoutFile.name() << endl;
 		return false;
 	}
 
-        if (!layoutFile.open(IO_ReadOnly))
+        if (!tqlayoutFile.open(IO_ReadOnly))
                 return false;
 
         ///Check if document is well-formed
-        if (!Document.setContent(&layoutFile))
+        if (!Document.setContent(&tqlayoutFile))
         {
                 kdDebug() << "wrong xml" << endl;
-                layoutFile.close();
+                tqlayoutFile.close();
                 return false;
         }
-        layoutFile.close();
+        tqlayoutFile.close();
 
         return true;
 }
@@ -100,8 +100,8 @@ void Glossary::fixImagePath()
 
 	for ( ; it != itEnd ; ++it )
 	{
-		( *it )->setDesc( ( *it )->desc().replace("[img]", firstpart ) );
-		( *it )->setDesc( ( *it )->desc().replace("[/img]", "\" />" ) );
+		( *it )->setDesc( ( *it )->desc().tqreplace("[img]", firstpart ) );
+		( *it )->setDesc( ( *it )->desc().tqreplace("[/img]", "\" />" ) );
 	}
 }
 	
@@ -136,15 +136,15 @@ TQValueList<GlossaryItem*> Glossary::readItems( TQDomDocument &itemDocument )
 
 		item->setName( i18n( nameNode.toElement( ).text().utf8() ) );
 		
-		item->setDesc( desc.replace("[b]", "<b>" ) );
-		item->setDesc( item->desc().replace("[/b]", "</b>" ) );
-		item->setDesc( item->desc().replace("[i]", "<i>" ) );
-		item->setDesc( item->desc().replace("[/i]", "</i>" ) );
-		item->setDesc( item->desc().replace("[sub]", "<sub>" ) );
-		item->setDesc( item->desc().replace("[/sub]", "</sub>" ) );
-		item->setDesc( item->desc().replace("[sup]", "<sup>" ) );
-		item->setDesc( item->desc().replace("[/sup]", "</sup>" ) );
-		item->setDesc( item->desc().replace("[br]", "<br />" ) );
+		item->setDesc( desc.tqreplace("[b]", "<b>" ) );
+		item->setDesc( item->desc().tqreplace("[/b]", "</b>" ) );
+		item->setDesc( item->desc().tqreplace("[i]", "<i>" ) );
+		item->setDesc( item->desc().tqreplace("[/i]", "</i>" ) );
+		item->setDesc( item->desc().tqreplace("[sub]", "<sub>" ) );
+		item->setDesc( item->desc().tqreplace("[/sub]", "</sub>" ) );
+		item->setDesc( item->desc().tqreplace("[sup]", "<sup>" ) );
+		item->setDesc( item->desc().tqreplace("[/sup]", "</sup>" ) );
+		item->setDesc( item->desc().tqreplace("[br]", "<br />" ) );
 		
 		refNodeList = refNode.elementsByTagName( "refitem" );
 		for ( uint it = 0; it < refNodeList.count(); it++ )
