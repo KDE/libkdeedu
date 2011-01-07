@@ -81,8 +81,8 @@ public:
       YMD /**< Year-Month-Day, also the default */, 
       YDM /**< Year-Day-Month @deprecated Included for completeness. */ };
 
-    TQSize tqsizeHint() const;
-    TQSize tqminimumSizeHint() const;
+    TQSize sizeHint() const;
+    TQSize minimumSizeHint() const;
 
 public slots:
     virtual void setDate( const ExtDate& date );
@@ -167,8 +167,8 @@ private:
 //     QTimeEdit( const TQTime& time, TQWidget* parent=0,  const char* name=0 );
 //     ~QTimeEdit();
 //
-//     TQSize tqsizeHint() const;
-//     TQSize tqminimumSizeHint() const;
+//     TQSize sizeHint() const;
+//     TQSize minimumSizeHint() const;
 //
 // public slots:
 //     virtual void setTime( const TQTime& time );
@@ -239,8 +239,8 @@ public:
 		   const char* name=0 );
     ~ExtDateTimeEdit();
 
-    TQSize tqsizeHint() const;
-    TQSize tqminimumSizeHint() const;
+    TQSize sizeHint() const;
+    TQSize minimumSizeHint() const;
 
 public slots:
     virtual void setDateTime( const ExtDateTime & dt );

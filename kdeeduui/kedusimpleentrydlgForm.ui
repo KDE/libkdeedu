@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>Simple_entry_dialog</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -19,7 +19,7 @@
         <property name="name">
             <cstring>e_original</cstring>
         </property>
-        <property name="tqgeometry">
+        <property name="geometry">
             <rect>
                 <x>40</x>
                 <y>80</y>
@@ -32,7 +32,7 @@
         <property name="name">
             <cstring>e_translation</cstring>
         </property>
-        <property name="tqgeometry">
+        <property name="geometry">
             <rect>
                 <x>40</x>
                 <y>180</y>
@@ -45,7 +45,7 @@
         <property name="name">
             <cstring>PushButton1</cstring>
         </property>
-        <property name="tqgeometry">
+        <property name="geometry">
             <rect>
                 <x>50</x>
                 <y>360</y>
@@ -61,7 +61,7 @@
         <property name="name">
             <cstring>PushButton1_2</cstring>
         </property>
-        <property name="tqgeometry">
+        <property name="geometry">
             <rect>
                 <x>460</x>
                 <y>360</y>
@@ -77,7 +77,7 @@
         <property name="name">
             <cstring>TextLabel1</cstring>
         </property>
-        <property name="tqgeometry">
+        <property name="geometry">
             <rect>
                 <x>40</x>
                 <y>50</y>
@@ -93,7 +93,7 @@
         <property name="name">
             <cstring>TextLabel1_2</cstring>
         </property>
-        <property name="tqgeometry">
+        <property name="geometry">
             <rect>
                 <x>40</x>
                 <y>150</y>
@@ -106,5 +106,5 @@
         </property>
     </widget>
 </widget>
-<tqlayoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="11"/>
 </UI>

@@ -124,7 +124,7 @@ ExtDateTable::ExtDateTable(TQWidget *parent, ExtDate date_, const char* name, WF
   if(!date_.isValid())
     {
       kdDebug() << "ExtDateTable ctor: WARNING: Given date is invalid, using current date." << endl;
-      date_=ExtDate::tqcurrentDate();
+      date_=ExtDate::currentDate();
     }
   setFocusPolicy( TQWidget::StrongFocus );
   setNumRows(7); // 6 weeks max + headline
@@ -204,7 +204,7 @@ ExtDateTable::paintCell(TQPainter *painter, int row, int col)
           normalday=false;
 
 			TQBrush brushTitle();
- 			TQBrush brushInvertTitle(tqcolorGroup().base());
+ 			TQBrush brushInvertTitle(colorGroup().base());
 			TQColor titleColor(isEnabled()?( KGlobalSettings::activeTitleColor() ):( KGlobalSettings::inactiveTitleColor() ) );
 			TQColor textColor(isEnabled()?( KGlobalSettings::activeTextColor() ):( KGlobalSettings::inactiveTextColor() ) );
       if (!normalday)
@@ -221,7 +221,7 @@ ExtDateTable::paintCell(TQPainter *painter, int row, int col)
         }
       painter->drawText(0, 0, w, h-1, AlignCenter,
                         d->calendar->weekDayName(daynum, true), -1, &rect);
-      painter->setPen(tqcolorGroup().text());
+      painter->setPen(colorGroup().text());
       painter->moveTo(0, h-1);
       painter->lineTo(w-1, h-1);
       // ----- draw the weekday:
@@ -238,7 +238,7 @@ ExtDateTable::paintCell(TQPainter *painter, int row, int col)
           // ° painting a day of the previous month or
           // ° painting a day of the following month
           // TODO: don't hardcode gray here! Use a color with less contrast to the background than normal text.
-          painter->setPen( tqcolorGroup().mid() );
+          painter->setPen( colorGroup().mid() );
 //          painter->setPen(gray);
         } else { // paint a day of the current month
           if ( d->useCustomColors )
@@ -263,9 +263,9 @@ ExtDateTable::paintCell(TQPainter *painter, int row, int col)
               }
               painter->setPen( mode->fgColor );
             } else
-              painter->setPen(tqcolorGroup().text());
+              painter->setPen(colorGroup().text());
           } else //if ( firstWeekDay < 4 ) // <- this doesn' make sense at all!
-          painter->setPen(tqcolorGroup().text());
+          painter->setPen(colorGroup().text());
         }
 
       pen=painter->pen();
@@ -276,19 +276,19 @@ ExtDateTable::paintCell(TQPainter *painter, int row, int col)
       if( ((offset+dy) == (pos+1)) && hasFocus())
         {
            // draw the currently selected date
-           painter->setPen(tqcolorGroup().highlight());
-           painter->setBrush(tqcolorGroup().highlight());
-           pen=tqcolorGroup().highlightedText();
+           painter->setPen(colorGroup().highlight());
+           painter->setBrush(colorGroup().highlight());
+           pen=colorGroup().highlightedText();
         } else {
           painter->setBrush(paletteBackgroundColor());
           painter->setPen(paletteBackgroundColor());
-//          painter->setBrush(tqcolorGroup().base());
-//          painter->setPen(tqcolorGroup().base());
+//          painter->setBrush(colorGroup().base());
+//          painter->setPen(colorGroup().base());
         }
 
-      if ( pCellDate == ExtDate::tqcurrentDate() )
+      if ( pCellDate == ExtDate::currentDate() )
       {
-         painter->setPen(tqcolorGroup().text());
+         painter->setPen(colorGroup().text());
       }
 
       if ( paintRect ) painter->drawRect(0, 0, w, h);
@@ -347,7 +347,7 @@ ExtDateTable::keyPressEvent( TQKeyEvent *e )
         setDate(date.addDays(1));
         return;
     case Key_N:
-        setDate(ExtDate::tqcurrentDate());
+        setDate(ExtDate::currentDate());
         return;
     case Key_Return:
     case Key_Enter:
@@ -390,7 +390,7 @@ ExtDateTable::setFontSize(int size)
       maxCell.setHeight(QMAX(maxCell.height(), rect.height()));
     }
   // ----- compare with a real wide number and add some space:
-  rect=metrics.boundingRect(TQString::tqfromLatin1("88"));
+  rect=metrics.boundingRect(TQString::fromLatin1("88"));
   maxCell.setWidth(QMAX(maxCell.width()+2, rect.width()));
   maxCell.setHeight(QMAX(maxCell.height()+4, rect.height()));
 }
@@ -494,7 +494,7 @@ ExtDateTable::setDate(const ExtDate& date_)
   numDaysPrevMonth=d->calendar->daysInMonth(temp);
   if(changed)
     {
-      tqrepaintContents(false);
+      repaintContents(false);
     }
   return true;
 }
@@ -505,28 +505,28 @@ ExtDateTable::getDate() const
   return date;
 }
 
-// what are those tqrepaintContents() good for? (pfeiffer)
+// what are those repaintContents() good for? (pfeiffer)
 void ExtDateTable::focusInEvent( TQFocusEvent *e )
 {
-//    tqrepaintContents(false);
+//    repaintContents(false);
     TQGridView::focusInEvent( e );
 }
 
 void ExtDateTable::focusOutEvent( TQFocusEvent *e )
 {
-//    tqrepaintContents(false);
+//    repaintContents(false);
     TQGridView::focusOutEvent( e );
 }
 
 QSize
-ExtDateTable::tqsizeHint() const
+ExtDateTable::sizeHint() const
 {
   if(maxCell.height()>0 && maxCell.width()>0)
     {
       return TQSize(maxCell.width()*numCols()+2*frameWidth(),
              (maxCell.height()+2)*numRows()+2*frameWidth());
     } else {
-      kdDebug() << "ExtDateTable::tqsizeHint: obscure failure - " << endl;
+      kdDebug() << "ExtDateTable::sizeHint: obscure failure - " << endl;
       return TQSize(-1, -1);
     }
 }
@@ -554,7 +554,7 @@ void ExtDateTable::setCustomDatePainting(const ExtDate &date, const TQColor &fgC
     mode->fgColor=fgColor;
     mode->bgColor=bgColor;
 
-    d->customPaintingModes.tqreplace( date.toString(), mode );
+    d->customPaintingModes.replace( date.toString(), mode );
     d->useCustomColors=true;
     update();
 }
@@ -617,7 +617,7 @@ ExtDateInternalWeekSelector::setMaxWeek(int max)
 }
 
 // ### CFM To avoid binary incompatibility.
-//     In future releases, remove this and tqreplace by  a ExtDate
+//     In future releases, remove this and replace by  a ExtDate
 //     private member, needed in ExtDateInternalMonthPicker::paintCell
 class ExtDateInternalMonthPicker::ExtDateInternalMonthPrivate {
 public:
@@ -677,7 +677,7 @@ ExtDateInternalMonthPicker::ExtDateInternalMonthPicker
 }
 
 QSize
-ExtDateInternalMonthPicker::tqsizeHint() const
+ExtDateInternalMonthPicker::sizeHint() const
 {
   return TQSize((max.width()+6)*numCols()+2*frameWidth(),
          (max.height()+6)*numRows()+2*frameWidth());
@@ -779,7 +779,7 @@ ExtDateInternalMonthPicker::contentsMouseMoveEvent(TQMouseEvent *e)
               updateCell( row, col /*, false */ ); // mark the new active cell
             }
         }
-      if ( tmpRow > -1 ) // tqrepaint the former active cell
+      if ( tmpRow > -1 ) // repaint the former active cell
           updateCell( tmpRow, tmpCol /*, true */ );
     }
 }
@@ -888,7 +888,7 @@ KPopupFrame::keyPressEvent(TQKeyEvent* e)
   if(e->key()==Key_Escape)
     {
       result=0; // rejected
-      tqApp->exit_loop();
+      qApp->exit_loop();
     }
 }
 
@@ -896,7 +896,7 @@ void
 KPopupFrame::close(int r)
 {
   result=r;
-  tqApp->exit_loop();
+  qApp->exit_loop();
 }
 
 void
@@ -947,8 +947,8 @@ int
 KPopupFrame::exec(TQPoint pos)
 {
   popup(pos);
-  tqrepaint();
-  tqApp->enter_loop();
+  repaint();
+  qApp->enter_loop();
   hide();
   return result;
 }

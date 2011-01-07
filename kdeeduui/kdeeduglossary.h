@@ -137,7 +137,7 @@ class Glossary
 		TQString m_backgroundpicture;
 
 		/**
-		 * tqreplaces the [img]-pseudocode with valid html. The path where
+		 * replaces the [img]-pseudocode with valid html. The path where
 		 * the pictures are stored will be used for pictures
 		 */
 		void fixImagePath();
@@ -148,7 +148,7 @@ class Glossary
 		TQString m_picturepath;
 		
 		/**
-		 * Load the tqlayout from an XML file.
+		 * Load the layout from an XML file.
 		 *
 		 * @param doc The TQDomDocument which will contain the read XML
 		 *            contents.

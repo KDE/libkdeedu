@@ -98,7 +98,7 @@ ExtDatePicker::ExtDatePicker(TQWidget *parent, ExtDate dt, const char *name, WFl
 ExtDatePicker::ExtDatePicker( TQWidget *parent, const char *name )
   : TQFrame(parent,name)
 {
-  init( ExtDate::tqcurrentDate() );
+  init( ExtDate::currentDate() );
 }
 
 void ExtDatePicker::init( const ExtDate &dt )
@@ -166,17 +166,17 @@ void ExtDatePicker::init( const ExtDate &dt )
 
   if (  TQApplication::reverseLayout() )
   {
-      yearForward->setIconSet(BarIconSet(TQString::tqfromLatin1("2leftarrow")));
-      yearBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("2rightarrow")));
-      monthForward->setIconSet(BarIconSet(TQString::tqfromLatin1("1leftarrow")));
-      monthBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("1rightarrow")));
+      yearForward->setIconSet(BarIconSet(TQString::fromLatin1("2leftarrow")));
+      yearBackward->setIconSet(BarIconSet(TQString::fromLatin1("2rightarrow")));
+      monthForward->setIconSet(BarIconSet(TQString::fromLatin1("1leftarrow")));
+      monthBackward->setIconSet(BarIconSet(TQString::fromLatin1("1rightarrow")));
   }
   else
   {
-      yearForward->setIconSet(BarIconSet(TQString::tqfromLatin1("2rightarrow")));
-      yearBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("2leftarrow")));
-      monthForward->setIconSet(BarIconSet(TQString::tqfromLatin1("1rightarrow")));
-      monthBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("1leftarrow")));
+      yearForward->setIconSet(BarIconSet(TQString::fromLatin1("2rightarrow")));
+      yearBackward->setIconSet(BarIconSet(TQString::fromLatin1("2leftarrow")));
+      monthForward->setIconSet(BarIconSet(TQString::fromLatin1("1rightarrow")));
+      monthBackward->setIconSet(BarIconSet(TQString::fromLatin1("1leftarrow")));
   }
   connect(table, TQT_SIGNAL(dateChanged(const ExtDate&)), TQT_SLOT(dateChangedSlot(const ExtDate&)));
   connect(table, TQT_SIGNAL(tableClicked()), TQT_SLOT(tableClickedSlot()));
@@ -386,7 +386,7 @@ ExtDatePicker::selectYearClicked()
   KPopupFrame* popup = new KPopupFrame(this);
   ExtDateInternalYearSelector* picker = new ExtDateInternalYearSelector(popup);
   // -----
-  picker->resize(picker->tqsizeHint());
+  picker->resize(picker->sizeHint());
   popup->setMainWidget(picker);
   connect(picker, TQT_SIGNAL(closeMe(int)), popup, TQT_SLOT(close(int)));
   picker->setFocus();
@@ -446,13 +446,13 @@ ExtDatePicker::lineEnterPressed()
 void
 ExtDatePicker::todayButtonClicked()
 {
-  setDate(ExtDate::tqcurrentDate());
+  setDate(ExtDate::currentDate());
 }
 
 QSize
-ExtDatePicker::tqsizeHint() const
+ExtDatePicker::sizeHint() const
 {
-  return TQWidget::tqsizeHint();
+  return TQWidget::sizeHint();
 }
 
 void
@@ -512,7 +512,7 @@ ExtDatePicker::setCloseButton( bool enable )
         TQToolTip::add(d->closeButton, i18n("Close"));
         d->closeButton->setPixmap( SmallIcon("remove") );
         connect( d->closeButton, TQT_SIGNAL( clicked() ),
-                 tqtopLevelWidget(), TQT_SLOT( close() ) );
+                 topLevelWidget(), TQT_SLOT( close() ) );
     }
     else {
         delete d->closeButton;

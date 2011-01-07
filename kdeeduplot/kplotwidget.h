@@ -95,11 +95,11 @@ public:
 		*/
 	virtual void clearObjectList() { ObjectList.clear(); update(); }
 
-	/**@short tqreplace an item in the KPlotObject list.
-		*@param i the index of th item to be tqreplaced
-		*@param o pointer to the tqreplacement KPlotObject
+	/**@short replace an item in the KPlotObject list.
+		*@param i the index of th item to be replaced
+		*@param o pointer to the replacement KPlotObject
 		*/
-	virtual void tqreplaceObject( int i, KPlotObject *o ) { ObjectList.tqreplace( i, o ); }
+	virtual void replaceObject( int i, KPlotObject *o ) { ObjectList.replace( i, o ); }
 
 	/**@return the number of KPlotObjects in the list
 		*/
@@ -212,7 +212,7 @@ public:
 	KPlotAxis 	LeftAxis;
 
 protected:
-	/**@short the paint event handler, executed when update() or tqrepaint() is called.
+	/**@short the paint event handler, executed when update() or repaint() is called.
 		*/
 	virtual void paintEvent( TQPaintEvent* /* e */ );
 

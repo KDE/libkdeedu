@@ -61,7 +61,7 @@ public:
    * initially.
    **/
   ExtDatePicker(TQWidget *parent=0,
-	      ExtDate=ExtDate::tqcurrentDate(),
+	      ExtDate=ExtDate::currentDate(),
 	      const char *name=0);
 
   /** The usual constructor.  The given date will be displayed
@@ -91,7 +91,7 @@ public:
    *  size hint, try adding 28 to each of the reported numbers of
    *  pixels.
    **/
-  TQSize tqsizeHint() const;
+  TQSize sizeHint() const;
 
   /**
    * Sets the date.
@@ -137,7 +137,7 @@ public:
   /**
    * By calling this method with @p enable = true, ExtDatePicker will show
    * a little close-button in the upper button-row. Clicking the
-   * close-button will cause the ExtDatePicker's tqtopLevelWidget()'s close()
+   * close-button will cause the ExtDatePicker's topLevelWidget()'s close()
    * method being called. This is mostly useful for toplevel datepickers
    * without a window manager decoration.
    * @see hasCloseButton
