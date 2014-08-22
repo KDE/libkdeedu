@@ -648,6 +648,7 @@ void KEduVocDocument::removeIdentifier( int index )
     if ( index < d->m_identifiers.size() && index >= 0 ) {
         d->m_identifiers.removeAt( index );
         d->m_lessonContainer->removeTranslation( index );
+        setModified(true);
     }
 }
 
@@ -675,7 +676,7 @@ int KEduVocDocument::appendIdentifier( const KEduVocIdentifier& id )
             identifier(i).setName(i18nc( "The name of the second, third ... language/column of vocabulary, if we have to guess it.", "Translation %1", i ) );
         }
     }
-
+    setModified(true);
 
     return i;
 }
