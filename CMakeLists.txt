@@ -9,7 +9,6 @@ include_directories (${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES})
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 add_subdirectory(keduvocdocument)
-add_subdirectory(data)
 #add_subdirectory(widgets)
 add_subdirectory(qtmmlwidget)
 add_subdirectory(icons)
