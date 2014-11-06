@@ -11,7 +11,6 @@ add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_subdirectory(keduvocdocument)
 #add_subdirectory(widgets)
 add_subdirectory(qtmmlwidget)
-add_subdirectory(icons)
 
 
 configure_file( "${LibKdeEdu_SOURCE_DIR}/LibKdeEduConfig.cmake.in" "${LibKdeEdu_BINARY_DIR}/LibKdeEduConfig.cmake" @ONLY )
