@@ -73,6 +73,8 @@ public:
     KAutoSaveFile            *m_autosave;
 
     bool                      m_dirty;
+    bool                      m_isReadOnly;
+
 
     // save these to document
     QList<KEduVocIdentifier>  m_identifiers;
@@ -110,7 +112,9 @@ public:
      *   @param flags Describes how to deal with locked file etc.
      *   @return ErrorCode where NoError is success
      *   */
-    KEduVocDocument::ErrorCode initializeKAutoSave(KAutoSaveFile &autosave,  QString const &fpath,  FileHandlingFlags flags) const;
+    KEduVocDocument::ErrorCode initializeKAutoSave(KAutoSaveFile &autosave,
+						   QString const &fpath,
+						   FileHandlingFlags flags) const;
 };
 
 KEduVocDocument::KEduVocDocumentPrivate::~KEduVocDocumentPrivate()
@@ -139,6 +143,7 @@ void KEduVocDocument::KEduVocDocumentPrivate::init()
     m_extraSizeHints.clear();
     m_sizeHints.clear();
     m_dirty = false;
+    m_isReadOnly = false;
     m_queryorg = "";
     m_querytrans = "";
     m_autosave->setManagedFile( i18n( "Untitled" ) );
@@ -298,9 +303,17 @@ KEduVocDocument::ErrorCode KEduVocDocument::open( const KUrl& url,  FileHandling
         return FileDoesNotExist;
     }
 
-    ErrorCode autosaveError = d->initializeKAutoSave( *d->m_autosave,  temporaryFile, flags );
-    if ( autosaveError != NoError) {
-        return autosaveError;
+    if (flags & FileOpenReadOnly) {
+	d->m_isReadOnly = true;
+    }
+
+    ErrorCode autosaveError = NoError;
+
+    if (!d->m_isReadOnly) {
+	autosaveError = d->initializeKAutoSave( *d->m_autosave,  temporaryFile, flags );
+	if ( autosaveError != NoError) {
+	    return autosaveError;
+	}
     }
 
     QIODevice * f = KFilterDev::deviceForFile( temporaryFile );
@@ -330,8 +343,11 @@ KEduVocDocument::ErrorCode KEduVocDocument::open( const KUrl& url,  FileHandling
     return errStatus;
 }
 
-void KEduVocDocument::close() {
-    d->m_autosave->releaseLock();
+void KEduVocDocument::close()
+{
+    if (!d->m_isReadOnly) {
+	d->m_autosave->releaseLock();
+    }
 }
 
 /// @todo When the API major version number increments remove this function
@@ -347,8 +363,12 @@ int KEduVocDocument::saveAs( const KUrl & url, FileType ft, const QString & gene
     return err;
 }
 
-KEduVocDocument::ErrorCode KEduVocDocument::saveAs( const KUrl & url, FileType ft, FileHandlingFlags flags)
+KEduVocDocument::ErrorCode KEduVocDocument::saveAs( const KUrl & url, FileType ft,
+						    FileHandlingFlags flags)
 {
+    if (!d->m_isReadOnly) {
+	return FileIsReadOnly;
+    }
 
     KUrl tmp( url );
 
