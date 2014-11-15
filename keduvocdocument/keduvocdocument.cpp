@@ -314,7 +314,7 @@ int KEduVocDocument::saveAs(const KUrl &url, FileType ft, const QString &generat
 KEduVocDocument::ErrorCode KEduVocDocument::saveAs( const KUrl & url, FileType ft,
 						    FileHandlingFlags flags)
 {
-    if (!d->m_isReadOnly) {
+    if (d->m_isReadOnly) {
 	return FileIsReadOnly;
     }
 
