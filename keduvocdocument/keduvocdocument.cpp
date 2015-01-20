@@ -136,7 +136,9 @@ KEduVocDocument::KEduVocDocumentPrivate::~KEduVocDocumentPrivate()
 void KEduVocDocument::KEduVocDocumentPrivate::init()
 {
     delete m_lessonContainer;
-    m_lessonContainer = new KEduVocLesson(i18nc("The top level lesson which contains all other lessons of the document.", "Document Lesson"));
+    m_lessonContainer = new KEduVocLesson(i18nc("The top level lesson which contains all other lessons of the document.",
+						"Document Lesson"),
+					  q);
     m_lessonContainer->setContainerType(KEduVocLesson::Lesson);
     delete m_wordTypeContainer;
     m_wordTypeContainer = new KEduVocWordType(i18n( "Word types" ));
@@ -192,7 +194,8 @@ KEduVocDocument::ErrorCode KEduVocDocument::KEduVocDocumentPrivate::initializeKA
 
 
 KEduVocDocument::KEduVocDocument( QObject *parent )
-        : QObject( parent ), d( new KEduVocDocumentPrivate( this ) )
+    : QObject(parent)
+    , d(new KEduVocDocumentPrivate(this))
 {
 }
 

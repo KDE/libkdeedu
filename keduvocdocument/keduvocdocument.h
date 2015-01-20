@@ -82,8 +82,8 @@ public:
     enum FileHandlingFlags
     {
         FileDefaultHandling = 0x0, ///< Default status
-        FileIgnoreLock = 0x1,      ///< Ignore the file lock
-	FileOpenReadOnly = 0x2	   ///< Open without any intention to change and save back later. This also implies FileIgnoreLock.
+        FileIgnoreLock      = 0x1, ///< Ignore the file lock
+	FileOpenReadOnly    = 0x2  ///< Open without any intention to change and save back later. This also implies FileIgnoreLock.
     };
 
     /// used as parameter for pattern
