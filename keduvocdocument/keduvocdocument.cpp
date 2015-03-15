@@ -72,7 +72,7 @@ public:
 
     /** autosave file used to provide locking access to the underlying file
      * Note: It is a pointer to allow locking a new file, saving results and
-     * then transfering the lock to m_autosave without risking loss of lock.
+     * then transferring the lock to m_autosave without risking loss of lock.
      * See saveAs for clarification*/
     KAutoSaveFile            *m_autosave;
 

@@ -3436,7 +3436,7 @@ MmlNode *MmlDocument::domToMml(const QDomNode &dom_node, bool *ok, QString *erro
 	    break;
 
 	default:
-	    // exact ammount of children specified - check...
+	    // exact amount of children specified - check...
 	    if (spec->child_spec != child_cnt) {
 		if (errorMsg != 0)
 		    *errorMsg = QString("element ")
@@ -5425,7 +5425,7 @@ QSize QtMmlWidget::sizeHint() const
     Sets the MathML expression to be rendered. The expression is given
     in the string \a text. If the expression is successfully parsed,
     this method returns true; otherwise it returns false. If an error
-    occured \a errorMsg is set to a diagnostic message, while \a
+    occurred \a errorMsg is set to a diagnostic message, while \a
     errorLine and \a errorColumn contain the location of the error.
     Any of \a errorMsg, \a errorLine and \a errorColumn may be 0,
     in which case they are not set.
@@ -6299,7 +6299,7 @@ void QtMmlDocument::clear()
     Sets the MathML expression to be rendered. The expression is given
     in the string \a text. If the expression is successfully parsed,
     this method returns true; otherwise it returns false. If an error
-    occured \a errorMsg is set to a diagnostic message, while \a
+    occurred \a errorMsg is set to a diagnostic message, while \a
     errorLine and \a errorColumn contain the location of the error.
     Any of \a errorMsg, \a errorLine and \a errorColumn may be 0,
     in which case they are not set.
